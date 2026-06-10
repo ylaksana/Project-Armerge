@@ -51,12 +51,14 @@ func tick(delta:float) -> void:
 	if body.is_on_floor():
 		if non_loop_animation_playing():
 			return
-		if wants_attack:
-			animated_sprite.play("attack")
-		elif dir == 0.0:
+		if dir == 0.0:
 			animated_sprite.play("idle") 
 		else:
 			animated_sprite.play("run")
+			
+		if wants_attack:
+			animated_sprite.play("attack")
+		
 	else:
 		# jump_attack
 		if wants_attack:
