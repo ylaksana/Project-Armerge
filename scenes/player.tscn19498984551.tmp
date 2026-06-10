@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cer4txav2xeaq"]
+
+[ext_resource type="Script" uid="uid://ba350msnig8c5" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://6nnxl7ob4p61" path="res://assets/heroine-idle.png" id="2_g2els"]
+[ext_resource type="Script" uid="uid://bd2gw28n1owvf" path="res://scripts/input_component.gd" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://dp8i04h7j7y1v" path="res://scripts/movement_component.gd" id="4_qlg0r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ij6vw"]
+size = Vector2(18, 27.5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("2_g2els")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qlg0r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="player" type="CharacterBody2D" unique_id=149138697]
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1453137155]
+position = Vector2(4, -7.25)
+shape = SubResource("RectangleShape2D_ij6vw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1857588325]
+z_index = 5
+position = Vector2(3, -9)
+sprite_frames = SubResource("SpriteFrames_qlg0r")
+autoplay = "default"
+frame_progress = 0.74065095
+
+[node name="InputComponent" type="Node" parent="." unique_id=1273875027]
+script = ExtResource("3_dqkch")
+metadata/_custom_type_script = "uid://bd2gw28n1owvf"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "model")]
+script = ExtResource("4_qlg0r")
+body = NodePath("..")
+model = NodePath("../AnimatedSprite2D")
+speed = 50.0
+jump = 600.0
+gravity_multiplier = 10.0
+metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
