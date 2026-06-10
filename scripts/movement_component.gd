@@ -12,19 +12,30 @@ class_name MovementComponent extends Node
 var dir : float = 0.0
 var wants_jump : bool = false
 var wants_attack: bool = false
+var prev_animation : String = ""
 
+# if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
+	animated_sprite.play("idle")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
+
+# logic for how animations should behave after finishing
 func _on_animation_finished() -> void:
+	# if the sprite is on the floor, we should just return to idle
 	if body.is_on_floor():
 		animated_sprite.play("idle")
+		prev_animation = ""
+		
+
+# return whether the animated sprite playing doesn't have a loop
+func non_loop_animation_playing() -> bool:
+	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)
 
 func tick(delta:float) -> void:
 	# check if the character exists
 	if body == null:
 		return
-		
+	
 	# body movement:
 	if dir < 0.0:
 		animated_sprite.flip_h = false
@@ -38,15 +49,18 @@ func tick(delta:float) -> void:
 		
 	# animations:
 	if body.is_on_floor():
+		if non_loop_animation_playing():
+			return
+		if dir == 0.0:
+			animated_sprite.play("idle")
+		elif wants_attack:
+			animated_sprite.play("attack")
+		else:
+			animated_sprite.play("run")
+	else:
+		# jump_attack
 		if wants_attack:
 			animated_sprite.play("attack")
-		elif dir != 0.0:
-			animated_sprite.play("run")
-		elif animated_sprite.animation != "attack":
-			animated_sprite.play("idle")
-	else:
-		animated_sprite.play("jump")
-		
 	
 	
 		
@@ -57,6 +71,7 @@ func tick(delta:float) -> void:
 	# jump:
 	if wants_jump and body.is_on_floor():
 		body.velocity.y = jump
+		animated_sprite.play("jump")
 	wants_jump = false
 	
 	body.move_and_slide()
