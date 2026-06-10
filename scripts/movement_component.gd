@@ -13,6 +13,13 @@ var dir : float = 0.0
 var wants_jump : bool = false
 var wants_attack: bool = false
 
+func _ready() -> void:
+	animated_sprite.animation_finished.connect(_on_animation_finished)
+	
+func _on_animation_finished() -> void:
+	if body.is_on_floor():
+		animated_sprite.play("idle")
+
 func tick(delta:float) -> void:
 	# check if the character exists
 	if body == null:
@@ -30,16 +37,13 @@ func tick(delta:float) -> void:
 		body.velocity.x = move_toward(body.velocity.x, 0, speed)
 		
 	# animations:
-	
 	if body.is_on_floor():
-		if animated_sprite.animation == "attack" and animated_sprite.is_playing():
-			pass
-		elif dir == 0.0 and wants_attack:
+		if wants_attack:
 			animated_sprite.play("attack")
-		elif dir == 0.0:
-			animated_sprite.play("idle")
-		else:
+		elif dir != 0.0:
 			animated_sprite.play("run")
+		elif animated_sprite.animation != "attack":
+			animated_sprite.play("idle")
 	else:
 		animated_sprite.play("jump")
 		
