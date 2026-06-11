@@ -1,10 +1,9 @@
 class_name MovementComponent extends Node
 
-@onready var collision_shape: CollisionShape2D = $"../CollisionShape2D"
-
 @export var body : CharacterBody2D
 @export var animated_sprite: AnimatedSprite2D
 @export var hitbox: HitboxComponent
+@export var collision_shape: CollisionShape2D
 @export var model : Node2D
 @export var speed: float = 150.0
 @export var jump = 6.0
@@ -19,19 +18,32 @@ var prev_animation : String = ""
 var hitbox_shape: CollisionShape2D
 var hitbox_position: float
 var hitbox_offset: float
+var collision_position : float
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
 	# hitbox logic
 	hitbox_shape = hitbox.get_node("CollisionShape2D")
-	hitbox_position = hitbox_shape.position.x
-	print("hitbox_position: ",hitbox_position)
+	collision_position = collision_shape.position.x
+	print("hitbox_position before: ",hitbox_position)
 	var collision_diameter = (collision_shape.shape as RectangleShape2D).size.x
 	var hitbox_diameter = (hitbox_shape.shape as RectangleShape2D).size.x
 	print("hitbox_diameter: ",hitbox_diameter)
 	print("collision_diameter: ",collision_diameter)
-	hitbox_offset = hitbox_diameter + collision_diameter
+	
+	# set the offset for the hitbox
+	hitbox_offset = ((collision_diameter/2) + (hitbox_diameter/2))
+	
+	# load the hitbox in front of where the player is facing
+	if animated_sprite.flip_h == false:
+		hitbox_position = collision_shape.position.x - hitbox_offset
+	else:
+		hitbox_position = collision_shape.position.x + hitbox_offset
+		
+		
 	print("hitbox_offset: ",hitbox_offset)
+	print("hitbox_position after: ", hitbox_position)
+	
 	
 	
 	animated_sprite.play("idle")
@@ -58,25 +70,20 @@ func tick(delta:float) -> void:
 		return
 	
 	# body movement:
+	
+	# move left
 	if dir < 0.0:
 		animated_sprite.flip_h = false
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		if hitbox.position.x < 0.0:
-			hitbox.position.x = hitbox_position - hitbox_offset
-			print(hitbox.position.x)
-		else:
-			hitbox.position.x = hitbox_position + hitbox_offset
-			print(hitbox.position.x)
+		hitbox.position.x = collision_position - hitbox_offset
+		print(hitbox.position.x)
+	
+	# move right
 	elif dir > 0.0:
 		animated_sprite.flip_h = true
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		if hitbox.position.x < 0.0:
-			hitbox.position.x = hitbox_position - hitbox_offset
-			print(hitbox.position.x)
-		else:
-			hitbox.position.x = hitbox_position + hitbox_offset
-			print(hitbox.position.x)
-		
+		hitbox.position.x = collision_position + hitbox_offset
+		print(hitbox.position.x)
 	
 	
 	if dir != 0.0:
@@ -89,6 +96,7 @@ func tick(delta:float) -> void:
 		if non_loop_animation_playing():
 			return
 		if dir == 0.0:
+			print(hitbox.position.x)
 			animated_sprite.play("idle") 
 		else:
 			animated_sprite.play("run")

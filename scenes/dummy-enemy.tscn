@@ -70,12 +70,12 @@ animation = &"idle"
 frame = 4
 frame_progress = 1.0
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1326504356 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "hurtbox", "model")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1326504356 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "collision_shape", "model")]
 script = ExtResource("4_a7g1i")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 hitbox = NodePath("../HitboxComponent")
-hurtbox = NodePath("../HurtboxComponent")
+collision_shape = NodePath("../CollisionShape2D")
 model = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 

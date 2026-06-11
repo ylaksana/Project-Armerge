@@ -182,7 +182,7 @@ script = ExtResource("7_fjrip")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
-position = Vector2(-12, -7)
+position = Vector2(-11.5, -7)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]

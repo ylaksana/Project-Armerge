@@ -166,12 +166,11 @@ frame_progress = 1.0
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://bd2gw28n1owvf"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "collision_shape", "model")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "model")]
 script = ExtResource("4_qlg0r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 hitbox = NodePath("../HitboxComponent")
-collision_shape = NodePath("../CollisionShape2D")
 model = NodePath("../AnimatedSprite2D")
 jump = -300.0
 gravity_multiplier = 0.0
@@ -182,7 +181,7 @@ script = ExtResource("7_fjrip")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
-position = Vector2(-12, -7)
+position = Vector2(-11.5, -7)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]
