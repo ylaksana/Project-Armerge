@@ -166,11 +166,12 @@ frame_progress = 1.0
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://bd2gw28n1owvf"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "model")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "hurtbox", "model")]
 script = ExtResource("4_qlg0r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 hitbox = NodePath("../HitboxComponent")
+hurtbox = NodePath("../HurtboxComponent")
 model = NodePath("../AnimatedSprite2D")
 jump = -300.0
 gravity_multiplier = 0.0

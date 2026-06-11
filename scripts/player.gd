@@ -1,8 +1,10 @@
 class_name Player extends CharacterBody2D
 @onready var input_component: InputComponent = $InputComponent
 @onready var movement_component: MovementComponent = $MovementComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
 
-
+	
 func _physics_process(delta: float) -> void:
 	# read controls from input
 	input_component.update()

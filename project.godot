@@ -47,11 +47,6 @@ attack={
 ]
 }
 
-[layer_names]
-
-2d_physics/layer_1="player_hurtbox"
-2d_physics/layer_2="enemy_hurtbox"
-
 [physics]
 
 3d/physics_engine="Jolt Physics"
