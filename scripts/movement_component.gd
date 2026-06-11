@@ -19,28 +19,29 @@ var hitbox_position: float
 var hitbox_offset: float
 var collision_position : float
 
+
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
 	# hitbox logic
 	hitbox_shape = hitbox.get_node("CollisionShape2D")
 	collision_position = collision_shape.position.x
-	print("hitbox_position before: ",hitbox_position)
+	#print("hitbox_position before: ",hitbox_position)
 	var collision_diameter = (collision_shape.shape as RectangleShape2D).size.x
 	var hitbox_diameter = (hitbox_shape.shape as RectangleShape2D).size.x
-	print("hitbox_diameter: ",hitbox_diameter)
-	print("collision_diameter: ",collision_diameter)
+	#print("hitbox_diameter: ",hitbox_diameter)
+	#print("collision_diameter: ",collision_diameter)
 	
 	# set the offset for the hitbox
-	hitbox_offset = ((collision_diameter/2) + (hitbox_diameter/2))
-	print(hitbox.get_parent().name)
+	hitbox_offset = (ceil(collision_diameter/2) + ceil(hitbox_diameter/2))
+	#print(hitbox.get_parent().name)s
 	# load the hitbox in front of where the player is facing
 	if animated_sprite.flip_h == false:
 		hitbox_position = collision_shape.position.x - hitbox_offset
 	else:
 		hitbox_position = collision_shape.position.x + hitbox_offset
 		
-	print("hitbox_offset: ",hitbox_offset)
-	print("hitbox_position after: ", hitbox_position)
+	#print("hitbox_offset: ",hitbox_offset)
+	#print("hitbox_position after: ", hitbox_position)
 	
 	animated_sprite.play("idle")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
@@ -70,12 +71,14 @@ func tick(delta:float) -> void:
 		animated_sprite.flip_h = false
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
 		hitbox_shape.position.x = collision_position - hitbox_offset
+		print(hitbox_shape.position.x)
 	
 	# move right
 	elif dir > 0.0:
 		animated_sprite.flip_h = true
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
 		hitbox_shape.position.x = collision_position + hitbox_offset
+		print(hitbox_shape.position.x)
 	
 	
 	if dir != 0.0:
@@ -95,15 +98,13 @@ func tick(delta:float) -> void:
 		if wants_attack:
 			animated_sprite.play("attack")
 			hitbox.monitoring = true
-		
+
 	else:
 		# jump_attack
 		if wants_attack:
 			animated_sprite.play("attack")
 			hitbox.monitoring = true
-	
-	
-		
+
 	# gravity:
 	if not body.is_on_floor():
 		body.velocity += body.get_gravity() * delta

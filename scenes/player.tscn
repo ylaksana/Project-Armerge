@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
-size = Vector2(19, 28.75)
+size = Vector2(14, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("2_tuyoq")
@@ -141,26 +141,24 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(11.875, 13.75)
+size = Vector2(10.0005, 13.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4r1p"]
-size = Vector2(14, 27)
+size = Vector2(14, 28)
 
 [node name="player" type="CharacterBody2D" unique_id=149138697]
 script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1453137155]
-position = Vector2(4, -8)
+position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_ur7pv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1857588325]
 z_index = 5
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"attack"
+animation = &"idle"
 autoplay = "attack"
-frame = 5
-frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -182,7 +180,7 @@ script = ExtResource("7_fjrip")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
-position = Vector2(-12, -7)
+position = Vector2(-8, -5)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]
@@ -192,5 +190,5 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1924998985]
-position = Vector2(4, -7.5)
+position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
