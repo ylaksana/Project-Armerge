@@ -14,7 +14,6 @@ class_name MovementComponent extends Node
 var dir : float = 0.0
 var wants_jump : bool = false
 var wants_attack: bool = false
-var prev_animation : String = ""
 var hitbox_shape: CollisionShape2D
 var hitbox_position: float
 var hitbox_offset: float
@@ -33,18 +32,15 @@ func _ready() -> void:
 	
 	# set the offset for the hitbox
 	hitbox_offset = ((collision_diameter/2) + (hitbox_diameter/2))
-	
+	print(hitbox.get_parent().name)
 	# load the hitbox in front of where the player is facing
 	if animated_sprite.flip_h == false:
 		hitbox_position = collision_shape.position.x - hitbox_offset
 	else:
 		hitbox_position = collision_shape.position.x + hitbox_offset
 		
-		
 	print("hitbox_offset: ",hitbox_offset)
 	print("hitbox_position after: ", hitbox_position)
-	
-	
 	
 	animated_sprite.play("idle")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
@@ -56,7 +52,6 @@ func _on_animation_finished() -> void:
 	# if the sprite is on the floor, we should just return to idle
 	if body.is_on_floor():
 		animated_sprite.play("idle")
-		prev_animation = ""
 
 
 # return whether the animated sprite playing doesn't have a loop
@@ -70,20 +65,17 @@ func tick(delta:float) -> void:
 		return
 	
 	# body movement:
-	
 	# move left
 	if dir < 0.0:
 		animated_sprite.flip_h = false
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		hitbox.position.x = collision_position - hitbox_offset
-		print(hitbox.position.x)
+		hitbox_shape.position.x = collision_position - hitbox_offset
 	
 	# move right
 	elif dir > 0.0:
 		animated_sprite.flip_h = true
 		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		hitbox.position.x = collision_position + hitbox_offset
-		print(hitbox.position.x)
+		hitbox_shape.position.x = collision_position + hitbox_offset
 	
 	
 	if dir != 0.0:
@@ -96,7 +88,6 @@ func tick(delta:float) -> void:
 		if non_loop_animation_playing():
 			return
 		if dir == 0.0:
-			print(hitbox.position.x)
 			animated_sprite.play("idle") 
 		else:
 			animated_sprite.play("run")
