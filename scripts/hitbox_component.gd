@@ -5,10 +5,13 @@ signal hit(hurtbox)
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
+	monitoring = false
 	if is_player:
+		monitoring = false
 		collision_layer = 1
 		collision_mask = 8
 	else:
+		monitoring = true
 		collision_layer = 4
 		collision_mask = 2
 	area_entered.connect(_on_area_entered)

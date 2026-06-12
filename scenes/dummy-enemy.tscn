@@ -84,6 +84,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 hitbox = NodePath("../HitboxComponent")
 collision_shape = NodePath("../body")
 model = NodePath("../AnimatedSprite2D")
+is_player = false
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433]

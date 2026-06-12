@@ -8,6 +8,7 @@ class_name MovementComponent extends Node
 @export var speed: float = 150.0
 @export var jump = 6.0
 @export var gravity_multiplier = 3.0
+@export var is_player: bool = true
 
 
 
@@ -22,23 +23,24 @@ var collision_position : float
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
-	# hitbox logic
-	hitbox_shape = hitbox.get_node("CollisionShape2D")
-	collision_position = collision_shape.position.x
-	#print("hitbox_position before: ",hitbox_position)
-	var collision_diameter = (collision_shape.shape as RectangleShape2D).size.x
-	var hitbox_diameter = (hitbox_shape.shape as RectangleShape2D).size.x
-	#print("hitbox_diameter: ",hitbox_diameter)
-	#print("collision_diameter: ",collision_diameter)
-	
-	# set the offset for the hitbox
-	hitbox_offset = (ceil(collision_diameter/2) + ceil(hitbox_diameter/2))
-	#print(hitbox.get_parent().name)s
-	# load the hitbox in front of where the player is facing
-	if animated_sprite.flip_h == false:
-		hitbox_position = collision_shape.position.x - hitbox_offset
-	else:
-		hitbox_position = collision_shape.position.x + hitbox_offset
+	# hitbox logic for player
+	if is_player:
+		hitbox_shape = hitbox.get_node("CollisionShape2D")
+		collision_position = collision_shape.position.x
+		#print("hitbox_position before: ",hitbox_position)
+		var collision_diameter = (collision_shape.shape as RectangleShape2D).size.x
+		var hitbox_diameter = (hitbox_shape.shape as RectangleShape2D).size.x
+		#print("hitbox_diameter: ",hitbox_diameter)
+		#print("collision_diameter: ",collision_diameter)
+		
+		# set the offset for the hitbox
+		hitbox_offset = (ceil(collision_diameter/2) + ceil(hitbox_diameter/2))
+		#print(hitbox.get_parent().name)s
+		# load the hitbox in front of where the player is facing
+		if animated_sprite.flip_h == false:
+			hitbox_position = collision_shape.position.x - hitbox_offset
+		else:
+			hitbox_position = collision_shape.position.x + hitbox_offset
 		
 	#print("hitbox_offset: ",hitbox_offset)
 	#print("hitbox_position after: ", hitbox_position)
