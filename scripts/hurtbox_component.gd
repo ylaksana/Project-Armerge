@@ -6,6 +6,8 @@ signal hit_received(hitbox: HitboxComponent)
 @export var animated_sprite : AnimatedSprite2D
 @export var is_player: bool = true
 
+
+
 func _ready() -> void:
 	if is_player:
 		collision_layer = 2
@@ -15,8 +17,10 @@ func _ready() -> void:
 		collision_mask = 1
 
 func take_hit(hitbox: HitboxComponent) -> void:
-	print("I am: ", get_parent().name, " hurtbox layer: ", collision_layer, " mask: ", collision_mask)
+	#print("I am: ", get_parent().name, " hurtbox layer: ", collision_layer, " mask: ", collision_mask)
+	# sprite animation
 	animated_sprite.modulate = Color.RED
+	# emit signal to other components
 	hit_received.emit(hitbox)
 	await get_tree().create_timer(0.2).timeout
 	animated_sprite.modulate = Color.WHITE

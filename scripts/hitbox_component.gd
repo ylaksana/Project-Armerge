@@ -2,6 +2,7 @@ class_name HitboxComponent extends Area2D
 
 signal hit(hurtbox)
 @export var is_player: bool = true
+var damage = 5
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="2_a7g1i"]
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="3_qwg2f"]
 [ext_resource type="Script" uid="uid://dp8i04h7j7y1v" path="res://scripts/movement_component.gd" id="4_a7g1i"]
+[ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="5_qwg2f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -106,3 +107,12 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1656536966]
 position = Vector2(0.5, 4)
 shape = SubResource("RectangleShape2D_ewmnv")
+
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox") instance=ExtResource("5_qwg2f")]
+offset_left = -9.0
+offset_top = -13.0
+offset_right = 85.99999
+offset_bottom = -2.9999924
+max_health = 15.0
+hurtbox = NodePath("../HurtboxComponent")
+is_player = false

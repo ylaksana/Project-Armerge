@@ -10,8 +10,6 @@ class_name MovementComponent extends Node
 @export var gravity_multiplier = 3.0
 @export var is_player: bool = true
 
-
-
 var dir : float = 0.0
 var wants_jump : bool = false
 var wants_attack: bool = false
@@ -19,7 +17,6 @@ var hitbox_shape: CollisionShape2D
 var hitbox_position: float
 var hitbox_offset: float
 var collision_position : float
-
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
@@ -71,17 +68,19 @@ func tick(delta:float) -> void:
 	# move left
 	if dir < 0.0:
 		animated_sprite.flip_h = false
-		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		hitbox_shape.position.x = collision_position - hitbox_offset
-		print(hitbox_shape.position.x)
+		if is_player:
+			# change the hitbox to face where the player is facing while hugging the overall collision shape
+			hitbox_shape.position.x = collision_position - hitbox_offset
+			#print(hitbox_shape.position.x)
 	
 	# move right
 	elif dir > 0.0:
 		animated_sprite.flip_h = true
-		# change the hitbox to face where the player is facing while hugging the overall collision shape
-		hitbox_shape.position.x = collision_position + hitbox_offset
-		print(hitbox_shape.position.x)
-	
+		if is_player:
+			# change the hitbox to face where the player is facing while hugging the overall collision shape
+			hitbox_shape.position.x = collision_position + hitbox_offset
+			#print(hitbox_shape.position.x)
+		
 	
 	if dir != 0.0:
 		body.velocity.x = dir * speed

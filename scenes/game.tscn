@@ -26,18 +26,6 @@ sources/1 = SubResource("TileSetAtlasSource_lnu2h")
 
 [node name="game" type="Node2D" unique_id=747950718]
 
-[node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
-position = Vector2(-75, -6)
-scale = Vector2(0.9572543, 0.950118)
-
-[node name="Camera2D" type="Camera2D" parent="player" unique_id=1950455770]
-position = Vector2(4.178618, -11.577509)
-rotation = -3.1415927
-zoom = Vector2(5, 5)
-limit_bottom = 70
-limit_smoothed = true
-position_smoothing_enabled = true
-
 [node name="TileMap" type="TileMap" parent="." unique_id=388683472]
 tile_set = SubResource("TileSet_lbhrr")
 format = 2
@@ -46,5 +34,25 @@ layer_0/tile_data = PackedInt32Array(-393236, 262145, 0, -327700, 262145, 0, -26
 layer_1/name = "mid"
 layer_1/tile_data = PackedInt32Array(0, 196609, 0, 65535, 196609, 0, 65534, 196609, 0, 1, 196609, 0, 2, 196609, 0, 3, 196609, 0, 131070, 196609, 1, 131071, 196609, 1, 65536, 196609, 1, 65537, 196609, 1, 65538, 196609, 1, 65539, 196609, 1, 131069, 196609, 1, 65533, 196609, 0, 4, 196609, 0, 5, 196609, 0, 6, 196609, 0, 7, 196609, 0, 65532, 196609, 0, 65531, 196609, 0, 65530, 196609, 0, 65529, 196609, 0, 65528, 196609, 0, 65527, 196609, 0, 65526, 196609, 0, 65525, 196609, 0, 65524, 196609, 0, 65523, 196609, 0, 65522, 196609, 0, 65521, 196609, 0, 131057, 196609, 1, 196593, 196609, 1, 262129, 196609, 1, 131058, 196609, 1, 196594, 196609, 1, 262130, 196609, 1, 131059, 196609, 1, 196595, 196609, 1, 262131, 196609, 1, 131060, 196609, 1, 196596, 196609, 1, 262132, 196609, 1, 131061, 196609, 1, 196597, 196609, 1, 262133, 196609, 1, 131062, 196609, 1, 196598, 196609, 1, 262134, 196609, 1, 131063, 196609, 1, 196599, 196609, 1, 262135, 196609, 1, 131064, 196609, 1, 196600, 196609, 1, 262136, 196609, 1, 131065, 196609, 1, 196601, 196609, 1, 262137, 196609, 1, 131066, 196609, 1, 196602, 196609, 1, 262138, 196609, 1, 131067, 196609, 1, 196603, 196609, 1, 262139, 196609, 1, 131068, 196609, 1, 196604, 196609, 1, 262140, 196609, 1, 196605, 196609, 1, 262141, 196609, 1, 196606, 196609, 1, 262142, 196609, 1, 196607, 196609, 1, 262143, 196609, 1, 131072, 196609, 1, 196608, 196609, 1, 131073, 196609, 1, 196609, 196609, 1, 131074, 196609, 1, 196610, 196609, 1, 131075, 196609, 1, 196611, 196609, 1, 65540, 196609, 1, 131076, 196609, 1, 196612, 196609, 1, 65541, 196609, 1, 131077, 196609, 1, 196613, 196609, 1, 65542, 196609, 1, 131078, 196609, 1, 196614, 196609, 1, 65543, 196609, 1, 131079, 196609, 1, 196615, 196609, 1, -65535, 262145, 1, -10, 262145, 1, -65530, 1, 1, -65534, 65537, 1, -131069, 131073, 0, -65533, 131073, 1, -12, 65537, 1, -65547, 131073, 0, -11, 131073, 1, -14, 1, 1, -7, 1, 1)
 
-[node name="CharacterBody2D" parent="." unique_id=1728071996 instance=ExtResource("3_lnu2h")]
+[node name="enemy" type="Node" parent="." unique_id=1803919886]
+
+[node name="dummy-enemy4" parent="enemy" unique_id=1728071996 instance=ExtResource("3_lnu2h")]
+position = Vector2(106, -11)
+
+[node name="dummy-enemy" parent="enemy" unique_id=1949125119 instance=ExtResource("3_lnu2h")]
 position = Vector2(-23, -11)
+
+[node name="dummy-enemy2" parent="enemy" unique_id=135174566 instance=ExtResource("3_lnu2h")]
+position = Vector2(-110, -11)
+
+[node name="dummy-enemy3" parent="enemy" unique_id=1351323827 instance=ExtResource("3_lnu2h")]
+position = Vector2(-222, -11)
+
+[node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
+position = Vector2(-66, -7)
+
+[node name="CameraD" type="Camera2D" parent="player" unique_id=1621657272]
+position = Vector2(4, -8)
+offset = Vector2(0, -10)
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
