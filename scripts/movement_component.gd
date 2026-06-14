@@ -50,7 +50,6 @@ func _ready() -> void:
 func _on_animation_finished() -> void:
 	# stop animations and movement if dead
 	if is_dead:
-		animated_sprite.pause()
 		return
 	# turn off hitbox
 	hitbox.monitoring = false
@@ -65,7 +64,13 @@ func non_loop_animation_playing() -> bool:
 
 
 func tick(delta:float) -> void:
-	# check if the character exists
+	
+	# gravity:
+	if not body.is_on_floor():
+		body.velocity += body.get_gravity() * delta
+	body.move_and_slide()
+	
+	# disable movement if the character is freed or dead
 	if body == null or is_dead:
 		return
 	
@@ -111,9 +116,7 @@ func tick(delta:float) -> void:
 			animated_sprite.play("attack")
 			hitbox.monitoring = true
 
-	# gravity:
-	if not body.is_on_floor():
-		body.velocity += body.get_gravity() * delta
+	
 	
 	# jump:
 	if wants_jump and body.is_on_floor():
@@ -121,7 +124,7 @@ func tick(delta:float) -> void:
 		animated_sprite.play("jump")
 	wants_jump = false
 	
-	body.move_and_slide()
+	
 	
 #func die() -> void:
 	#is_dead = true

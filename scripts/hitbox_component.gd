@@ -12,6 +12,7 @@ func _ready() -> void:
 		collision_layer = 1
 		collision_mask = 8
 	else:
+		print("enemy body layer: ", collision_layer, " mask: ", collision_mask)
 		monitoring = true
 		collision_layer = 4
 		collision_mask = 2

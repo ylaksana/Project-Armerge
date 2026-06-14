@@ -20,14 +20,21 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_attack = input_component.attack_pressed
 	movement_component.tick(delta)
 	
+	
 func _on_died() -> void:
+	self.collision_mask = 1
+	var tween = create_tween()
+	tween.tween_property(self, "velocity:x", 0.0, 0.4).set_trans(Tween.TRANS_SINE)
 	movement_component.animated_sprite.play("death")
 	movement_component.is_dead = true
 	health_component.reset_scene_timer.start()
 	health_component.reset_scene_timer.timeout.connect(_on_timer_timeout)
 	
+	
 func _on_timer_timeout() -> void:
 	get_tree().reload_current_scene()
+	
+	
 	
 
 	

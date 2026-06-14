@@ -62,6 +62,7 @@ size = Vector2(3, 11)
 size = Vector2(19, 14)
 
 [node name="dummy-enemy" type="CharacterBody2D" unique_id=1728071996]
+collision_layer = 2
 
 [node name="body" type="CollisionShape2D" parent="." unique_id=179698780]
 position = Vector2(0.5, 4)

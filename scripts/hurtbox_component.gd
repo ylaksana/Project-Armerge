@@ -20,7 +20,7 @@ func take_hit(hitbox: HitboxComponent) -> void:
 	# emit signal to other components
 	hit_received.emit(hitbox)
 	
-	# sprite animation
+	# sprite animations
 	if get_tree():
 		animated_sprite.modulate = Color.RED
 		await get_tree().create_timer(0.2).timeout

@@ -38,6 +38,10 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("2_tuyoq")
 region = Rect2(160, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(0, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
 atlas = ExtResource("3_y4r1p")
 region = Rect2(32, 0, 32, 32)
@@ -121,6 +125,9 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_fulsm")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_4r5pv")
 }, {
 "duration": 1.0,
@@ -189,7 +196,6 @@ size = Vector2(10.0005, 13.75)
 size = Vector2(14, 28)
 
 [node name="player" type="CharacterBody2D" unique_id=149138697]
-collision_mask = 3
 script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1453137155]
@@ -202,7 +208,7 @@ position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"death"
 autoplay = "attack"
-frame = 4
+frame = 5
 frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
