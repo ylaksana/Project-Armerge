@@ -41,6 +41,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/background = SubResource("StyleBoxEmpty_vb46k")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xihqu")
 show_percentage = false
@@ -48,4 +50,9 @@ show_percentage = false
 [node name="ResetVisibility" type="Timer" parent="." unique_id=868996829]
 one_shot = true
 
+[node name="ResetSceneTimer" type="Timer" parent="." unique_id=1850676710]
+wait_time = 1.2999999999999998
+one_shot = true
+
 [connection signal="timeout" from="ResetVisibility" to="." method="_on_reset_visibility_timeout"]
+[connection signal="timeout" from="ResetSceneTimer" to="." method="_on_timer_timeout"]

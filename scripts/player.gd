@@ -6,6 +6,7 @@ class_name Player extends CharacterBody2D
 @onready var health_component: HealthComponent = $HealthComponent
 
 
+
 func _ready() -> void:
 	health_component.died.connect(_on_died)
 
@@ -19,5 +20,14 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_attack = input_component.attack_pressed
 	movement_component.tick(delta)
 	
-func _on_died()->void:
-	queue_free()
+func _on_died() -> void:
+	movement_component.animated_sprite.play("death")
+	movement_component.is_dead = true
+	health_component.reset_scene_timer.start()
+	health_component.reset_scene_timer.timeout.connect(_on_timer_timeout)
+	
+func _on_timer_timeout() -> void:
+	get_tree().reload_current_scene()
+	
+
+	

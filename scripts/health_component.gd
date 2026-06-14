@@ -6,6 +6,8 @@ signal died
 @export var max_health: float = 100.0
 @export var hurtbox: HurtboxComponent
 @export var is_player: bool = true
+@onready var reset_scene_timer: Timer = $ResetSceneTimer
+
 
 
 var curr_health : float = 0.0
@@ -60,3 +62,4 @@ func damage(hitbox: HitboxComponent) -> void:
 
 func _on_reset_visibility_timeout() -> void:
 	_change_opacity(0.0)
+	

@@ -13,6 +13,7 @@ class_name MovementComponent extends Node
 var dir : float = 0.0
 var wants_jump : bool = false
 var wants_attack: bool = false
+var is_dead: bool = false
 var hitbox_shape: CollisionShape2D
 var hitbox_position: float
 var hitbox_offset: float
@@ -47,6 +48,10 @@ func _ready() -> void:
 
 # logic for how animations should behave after finishing
 func _on_animation_finished() -> void:
+	# stop animations and movement if dead
+	if is_dead:
+		animated_sprite.pause()
+		return
 	# turn off hitbox
 	hitbox.monitoring = false
 	# if the sprite is on the floor, we should just return to idle
@@ -61,7 +66,7 @@ func non_loop_animation_playing() -> bool:
 
 func tick(delta:float) -> void:
 	# check if the character exists
-	if body == null:
+	if body == null or is_dead:
 		return
 	
 	# body movement:
@@ -117,6 +122,10 @@ func tick(delta:float) -> void:
 	wants_jump = false
 	
 	body.move_and_slide()
+	
+#func die() -> void:
+	#is_dead = true
+	#animated_sprite.play("death")
 	
 	
 	
