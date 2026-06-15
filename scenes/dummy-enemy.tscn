@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cww5st27sngvu"]
 
+[ext_resource type="Script" uid="uid://crnkgph5w0d5s" path="res://scripts/enemy.gd" id="1_8m0er"]
 [ext_resource type="Texture2D" uid="uid://b7220vlq5whgr" path="res://assets/dummy-enemy.png" id="1_gip3d"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="2_a7g1i"]
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="3_qwg2f"]
@@ -63,6 +64,7 @@ size = Vector2(19, 14)
 
 [node name="dummy-enemy" type="CharacterBody2D" unique_id=1728071996]
 collision_layer = 2
+script = ExtResource("1_8m0er")
 
 [node name="body" type="CollisionShape2D" parent="." unique_id=179698780]
 position = Vector2(0.5, 4)

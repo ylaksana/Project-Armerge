@@ -2,13 +2,12 @@ class_name HealthComponent extends ProgressBar
 
 signal health_changed(curr:float,max:float)
 signal died
+signal enemy_died
 
 @export var max_health: float = 100.0
 @export var hurtbox: HurtboxComponent
 @export var is_player: bool = true
 @onready var reset_scene_timer: Timer = $ResetSceneTimer
-
-
 
 var curr_health : float = 0.0
 var is_hit : bool = false
@@ -58,7 +57,7 @@ func damage(hitbox: HitboxComponent) -> void:
 		if is_player:
 			died.emit()
 		else:
-			owner.queue_free()
+			enemy_died.emit()
 
 func _on_reset_visibility_timeout() -> void:
 	_change_opacity(0.0)

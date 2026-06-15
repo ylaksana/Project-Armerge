@@ -6,7 +6,6 @@ class_name Player extends CharacterBody2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var pause_menu: Control = $"../CanvasLayer/pause_menu"
 
-
 func _ready() -> void:
 	health_component.died.connect(_on_died)
 
@@ -21,7 +20,6 @@ func _physics_process(delta: float) -> void:
 	movement_component.tick(delta)
 	
 	
-	
 func _on_died() -> void:
 	self.collision_mask = 1
 	var tween = create_tween()
@@ -30,10 +28,10 @@ func _on_died() -> void:
 	movement_component.is_dead = true
 	health_component.reset_scene_timer.start()
 	health_component.reset_scene_timer.timeout.connect(_on_timer_timeout)
-	
+
 	
 func _on_timer_timeout() -> void:
-	get_tree().reload_current_scene()
+	pause_menu._on_defeat()
 	
 	
 	
