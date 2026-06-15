@@ -9,4 +9,3 @@ func update() -> void:
 	dir = Input.get_axis("left","right")
 	jump_pressed = Input.is_action_just_pressed("jump")
 	attack_pressed = Input.is_action_just_pressed("attack")
-	

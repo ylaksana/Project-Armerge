@@ -183,7 +183,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(10.0005, 13.75)
+size = Vector2(10.0005, 8.875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4r1p"]
 size = Vector2(14, 28)
@@ -200,10 +200,8 @@ shape = SubResource("RectangleShape2D_ur7pv")
 z_index = 5
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"death"
+animation = &"idle"
 autoplay = "attack"
-frame = 4
-frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -225,7 +223,7 @@ script = ExtResource("7_fjrip")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
-position = Vector2(-8, -5)
+position = Vector2(-8, -2.5625)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]

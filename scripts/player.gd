@@ -4,7 +4,7 @@ class_name Player extends CharacterBody2D
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
-
+@onready var pause_menu: Control = $"../CanvasLayer/pause_menu"
 
 
 func _ready() -> void:
@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.wants_attack = input_component.attack_pressed
 	movement_component.tick(delta)
+	
 	
 	
 func _on_died() -> void:
