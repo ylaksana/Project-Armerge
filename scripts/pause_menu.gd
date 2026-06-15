@@ -69,6 +69,7 @@ func _on_victory() -> void:
 	print("victory!")
 	# won flag
 	won = true
+	get_tree().paused = true
 	
 	# hide these elements
 	pause_label.visible = false
@@ -84,6 +85,7 @@ func _on_victory() -> void:
 func _on_defeat() -> void:
 	# lost flag
 	lost = true
+	get_tree().paused = true
 	
 	# hide these elements
 	pause_label.visible = false
