@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5jag7wbmdhkk"]
 
-[ext_resource type="Script" uid="uid://bbu0mc5yijkgw" path="res://scripts/game.gd" id="1_iywne"]
+[ext_resource type="Script" uid="uid://bbu0mc5yijkgw" path="res://scripts/game.gd" id="1_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://cer4txav2xeaq" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://d0xakt2gbeq1l" path="res://assets/prototype-bg.png" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://cww5st27sngvu" path="res://scenes/dummy-enemy.tscn" id="3_lnu2h"]
@@ -31,7 +31,7 @@ sources/1 = SubResource("TileSetAtlasSource_lnu2h")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_u5sy4"]
 
 [node name="game" type="Node2D" unique_id=747950718]
-script = ExtResource("1_iywne")
+script = ExtResource("1_u5sy4")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=388683472]
 tile_set = SubResource("TileSet_lbhrr")
@@ -43,45 +43,21 @@ layer_1/tile_data = PackedInt32Array(0, 196609, 0, 65535, 196609, 0, 65534, 1966
 
 [node name="enemies" type="Node" parent="." unique_id=1803919886]
 
-[node name="dummy-enemy4" parent="enemies" unique_id=1728071996 instance=ExtResource("3_lnu2h")]
-position = Vector2(106, -11)
-
-[node name="dummy-enemy" parent="enemies" unique_id=1949125119 instance=ExtResource("3_lnu2h")]
-position = Vector2(-23, -11)
-
-[node name="dummy-enemy2" parent="enemies" unique_id=135174566 instance=ExtResource("3_lnu2h")]
-position = Vector2(-110, -11)
-
-[node name="dummy-enemy3" parent="enemies" unique_id=1351323827 instance=ExtResource("3_lnu2h")]
-position = Vector2(-224, -12)
-
-[node name="dummy-enemy5" parent="enemies" unique_id=322196342 instance=ExtResource("3_lnu2h")]
-position = Vector2(-476, 37)
-
-[node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
-position = Vector2(-535, 41)
-collision_layer = 5
-
-[node name="CameraD" type="Camera2D" parent="player" unique_id=1621657272]
-position = Vector2(1, -8)
-offset = Vector2(0, -10)
-zoom = Vector2(4, 4)
-limit_bottom = 100
-position_smoothing_enabled = true
+[node name="dummy-enemy" parent="enemies" unique_id=1728071996 instance=ExtResource("3_lnu2h")]
+position = Vector2(-450, 37)
 
 [node name="SceneTransition" parent="." unique_id=488066424 instance=ExtResource("5_p57ef")]
 visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1725857574]
 
-[node name="pause_menu" parent="CanvasLayer" unique_id=1251224610 node_paths=PackedStringArray("killzone", "player") instance=ExtResource("6_p57ef")]
+[node name="pause_menu" parent="CanvasLayer" unique_id=1251224610 node_paths=PackedStringArray("killzone") instance=ExtResource("6_p57ef")]
 offset_left = -11.0
 offset_top = -12.0
 offset_right = -11.0
 offset_bottom = -12.0
 scale = Vector2(2, 2)
 killzone = NodePath("../../killzone")
-player = NodePath("../../player")
 
 [node name="killzone" parent="." unique_id=2120611499 instance=ExtResource("7_u5sy4")]
 position = Vector2(0, 100)
@@ -93,3 +69,13 @@ shape = SubResource("WorldBoundaryShape2D_u5sy4")
 [node name="VictoryTimer" type="Timer" parent="." unique_id=71667213]
 wait_time = 1.2999999999999998
 one_shot = true
+
+[node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
+position = Vector2(-541, 41)
+
+[node name="Camera2D" type="Camera2D" parent="player" unique_id=1621657272]
+position = Vector2(7, -8)
+offset = Vector2(0, -10)
+zoom = Vector2(4, 4)
+limit_bottom = 100
+position_smoothing_enabled = true

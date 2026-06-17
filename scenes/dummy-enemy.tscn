@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="3_qwg2f"]
 [ext_resource type="Script" uid="uid://dp8i04h7j7y1v" path="res://scripts/movement_component.gd" id="4_a7g1i"]
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="5_qwg2f"]
+[ext_resource type="Script" uid="uid://c2afocq0flruh" path="res://scripts/animation_component.gd" id="7_c7r63"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -81,19 +82,19 @@ animation = &"idle"
 frame = 4
 frame_progress = 1.0
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1326504356 node_paths=PackedStringArray("body", "animated_sprite", "hitbox", "collision_shape", "model")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1326504356 node_paths=PackedStringArray("body", "animated_sprite")]
 script = ExtResource("4_a7g1i")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
-hitbox = NodePath("../HitboxComponent")
-collision_shape = NodePath("../body")
-model = NodePath("../AnimatedSprite2D")
-is_player = false
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
-[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433]
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433 node_paths=PackedStringArray("movement_component", "animated_sprite", "body", "body_collision")]
 script = ExtResource("2_a7g1i")
 is_player = false
+movement_component = NodePath("../MovementComponent")
+animated_sprite = NodePath("../AnimatedSprite2D")
+body = NodePath("..")
+body_collision = NodePath("../body")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=544301487]
@@ -119,3 +120,11 @@ offset_bottom = -2.9999924
 max_health = 15.0
 hurtbox = NodePath("../HurtboxComponent")
 is_player = false
+
+[node name="AnimationComponent" type="Node" parent="." unique_id=190048789 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component")]
+script = ExtResource("7_c7r63")
+hitbox = NodePath("../HitboxComponent")
+body = NodePath("..")
+animated_sprite = NodePath("../AnimatedSprite2D")
+movement_component = NodePath("../MovementComponent")
+metadata/_custom_type_script = "uid://c2afocq0flruh"
