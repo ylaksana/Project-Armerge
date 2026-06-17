@@ -51,13 +51,14 @@ visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1725857574]
 
-[node name="pause_menu" parent="CanvasLayer" unique_id=1251224610 node_paths=PackedStringArray("killzone") instance=ExtResource("6_p57ef")]
+[node name="pause_menu" parent="CanvasLayer" unique_id=1251224610 node_paths=PackedStringArray("killzone", "player") instance=ExtResource("6_p57ef")]
 offset_left = -11.0
 offset_top = -12.0
 offset_right = -11.0
 offset_bottom = -12.0
 scale = Vector2(2, 2)
 killzone = NodePath("../../killzone")
+player = NodePath("../../player")
 
 [node name="killzone" parent="." unique_id=2120611499 instance=ExtResource("7_u5sy4")]
 position = Vector2(0, 100)
@@ -72,6 +73,7 @@ one_shot = true
 
 [node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
 position = Vector2(-541, 41)
+collision_layer = 5
 
 [node name="Camera2D" type="Camera2D" parent="player" unique_id=1621657272]
 position = Vector2(7, -8)
