@@ -53,7 +53,7 @@ func tick(delta: float) -> void:
 			animated_sprite.play("run")
 			
 		if movement_component.wants_attack:
-			animated_sprite.play("attack")
+			animated_sprite.play("basicattack_1")
 			hitbox.monitoring = true
 
 	else:
