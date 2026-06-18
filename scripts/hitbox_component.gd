@@ -51,18 +51,19 @@ func tick(delta: float) -> void:
 	if body == null:
 		return
 		
-	if movement_component.dir < 0.0:
-		if is_player:
-			# change the hitbox to face where the player is facing while hugging the overall collision shape
-			hitbox_shape.position.x = collision_position - hitbox_offset
-			#print(hitbox_shape.position.x)
-	
-	# move right
-	elif movement_component.dir > 0.0:
-		if is_player:
-			# change the hitbox to face where the player is facing while hugging the overall collision shape
-			hitbox_shape.position.x = collision_position + hitbox_offset
-			#print(hitbox_shape.position.x)
+	if is_player:
+		if movement_component.dir < 0.0:
+			if is_player:
+				# change the hitbox to face where the player is facing while hugging the overall collision shape
+				hitbox_shape.position.x = collision_position - hitbox_offset
+				#print(hitbox_shape.position.x)
+		
+		# move right
+		elif movement_component.dir > 0.0:
+			if is_player:
+				# change the hitbox to face where the player is facing while hugging the overall collision shape
+				hitbox_shape.position.x = collision_position + hitbox_offset
+				#print(hitbox_shape.position.x)
 
 func _on_area_entered(area):
 	if area is HurtboxComponent:

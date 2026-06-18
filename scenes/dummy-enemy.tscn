@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://b7220vlq5whgr" path="res://assets/dummy-enemy.png" id="1_gip3d"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="2_a7g1i"]
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="3_qwg2f"]
-[ext_resource type="Script" uid="uid://dp8i04h7j7y1v" path="res://scripts/movement_component.gd" id="4_a7g1i"]
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="5_qwg2f"]
-[ext_resource type="Script" uid="uid://c2afocq0flruh" path="res://scripts/animation_component.gd" id="7_c7r63"]
+[ext_resource type="Script" uid="uid://bjpplap8y0tb" path="res://scripts/enemy_animation_component.gd" id="7_c7r63"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -82,16 +81,10 @@ animation = &"idle"
 frame = 4
 frame_progress = 1.0
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1326504356 node_paths=PackedStringArray("body", "animated_sprite")]
-script = ExtResource("4_a7g1i")
-body = NodePath("..")
-animated_sprite = NodePath("../AnimatedSprite2D")
-metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
-
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433 node_paths=PackedStringArray("movement_component", "animated_sprite", "body", "body_collision")]
 script = ExtResource("2_a7g1i")
 is_player = false
-movement_component = NodePath("../MovementComponent")
+movement_component = NodePath("")
 animated_sprite = NodePath("../AnimatedSprite2D")
 body = NodePath("..")
 body_collision = NodePath("../body")
@@ -117,14 +110,10 @@ offset_left = -9.0
 offset_top = -13.0
 offset_right = 85.99999
 offset_bottom = -2.9999924
-max_health = 15.0
+max_health = 50.0
 hurtbox = NodePath("../HurtboxComponent")
 is_player = false
 
-[node name="AnimationComponent" type="Node" parent="." unique_id=190048789 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component")]
+[node name="EnemyAnimationComponent" type="Node" parent="." unique_id=1749495084]
 script = ExtResource("7_c7r63")
-hitbox = NodePath("../HitboxComponent")
-body = NodePath("..")
-animated_sprite = NodePath("../AnimatedSprite2D")
-movement_component = NodePath("../MovementComponent")
-metadata/_custom_type_script = "uid://c2afocq0flruh"
+metadata/_custom_type_script = "uid://bjpplap8y0tb"
