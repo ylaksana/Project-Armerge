@@ -4,6 +4,7 @@ signal hit(hurtbox)
 
 @export var is_player: bool = true
 @export var movement_component : MovementComponent
+@export var player_animation_component : PlayerAnimationComponent
 @export var animated_sprite: AnimatedSprite2D
 @export var body: CharacterBody2D
 @export var body_collision: CollisionShape2D
@@ -51,16 +52,14 @@ func tick(delta: float) -> void:
 	if body == null:
 		return
 		
-	if is_player:
+	if is_player and not player_animation_component.is_attacking:
 		if movement_component.dir < 0.0:
-			if is_player:
 				# change the hitbox to face where the player is facing while hugging the overall collision shape
 				hitbox_shape.position.x = collision_position - hitbox_offset
 				print(hitbox_shape.position.x)
 		
 		# move right
 		elif movement_component.dir > 0.0:
-			if is_player:
 				# change the hitbox to face where the player is facing while hugging the overall collision shape
 				hitbox_shape.position.x = collision_position + hitbox_offset
 				print(hitbox_shape.position.x)

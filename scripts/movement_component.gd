@@ -24,7 +24,7 @@ func tick(delta:float) -> void:
 	if is_dead:
 		return
 	
-	if (animation_component.non_loop_animation_playing() or not animation_component.combo_timer.is_stopped()) and body.is_on_floor():
+	if (animation_component.non_loop_animation_playing() or not animation_component.combo_timer.is_stopped()) and not animation_component.is_aerial:
 		body.velocity.x = 0
 	elif dir != 0.0:
 		body.velocity.x = dir * speed

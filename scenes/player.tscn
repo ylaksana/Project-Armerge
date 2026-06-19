@@ -275,9 +275,10 @@ jump = -300.0
 gravity_multiplier = 0.0
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
-[node name="HitboxComponent" type="Area2D" parent="." unique_id=1938364455 node_paths=PackedStringArray("movement_component", "animated_sprite", "body", "body_collision")]
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1938364455 node_paths=PackedStringArray("movement_component", "player_animation_component", "animated_sprite", "body", "body_collision")]
 script = ExtResource("7_fjrip")
 movement_component = NodePath("../MovementComponent")
+player_animation_component = NodePath("../PlayerAnimationComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 body = NodePath("..")
 body_collision = NodePath("../CollisionShape2D")
