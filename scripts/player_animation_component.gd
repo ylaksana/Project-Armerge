@@ -28,11 +28,19 @@ func _on_animation_finished() -> void:
 	
 	# combo window
 	if animated_sprite.animation in attack_animations:
+		# start timer if on floor
 		if body.is_on_floor():
-			combo_timer.start()
+			if animated_sprite.animation != attack_animations[-1]:
+				combo_timer.start()
+			else:
+				is_attacking = false
+				combo_step = 0
+				animated_sprite.play("idle")
+		# if in the air, reset combo_step
 		else:
 			is_attacking = false
 			animated_sprite.play("idle")
+			combo_step = 0
 
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
@@ -45,12 +53,12 @@ func tick(delta: float) -> void:
 		return
 	
 	# body movement:
-		# move left
+	# move left
 	if not is_attacking:
 		if movement_component.dir < 0.0:
 			animated_sprite.flip_h = false
 		
-		# move right
+	# move right
 		elif movement_component.dir > 0.0:
 			animated_sprite.flip_h = true
 			
@@ -85,6 +93,7 @@ func attack() -> void:
 func _on_combo_timer_timeout() -> void:
 	is_attacking = false
 	print("combo timeout!")
+	combo_step = 0
 	# if the sprite has , we should just return to idle
 	if body.is_on_floor():
 		animated_sprite.play("idle")

@@ -13,13 +13,16 @@ var wants_attack: bool = false
 var is_dead: bool = false
 
 func tick(delta:float) -> void:
-	if body == null or is_dead:
-		return
+	if body == null:
+		return	
 		
 	# gravity:
 	if not body.is_on_floor():
 		body.velocity += body.get_gravity() * delta
+	body.move_and_slide()
 	
+	if is_dead:
+		return
 	
 	if (animation_component.non_loop_animation_playing() or not animation_component.combo_timer.is_stopped()) and body.is_on_floor():
 		body.velocity.x = 0
@@ -33,7 +36,7 @@ func tick(delta:float) -> void:
 		body.velocity.y = jump
 	wants_jump = false
 	
-	body.move_and_slide()
+	
 	
 	
 	
