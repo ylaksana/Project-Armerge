@@ -293,7 +293,7 @@ max_health = 10.0
 hurtbox = NodePath("../HurtboxComponent")
 
 [node name="ComboTimer" type="Timer" parent="." unique_id=695190879]
-wait_time = 0.2
+wait_time = 0.3
 one_shot = true
 
 [node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component", "combo_timer")]

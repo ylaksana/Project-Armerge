@@ -32,7 +32,7 @@ func tick(delta:float) -> void:
 		body.velocity.x = move_toward(body.velocity.x, 0, speed)
 	
 	# jump:
-	if wants_jump and body.is_on_floor():
+	if wants_jump and body.is_on_floor() and not animation_component.is_attacking:
 		body.velocity.y = jump
 	wants_jump = false
 	

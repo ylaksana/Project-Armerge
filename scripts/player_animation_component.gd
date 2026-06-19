@@ -11,6 +11,7 @@ var is_dead: bool = false
 var is_attacking: bool = false
 var is_aerial: bool = false
 var combo_step: int = 0
+var continue_combo: bool = false
 var attack_animations = ["basicattack_1", "basicattack_2"]
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
@@ -65,6 +66,15 @@ func tick(delta: float) -> void:
 	# disable movement if the character is freed or dead
 	if body == null or is_dead:
 		return
+		
+	if movement_component.wants_attack and animated_sprite.animation != attack_animations[-1]:
+		continue_combo = true
+	
+	if is_aerial and is_attacking and body.is_on_floor():
+		is_attacking = false
+		is_aerial = false
+		hitbox.monitoring = false
+		animated_sprite.play("run")
 	
 	# body movement:
 	# move left
@@ -80,7 +90,8 @@ func tick(delta: float) -> void:
 	if body.is_on_floor():
 		if non_loop_animation_playing():
 			return
-		if movement_component.wants_attack:
+		if continue_combo:
+			continue_combo = false
 			attack()
 			
 		elif not combo_timer.is_stopped():
@@ -96,7 +107,8 @@ func tick(delta: float) -> void:
 				animated_sprite.play("run")
 	else:
 		# jump_attack
-		if movement_component.wants_attack:
+		if continue_combo:
+			continue_combo = false
 			attack()
 		elif not non_loop_animation_playing():
 			animated_sprite.play("jump")
