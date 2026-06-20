@@ -12,7 +12,7 @@ var is_attacking: bool = false
 var is_aerial: bool = false
 var combo_step: int = 0
 var continue_combo: bool = false
-var attack_animations = ["basicattack_1", "basicattack_2"]
+var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3"]
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
@@ -52,7 +52,7 @@ func _on_animation_finished() -> void:
 			print("in air")
 			combo_step = 0
 			is_attacking = false
-			animated_sprite.play("idle")
+			animated_sprite.play("jump")
 	
 
 			
@@ -113,7 +113,6 @@ func tick(delta: float) -> void:
 		elif not non_loop_animation_playing():
 			animated_sprite.play("jump")
 
-
 func attack() -> void:
 	combo_timer.stop()
 	hitbox.monitoring = true
@@ -123,9 +122,11 @@ func attack() -> void:
 	if is_aerial:
 		combo_step = 0
 	else:
+		movement_component.animation_based_movement(attack_animations[combo_step])
 		combo_step = (combo_step + 1) % len(attack_animations)
 	
 func _on_combo_timer_timeout() -> void:
+	#body.collision_mask = 3
 	is_attacking = false
 	print("combo timeout!")
 	combo_step = 0

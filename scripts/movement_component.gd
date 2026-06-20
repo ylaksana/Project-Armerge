@@ -12,6 +12,7 @@ var wants_jump : bool = false
 var wants_attack: bool = false
 var is_dead: bool = false
 
+
 func tick(delta:float) -> void:
 	if body == null:
 		return	
@@ -35,6 +36,21 @@ func tick(delta:float) -> void:
 	if wants_jump and body.is_on_floor() and not animation_component.is_attacking:
 		body.velocity.y = jump
 	wants_jump = false
+	
+func animation_based_movement(animation: String) -> void:
+	var direction = 1 if animation_component.animated_sprite.flip_h else -1
+	var tween = create_tween()
+	print("current animation: ", animation)
+	if animation == "basicattack_3":
+		#body.collision_mask = 1
+		animation_component.hitbox.monitoring = false
+		tween.tween_interval(0.2)
+		tween.tween_callback(func(): animation_component.hitbox.monitoring = true)
+		tween.tween_property(body, "velocity:x", speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(body, "velocity:x", 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	elif animation != "basicattack_3":
+		tween.tween_property(body, "velocity:x", speed * 0.3 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(body, "velocity:x", 0.0, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	
 	
 	
