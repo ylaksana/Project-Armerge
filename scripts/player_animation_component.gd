@@ -6,7 +6,6 @@ class_name PlayerAnimationComponent extends Node
 @export var movement_component: MovementComponent
 @export var combo_timer: Timer
 
-var is_jump_attack: bool = false
 var is_dead: bool = false
 var is_attacking: bool = false
 var is_aerial: bool = false

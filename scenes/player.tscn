@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cer4txav2xeaq"]
 
 [ext_resource type="Script" uid="uid://ba350msnig8c5" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Shader" uid="uid://boefkxa7wkin7" path="res://scripts/hit-flash.gdshader" id="2_f1ej7"]
 [ext_resource type="Texture2D" uid="uid://6nnxl7ob4p61" path="res://assets/heroine-idle.png" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://d1ekdragv62op" path="res://assets/heroine-basicattack.png" id="2_tuyoq"]
 [ext_resource type="Texture2D" uid="uid://dgom4w43uhwmq" path="res://assets/heroine-basicattack-2.png" id="3_3v2ag"]
@@ -16,6 +17,11 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oprun"]
+shader = ExtResource("2_f1ej7")
+shader_parameter/hit_flash_color = Color(1, 1, 1, 1)
+shader_parameter/hit_flash_on = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
 atlas = ExtResource("2_tuyoq")
@@ -303,6 +309,7 @@ shape = SubResource("RectangleShape2D_ur7pv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1857588325]
 z_index = 5
+material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"basicattack_3"
@@ -344,16 +351,17 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox") instance=ExtResource("9_ur7pv")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite") instance=ExtResource("9_ur7pv")]
 offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
 max_health = 10.0
 hurtbox = NodePath("../HurtboxComponent")
+animated_sprite = NodePath("../AnimatedSprite2D")
 
 [node name="ComboTimer" type="Timer" parent="." unique_id=695190879]
-wait_time = 0.2
+wait_time = 0.3
 one_shot = true
 
 [node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component", "combo_timer")]
