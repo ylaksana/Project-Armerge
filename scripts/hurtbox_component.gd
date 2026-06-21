@@ -6,8 +6,6 @@ signal hit_received(hitbox: HitboxComponent)
 @export var animated_sprite : AnimatedSprite2D
 @export var is_player: bool = true
 
-
-
 func _ready() -> void:
 	if is_player:
 		collision_layer = 2
@@ -19,7 +17,7 @@ func _ready() -> void:
 func take_hit(hitbox: HitboxComponent) -> void:
 	# emit signal to other components
 	hit_received.emit(hitbox)
-		
+	print("hit: ", body.name)
 
 	
 		

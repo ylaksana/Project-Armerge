@@ -40,7 +40,7 @@ func tick(delta:float) -> void:
 func animation_based_movement(animation: String) -> void:
 	var direction = 1 if animation_component.animated_sprite.flip_h else -1
 	var tween = create_tween()
-	print("current animation: ", animation)
+	#print("current animation: ", animation)
 	if animation == "basicattack_3":
 		#body.collision_mask = 1
 		animation_component.hitbox.monitoring = false

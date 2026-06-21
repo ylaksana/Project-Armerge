@@ -5,7 +5,12 @@ extends Node2D
 
 var button_type = null
 	
+
+func _ready() -> void:
+	print("main menu loaded")
+	
 func _on_start_pressed() -> void:
+	print("pressed start")
 	button_type = "start"
 	scene_transition.show()
 	fade_timer.start()
@@ -24,6 +29,7 @@ func _on_quit_pressed() -> void:
 
 func _on_fade_timer_timeout() -> void:
 	if button_type == "start":
+		print("pressed start after timeout")
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	elif button_type == "options":
 		get_tree().change_scene_to_file("res://scenes/game.tscn")

@@ -293,7 +293,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_smehm"]
-size = Vector2(9.00025, 8.875)
+size = Vector2(10.0005, 8.875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4r1p"]
 size = Vector2(14, 28)
@@ -314,8 +314,6 @@ position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"basicattack_3"
 autoplay = "basicattack_1"
-frame = 7
-frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -340,7 +338,7 @@ body_collision = NodePath("../CollisionShape2D")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
-position = Vector2(-7.499875, -2.5625)
+position = Vector2(-8, -2.5625)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]
@@ -354,7 +352,6 @@ position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
 
 [node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite") instance=ExtResource("9_ur7pv")]
-process_mode = 3
 offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999

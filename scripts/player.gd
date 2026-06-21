@@ -7,7 +7,6 @@ class_name Player extends CharacterBody2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var pause_menu: Control = $"../CanvasLayer/pause_menu"
 @onready var player_animation_component: PlayerAnimationComponent = $PlayerAnimationComponent
-@onready var hit_flash_animation: AnimationPlayer = $HitFlashAnimation
 
 
 func _ready() -> void:

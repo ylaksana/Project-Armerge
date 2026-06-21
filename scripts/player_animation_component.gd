@@ -17,7 +17,8 @@ var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3"]
 func _ready() -> void:
 	animated_sprite.play("idle")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	combo_timer.timeout.connect(_on_combo_timer_timeout)
+	if not combo_timer.timeout.is_connected(_on_combo_timer_timeout):
+		combo_timer.timeout.connect(_on_combo_timer_timeout)
 
 # logic for how animations should behave after finishing
 func _on_animation_finished() -> void:
@@ -30,11 +31,11 @@ func _on_animation_finished() -> void:
 	# combo window
 	if animated_sprite.animation in attack_animations:
 		if body.is_on_floor():
-			print("on ground")
-			print("animation: ",animated_sprite.animation)
+			#print("on ground")
+			#print("animation: ",animated_sprite.animation)
 			if is_aerial:
 				if movement_component.dir != 0.0:
-					print("run after jump attack")
+					#print("run after jump attack")
 					animated_sprite.play("run")
 				else:	
 					animated_sprite.play("idle")
@@ -48,7 +49,7 @@ func _on_animation_finished() -> void:
 				
 		# if in the air, reset combo_step
 		else:
-			print("in air")
+			#print("in air")
 			combo_step = 0
 			is_attacking = false
 			animated_sprite.play("jump")
@@ -127,7 +128,7 @@ func attack() -> void:
 func _on_combo_timer_timeout() -> void:
 	#body.collision_mask = 3
 	is_attacking = false
-	print("combo timeout!")
+	#print("combo timeout!")
 	combo_step = 0
 	if body.is_on_floor():
 		animated_sprite.play("idle")

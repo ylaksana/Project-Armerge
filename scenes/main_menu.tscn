@@ -6,6 +6,10 @@
 [node name="Main Menu" type="Node2D" unique_id=245679627]
 script = ExtResource("1_l6cm7")
 
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2015831329]
+position = Vector2(0, -54)
+zoom = Vector2(5, 5)
+
 [node name="Button_Manager" type="Control" parent="." unique_id=1014272504]
 layout_mode = 3
 anchors_preset = 0
@@ -29,10 +33,6 @@ offset_right = 48.0
 offset_bottom = -77.0
 theme_override_font_sizes/font_size = 8
 text = "Start Game"
-
-[node name="Camera2D" type="Camera2D" parent="Button_Manager/Options" unique_id=2015831329]
-position = Vector2(48, 54)
-zoom = Vector2(5, 5)
 
 [node name="Quit" type="Button" parent="Button_Manager" unique_id=397686761]
 layout_mode = 0
