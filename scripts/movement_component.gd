@@ -44,7 +44,7 @@ func animation_based_movement(animation: String) -> void:
 	if animation == "basicattack_3":
 		#body.collision_mask = 1
 		animation_component.hitbox.monitoring = false
-		tween.tween_interval(0.2)
+		tween.tween_interval(0.3)
 		tween.tween_callback(func(): animation_component.hitbox.monitoring = true)
 		tween.tween_property(body, "velocity:x", speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(body, "velocity:x", 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

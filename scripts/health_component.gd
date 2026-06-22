@@ -53,11 +53,6 @@ func damage(hitbox: HitboxComponent) -> void:
 	#print("Damage taken!")
 	curr_health = clamp(curr_health - hitbox.damage, 0.0, max_health)
 	
-	# hitstop
-	get_tree().paused = true
-	await get_tree().create_timer(0.1, true).timeout
-	get_tree().paused = false
-	
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
 	await get_tree().create_timer(0.05, true, false, true).timeout
 	animated_sprite.material.set_shader_parameter("hit_flash_on", false)

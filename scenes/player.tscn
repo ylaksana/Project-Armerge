@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="9_ur7pv"]
 [ext_resource type="Script" uid="uid://c2afocq0flruh" path="res://scripts/player_animation_component.gd" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="15_oprun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -62,10 +63,6 @@ region = Rect2(96, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_31cv2"]
 atlas = ExtResource("3_3v2ag")
 region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pf23h"]
-atlas = ExtResource("3_3v2ag")
-region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fulsm"]
 atlas = ExtResource("4_jej6c")
@@ -192,9 +189,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_31cv2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pf23h")
 }],
 "loop": false,
 "name": &"basicattack_2",
@@ -312,10 +306,8 @@ z_index = 5
 material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"basicattack_3"
+animation = &"basicattack_2"
 autoplay = "basicattack_1"
-frame = 7
-frame_progress = 1.0
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -375,6 +367,12 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 movement_component = NodePath("../MovementComponent")
 combo_timer = NodePath("../ComboTimer")
 metadata/_custom_type_script = "uid://c2afocq0flruh"
+
+[node name="HitstopManager" type="Node" parent="." unique_id=1326356034 node_paths=PackedStringArray("animated_sprite", "hurtbox")]
+script = ExtResource("15_oprun")
+animated_sprite = NodePath("../AnimatedSprite2D")
+hurtbox = NodePath("../HurtboxComponent")
+metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 
 [connection signal="timeout" from="ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="timeout" from="ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]

@@ -6,6 +6,7 @@ signal hit_received(hitbox: HitboxComponent)
 @export var animated_sprite : AnimatedSprite2D
 @export var is_player: bool = true
 
+
 func _ready() -> void:
 	if is_player:
 		collision_layer = 2

@@ -44,13 +44,6 @@ func pause() -> void:
 	print(get_tree().paused)
 	animation_player.play("blur")
 	
-#func esc() -> void:
-	#if wants_pause: 
-		#if get_tree().paused == false:
-			#pause()
-		#else:
-			#resume()
-	
 
 func _on_resume_pressed() -> void:
 	resume()

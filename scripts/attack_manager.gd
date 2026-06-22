@@ -1,0 +1,1 @@
+class_name attack_manager extends Node
