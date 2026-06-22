@@ -8,12 +8,16 @@ signal hit(hurtbox)
 @export var animated_sprite: AnimatedSprite2D
 @export var body: CharacterBody2D
 @export var body_collision: CollisionShape2D
+@export var attacks: Array[AttackData]
+
 
 var damage = 5
 var hitbox_shape: CollisionShape2D
 var hitbox_position: float
 var hitbox_offset: float
 var collision_position : float
+var curr_atk: AttackData
+var has_hit: bool = false
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
@@ -47,6 +51,8 @@ func _ready() -> void:
 		collision_layer = 4
 		collision_mask = 2
 	area_entered.connect(_on_area_entered)
+	animated_sprite.frame_changed.connect(_on_frame_changed)
+	area_exited.connect(_on_area_exited)
 	
 func tick(delta: float) -> void:
 	if body == null:
@@ -65,7 +71,31 @@ func tick(delta: float) -> void:
 				#print(hitbox_shape.position.x)
 
 func _on_area_entered(area):
-	if area is HurtboxComponent:
-		#monitoring = true
+	if area is HurtboxComponent and not has_hit:
+		has_hit = true
+		if curr_atk:
+			damage = curr_atk.damage
 		area.take_hit(self)
 		hit.emit(area)
+		
+func _on_area_exited(area):
+	print("curr_atk = ", curr_atk)
+	if area is HurtboxComponent and curr_atk == null:
+		has_hit = false
+
+func set_curr_atk(animation_name: String) -> void:
+	curr_atk = null
+	monitoring = false
+	has_hit = false
+	curr_atk = attacks.filter(func(atk): return atk.animation_name == animation_name).front()
+	_on_frame_changed()
+	print("curr_atk set to: ", curr_atk)
+	
+func _on_frame_changed() -> void:
+	if curr_atk == null:
+		return
+	print("frame: ", animated_sprite.frame, " active_frames: ", curr_atk.active_frames)
+	if animated_sprite.frame in curr_atk.active_frames:
+		monitoring = true
+	else:
+		monitoring =  false

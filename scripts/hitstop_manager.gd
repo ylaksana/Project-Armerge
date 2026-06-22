@@ -2,6 +2,7 @@ class_name HitstopManager extends Node
 
 @export var animated_sprite: AnimatedSprite2D
 @export var hurtbox: HurtboxComponent
+@export var health_component: HealthComponent
 
 var attack_pairs = {
 		"basicattack_1": "light",
@@ -11,28 +12,53 @@ var attack_pairs = {
 	
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit)
-
+	
 func light_hit() -> void:
-	get_tree().paused = true
-	await get_tree().create_timer(0.1, true).timeout
-	get_tree().paused = false
+	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
+	get_tree().create_timer(0.1, true, false, true).timeout.connect(
+		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
+	)
+	#get_tree().paused = true
+	#await get_tree().create_timer(0.05, true).timeout
+	#get_tree().paused = false
 	
 func medium_hit() -> void:
-	pass
+	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
+	await get_tree().create_timer(0.15, true, false, true).timeout
+	animated_sprite.material.set_shader_parameter("hit_flash_on", false)
+	get_tree().paused = true
+	await get_tree().create_timer(0.15, true).timeout
+	get_tree().paused = false
+	
+	
+func heavy_hit() -> void:
+	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
+	get_tree().create_timer(0.2, true, false, true).timeout.connect(
+		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
+	)
 	get_tree().paused = true
 	await get_tree().create_timer(0.2, true).timeout
 	get_tree().paused = false
 	
-func heavy_hit() -> void:
-	get_tree().paused = true
-	await get_tree().create_timer(0.3, true).timeout
-	get_tree().paused = false
+func on_death() -> void:
+	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
+	get_tree().create_timer(0.4, true, false, true).timeout.connect(
+		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
+	)
 	
-func _on_hit(hitbox: HitboxComponent) -> void:
+func _on_hit(hitbox: HitboxComponent, right_hit: bool) -> void:
 	var attack_type: String = attack_pairs.get(hitbox.animated_sprite.animation, "")
-	if attack_type == "light":
-		light_hit()
-	elif attack_type == "medium":
-		medium_hit()
-	elif attack_type == "heavy":
-		heavy_hit()
+	print(animated_sprite.animation, ": ", attack_type)
+	if health_component.curr_health > 0:
+		if attack_type == "light":
+			light_hit()
+		elif attack_type == "medium":
+			medium_hit()
+		elif attack_type == "heavy":
+			heavy_hit()
+	else:
+		("on death")
+		on_death()
+		
+
+		

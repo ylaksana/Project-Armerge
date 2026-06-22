@@ -20,6 +20,8 @@ func _physics_process(delta: float) -> void:
 	
 func _on_died() -> void:
 	died.emit()
+	await get_tree().create_timer(0.35, true).timeout
 	queue_free()
+
 	
 	

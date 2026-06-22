@@ -49,17 +49,15 @@ func change_value(new_value: float) -> void:
 func _emit() -> void:
 	health_changed.emit(curr_health, max_health)
 	
-func damage(hitbox: HitboxComponent) -> void:
+func damage(hitbox: HitboxComponent, right_hit: bool) -> void:
 	#print("Damage taken!")
 	curr_health = clamp(curr_health - hitbox.damage, 0.0, max_health)
-	
-	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
-	await get_tree().create_timer(0.05, true, false, true).timeout
-	animated_sprite.material.set_shader_parameter("hit_flash_on", false)
 	_emit()
 	change_value(curr_health)
+	print("curr_health: ", curr_health)
 	if curr_health == 0.0:
 		if is_player:
+			("player is dead")
 			died.emit()
 		else:
 			enemy_died.emit()

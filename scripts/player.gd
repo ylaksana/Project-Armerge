@@ -24,6 +24,7 @@ func _physics_process(delta: float) -> void:
 	hitbox_component.tick(delta)
 
 func _on_died() -> void:
+	self.collision_layer = 0
 	self.collision_mask = 1
 	var tween = create_tween()
 	tween.tween_property(self, "velocity:x", 0.0, 0.4).set_trans(Tween.TRANS_SINE)

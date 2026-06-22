@@ -20,6 +20,9 @@ func _on_enemy_died() -> void:
 	points += 1
 	if points > 0: 
 		_on_victory()
+		get_tree().paused = true
+		await get_tree().create_timer(0.2, true).timeout
+		get_tree().paused = false
 		
 func _on_victory() -> void:
 	#print("Victory")

@@ -12,7 +12,7 @@ func _ready()->void:
 func non_loop_animation_playing() -> bool:
 	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)
 
-func hit(hitbox: HitboxComponent) -> void:
+func hit(hitbox: HitboxComponent, right_hit: bool) -> void:
 		hurt = true
 		
 func tick(delta: float):

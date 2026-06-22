@@ -20,9 +20,9 @@ func tick(delta: float):
 	body.move_and_slide()
 
 
-func _on_hit_received(hitbox: HitboxComponent) -> void:
+func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
-		var direction = -1 if animated_sprite.flip_h else 1
+		var direction = -1 if right_hit else 1
 		var tween = create_tween()
 		tween.tween_property(body, "velocity:x", speed * direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="5_qwg2f"]
 [ext_resource type="Script" uid="uid://bjpplap8y0tb" path="res://scripts/enemy_animation_component.gd" id="7_c7r63"]
 [ext_resource type="Script" uid="uid://c5x432goybt7o" path="res://scripts/enemy_movement_component.gd" id="8_oq36r"]
+[ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="10_20u0h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -203,7 +204,6 @@ offset_left = -9.0
 offset_top = -13.0
 offset_right = 85.99999
 offset_bottom = -2.9999924
-max_health = 40.0
 hurtbox = NodePath("../HurtboxComponent")
 is_player = false
 animated_sprite = NodePath("../AnimatedSprite2D")
@@ -225,3 +225,10 @@ metadata/_custom_type_script = "uid://c5x432goybt7o"
 
 [node name="HitFlashAnimation" type="AnimationPlayer" parent="." unique_id=1694868199]
 libraries/ = SubResource("AnimationLibrary_c7a4h")
+
+[node name="HitstopManager" type="Node" parent="." unique_id=857337705 node_paths=PackedStringArray("animated_sprite", "hurtbox", "health_component")]
+script = ExtResource("10_20u0h")
+animated_sprite = NodePath("../AnimatedSprite2D")
+hurtbox = NodePath("../HurtboxComponent")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
