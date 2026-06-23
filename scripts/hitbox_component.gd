@@ -10,7 +10,6 @@ signal hit(hurtbox)
 @export var body_collision: CollisionShape2D
 @export var attacks: Array[AttackData]
 
-
 var damage = 5
 var hitbox_shape: CollisionShape2D
 var hitbox_position: float

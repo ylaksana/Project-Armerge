@@ -7,4 +7,5 @@ script = ExtResource("1_ovcfx")
 animation_name = "basicattack_3"
 active_frames = Array[int]([3, 4, 5])
 damage = 5.0
+attack_weight = "heavy"
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

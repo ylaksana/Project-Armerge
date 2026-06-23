@@ -4,12 +4,6 @@ class_name HitstopManager extends Node
 @export var hurtbox: HurtboxComponent
 @export var health_component: HealthComponent
 
-var attack_pairs = {
-		"basicattack_1": "light",
-		"basicattack_2": "light",
-		"basicattack_3": "light"
-	}
-	
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit)
 	
@@ -18,9 +12,9 @@ func light_hit() -> void:
 	get_tree().create_timer(0.1, true, false, true).timeout.connect(
 		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
 	)
-	#get_tree().paused = true
-	#await get_tree().create_timer(0.05, true).timeout
-	#get_tree().paused = false
+	get_tree().paused = true
+	await get_tree().create_timer(0.05, true).timeout
+	get_tree().paused = false
 	
 func medium_hit() -> void:
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
@@ -47,18 +41,19 @@ func on_death() -> void:
 	)
 	
 func _on_hit(hitbox: HitboxComponent, right_hit: bool) -> void:
-	var attack_type: String = attack_pairs.get(hitbox.animated_sprite.animation, "")
-	print(animated_sprite.animation, ": ", attack_type)
-	if health_component.curr_health > 0:
-		if attack_type == "light":
-			light_hit()
-		elif attack_type == "medium":
-			medium_hit()
-		elif attack_type == "heavy":
-			heavy_hit()
+	var attack_type: String
+	if hitbox.curr_atk != null:
+		attack_type = hitbox.curr_atk.attack_weight
 	else:
-		("on death")
-		on_death()
+		attack_type = "light"
+	print(animated_sprite.animation, ": ", attack_type)
+	
+	if attack_type == "light":
+		light_hit()
+	elif attack_type == "medium":
+		medium_hit()
+	elif attack_type == "heavy":
+		heavy_hit()
 		
 
 		

@@ -31,6 +31,7 @@ func _on_died() -> void:
 	player_animation_component.animated_sprite.play("death")
 	player_animation_component.is_dead = true
 	movement_component.is_dead = true
+	hitbox_component.curr_atk = null
 	health_component.reset_scene_timer.start()
 	health_component.reset_scene_timer.timeout.connect(_on_timer_timeout)
 
