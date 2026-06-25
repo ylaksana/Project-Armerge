@@ -11,7 +11,7 @@ var is_attacking: bool = false
 var is_aerial: bool = false
 var combo_step: int = 0
 var continue_combo: bool = false
-var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3"]
+var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3", "basicattack_4"]
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:

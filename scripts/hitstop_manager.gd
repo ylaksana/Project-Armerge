@@ -13,25 +13,25 @@ func light_hit() -> void:
 		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
 	)
 	get_tree().paused = true
-	await get_tree().create_timer(0.05, true).timeout
+	await get_tree().create_timer(0.01, true).timeout
 	get_tree().paused = false
 	
 func medium_hit() -> void:
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
-	await get_tree().create_timer(0.15, true, false, true).timeout
+	await get_tree().create_timer(0.1, true, false, true).timeout
 	animated_sprite.material.set_shader_parameter("hit_flash_on", false)
 	get_tree().paused = true
-	await get_tree().create_timer(0.15, true).timeout
+	await get_tree().create_timer(0.05, true).timeout
 	get_tree().paused = false
 	
 	
 func heavy_hit() -> void:
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
-	get_tree().create_timer(0.2, true, false, true).timeout.connect(
+	get_tree().create_timer(0.25, true, false, true).timeout.connect(
 		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
 	)
 	get_tree().paused = true
-	await get_tree().create_timer(0.2, true).timeout
+	await get_tree().create_timer(0.15, true).timeout
 	get_tree().paused = false
 	
 func on_death() -> void:

@@ -5,7 +5,7 @@ class_name EnemyAnimationComponent extends Node
 @export var hurtbox: HurtboxComponent
 var hurt : bool = false
 
-func _ready()->void:
+func _ready() -> void:
 	hurtbox.hit_received.connect(hit)
 	
 # return whether the animated sprite playing doesn't have a loop

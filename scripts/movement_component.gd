@@ -42,11 +42,14 @@ func animation_based_movement(animation: String) -> void:
 	var tween = create_tween()
 	#print("current animation: ", animation)
 	if animation == "basicattack_3":
-		tween.tween_interval(0.3)
-		tween.tween_callback(func(): animation_component.hitbox.monitoring = true)
-		tween.tween_property(body, "velocity:x", speed * 2 * direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_interval(0.2)
+		tween.tween_property(body, "velocity:x", speed * 2 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	elif animation != "basicattack_3":
+	elif animation == "basicattack_4":
+		tween.tween_interval(0.2)
+		tween.tween_property(body, "velocity:x", speed * 3 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	else:
 		tween.tween_property(body, "velocity:x", speed * 0.3 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		tween.tween_property(body, "velocity:x", 0.0, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	

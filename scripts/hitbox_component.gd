@@ -1,6 +1,6 @@
 class_name HitboxComponent extends Area2D
 
-signal hit(hurtbox)
+signal hit(hurtbox, vfx_position: float)
 
 @export var is_player: bool = true
 @export var movement_component : MovementComponent

@@ -7,6 +7,7 @@ class_name EnemyMovementComponent extends Node
 @export var speed: float = 150.0
 @export var jump = 6.0
 @export var gravity_multiplier = 3.0
+@export var hit_vfx: PackedScene
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
@@ -22,7 +23,22 @@ func tick(delta: float):
 
 func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
+		if hit_vfx:
+			var position = hurtbox.global_position
+			var vfx = hit_vfx.instantiate()
+			get_tree().root.add_child(vfx)
+			vfx.global_position = position
+			
 		var direction = -1 if right_hit else 1
 		var tween = create_tween()
-		tween.tween_property(body, "velocity:x", speed * direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		if hitbox.curr_atk.animation_name == "basicattack_4":
+			tween.tween_property(body, "velocity:x", speed * 2 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween.parallel().tween_property(body, "velocity:y", -speed * 0.5, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		else:
+			tween.tween_property(body, "velocity:x", speed * direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		
+		
+		
+		
