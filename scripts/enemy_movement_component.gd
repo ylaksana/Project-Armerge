@@ -54,6 +54,7 @@ func tick(delta: float):
 		wander()
 		change_direction()
 	else:
+		chase()
 		body.move_and_slide()
 	
 func wander():
@@ -91,13 +92,13 @@ func change_direction():
 	if curr_state == State.WANDER:
 		if animated_sprite.flip_h:
 			if body.position.x <= right_bounds.x:
-				direction = Vector2(-1,0)
+				direction = Vector2(1,0)
 			else:
 				animated_sprite.flip_h = false
 				raycast.target_position = Vector2(-125,0)
 		else:
 			if body.position.x >= left_bounds.x:
-				direction = Vector2(1,0)
+				direction = Vector2(-1,0)
 			else:
 				animated_sprite.flip_h = true
 				raycast.target_position = Vector2(125,0)

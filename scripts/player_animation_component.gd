@@ -35,7 +35,6 @@ func _on_animation_finished() -> void:
 				if movement_component.dir != 0.0:
 					#print("run after jump attack")
 					animated_sprite.play("run")
-					
 				else:	
 					animated_sprite.play("idle")
 				_on_combo_timer_timeout()
@@ -67,13 +66,14 @@ func tick(delta: float) -> void:
 	if body == null or is_dead:
 		return
 		
+	print(hitbox.monitoring)
+		
 	if movement_component.wants_attack and animated_sprite.animation != attack_animations[-1]:
 		continue_combo = true
 	
 	if is_aerial and is_attacking and body.is_on_floor():
-		is_attacking = false
 		is_aerial = false
-		hitbox.curr_atk = null
+		_on_combo_timer_timeout()
 		animated_sprite.play("run")
 	
 	# body movement:
@@ -128,6 +128,7 @@ func _on_combo_timer_timeout() -> void:
 	#body.collision_mask = 3
 	is_attacking = false
 	hitbox.curr_atk = null
+	hitbox.monitoring = false
 	#print("combo timeout!")
 	combo_step = 0
 	if body.is_on_floor():
