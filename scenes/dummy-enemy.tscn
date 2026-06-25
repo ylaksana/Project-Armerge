@@ -175,6 +175,10 @@ position = Vector2(1, -5)
 sprite_frames = SubResource("SpriteFrames_mi5jg")
 animation = &"hurt"
 
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D" unique_id=1669904676]
+position = Vector2(-1, 10)
+target_position = Vector2(-125, 0)
+
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433 node_paths=PackedStringArray("animated_sprite", "body", "body_collision")]
 collision_mask = 2
 script = ExtResource("2_a7g1i")
@@ -217,12 +221,14 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 hurtbox = NodePath("../HurtboxComponent")
 metadata/_custom_type_script = "uid://bjpplap8y0tb"
 
-[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "enemy_animation_component", "hurtbox")]
+[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "enemy_animation_component", "hurtbox", "raycast", "raycast_timer")]
 script = ExtResource("8_oq36r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 enemy_animation_component = NodePath("../EnemyAnimationComponent")
 hurtbox = NodePath("../HurtboxComponent")
+raycast = NodePath("../AnimatedSprite2D/RayCast2D")
+raycast_timer = NodePath("../RaycastTimer")
 hit_vfx = ExtResource("10_4os1g")
 metadata/_custom_type_script = "uid://c5x432goybt7o"
 
@@ -235,3 +241,9 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 hurtbox = NodePath("../HurtboxComponent")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
+
+[node name="RaycastTimer" type="Timer" parent="." unique_id=274615750]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]

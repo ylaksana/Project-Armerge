@@ -8,4 +8,5 @@ animation_name = "basicattack_1"
 active_frames = Array[int]([3])
 damage = 5.0
 attack_weight = "light"
+lunge_speed = 0.3
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

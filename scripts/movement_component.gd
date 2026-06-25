@@ -37,23 +37,9 @@ func tick(delta:float) -> void:
 		body.velocity.y = jump
 	wants_jump = false
 	
-func animation_based_movement(animation: String) -> void:
-	var direction = 1 if animation_component.animated_sprite.flip_h else -1
+func animation_based_movement() -> void:
+	var direction = 1 if animated_sprite.flip_h else -1
 	var tween = create_tween()
-	#print("current animation: ", animation)
-	if animation == "basicattack_3":
-		tween.tween_interval(0.2)
-		tween.tween_property(body, "velocity:x", speed * 2 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	elif animation == "basicattack_4":
-		tween.tween_interval(0.2)
-		tween.tween_property(body, "velocity:x", speed * 3 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	else:
-		tween.tween_property(body, "velocity:x", speed * 0.3 * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(body, "velocity:x", 0.0, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	
-	
-	
-	
-	
+	tween.tween_interval(animation_component.hitbox.curr_atk.tween_delay)
+	tween.tween_property(body, "velocity:x", speed * animation_component.hitbox.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

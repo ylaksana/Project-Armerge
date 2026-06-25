@@ -7,4 +7,6 @@ script = ExtResource("1_8p50k")
 animation_name = "basicattack_4"
 active_frames = Array[int]([5, 6])
 attack_weight = "heavy"
+lunge_speed = 3.0
+tween_delay = 0.2
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

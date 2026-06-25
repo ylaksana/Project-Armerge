@@ -19,11 +19,3 @@ func take_hit(hitbox: HitboxComponent) -> void:
 	# emit signal to other components
 	hit_received.emit(hitbox, right_hit)
 	print("hit: ", body.name)
-
-	
-		
-	
-		
-	
-	
-	

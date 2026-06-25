@@ -1,7 +1,8 @@
-extends CharacterBody2D
+class_name Enemy extends CharacterBody2D
 
 signal died
 
+@export var player: Player
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var enemy_animation_component: EnemyAnimationComponent = $EnemyAnimationComponent
@@ -15,6 +16,7 @@ func _physics_process(delta: float) -> void:
 	hitbox_component.tick(delta)
 	enemy_animation_component.tick(delta)
 	enemy_movement_component.tick(delta)
+	
 	
 	
 	

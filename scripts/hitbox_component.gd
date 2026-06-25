@@ -93,7 +93,7 @@ func set_curr_atk(animation_name: String) -> void:
 func _on_frame_changed() -> void:
 	if curr_atk == null:
 		return
-	print("frame: ", animated_sprite.frame, " active_frames: ", curr_atk.active_frames)
+	#print("frame: ", animated_sprite.frame, " active_frames: ", curr_atk.active_frames)
 	if animated_sprite.frame in curr_atk.active_frames:
 		monitoring = true
 	else:

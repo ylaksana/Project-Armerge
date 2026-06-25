@@ -4,3 +4,5 @@ class_name AttackData extends Resource
 @export var active_frames: Array[int]
 @export var damage: float = 10.0
 @export var attack_weight: String
+@export var lunge_speed: float
+@export var tween_delay: float = 0.0

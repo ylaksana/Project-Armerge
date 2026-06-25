@@ -120,7 +120,7 @@ func attack() -> void:
 	if is_aerial:
 		combo_step = 0
 	else:
-		movement_component.animation_based_movement(attack_animations[combo_step]) 
+		movement_component.animation_based_movement() 
 		combo_step = (combo_step + 1) % len(attack_animations)
 	
 func _on_combo_timer_timeout() -> void:
