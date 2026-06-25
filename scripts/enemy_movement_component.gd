@@ -3,7 +3,6 @@ class_name EnemyMovementComponent extends Node
 # nodes
 @export var body: Enemy
 @export var animated_sprite: AnimatedSprite2D
-@export var enemy_animation_component: EnemyAnimationComponent
 @export var hurtbox: HurtboxComponent
 @export var raycast: RayCast2D
 @export var raycast_timer: Timer
@@ -48,14 +47,25 @@ func tick(delta: float):
 	# always affects the enemy
 	gravity(delta)
 	
+	# turn around if hitting wall
+	if body.is_on_wall():
+		animated_sprite.flip_h = not animated_sprite.flip_h
+		direction *= -1
+		if direction.x == 1:
+			raycast.target_position = Vector2(125,0)
+		else:
+			raycast.target_position = Vector2(-125,0)
+			
 	# AI resumes if not hit
 	if not is_stunned:
 		movement(delta)
 		wander()
 		change_direction()
 	else:
+		# AI will notice you when hit
 		chase()
 		body.move_and_slide()
+		
 	
 func wander():
 	if raycast.is_colliding():
@@ -106,12 +116,12 @@ func change_direction():
 	else:
 		direction = (body.player.position - body.position).normalized()
 		direction = sign(direction)
-	if direction.x == 1:
-		animated_sprite.flip_h = true
-		raycast.target_position = Vector2(125,0)
-	else:
-		animated_sprite.flip_h = false
-		raycast.target_position = Vector2(-125,0)
+		if direction.x == 1:
+			animated_sprite.flip_h = true
+			raycast.target_position = Vector2(125,0)
+		else:
+			animated_sprite.flip_h = false
+			raycast.target_position = Vector2(-125,0)
 
 
 func _on_raycast_timer_timeout() -> void:

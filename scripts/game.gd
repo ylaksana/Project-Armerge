@@ -16,7 +16,7 @@ func _ready():
 		enemy.died.connect(_on_enemy_died)
 		
 func _on_enemy_died() -> void:
-	#print("Enemy slain!")
+	print("Enemy slain!")
 	total_enemies -= 1
 	if total_enemies == 0: 
 		_on_victory()

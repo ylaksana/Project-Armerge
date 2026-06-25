@@ -43,8 +43,7 @@ func _on_animation_finished() -> void:
 					combo_timer.start()
 				else:
 					_on_combo_timer_timeout()
-				
-				
+	
 		# if in the air, reset combo_step
 		else:
 			#print("in air")
@@ -52,9 +51,6 @@ func _on_animation_finished() -> void:
 			hitbox.curr_atk = null
 			is_attacking = false
 			animated_sprite.play("jump")
-	
-
-			
 
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
@@ -65,8 +61,6 @@ func tick(delta: float) -> void:
 	# disable movement if the character is freed or dead
 	if body == null or is_dead:
 		return
-		
-	print(hitbox.monitoring)
 		
 	if movement_component.wants_attack and animated_sprite.animation != attack_animations[-1]:
 		continue_combo = true

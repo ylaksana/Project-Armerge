@@ -222,11 +222,10 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 hurtbox = NodePath("../HurtboxComponent")
 metadata/_custom_type_script = "uid://bjpplap8y0tb"
 
-[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "enemy_animation_component", "hurtbox", "raycast", "raycast_timer")]
+[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "hurtbox", "raycast", "raycast_timer")]
 script = ExtResource("8_oq36r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
-enemy_animation_component = NodePath("../EnemyAnimationComponent")
 hurtbox = NodePath("../HurtboxComponent")
 raycast = NodePath("../AnimatedSprite2D/RayCast2D")
 raycast_timer = NodePath("../RaycastTimer")
@@ -244,7 +243,7 @@ health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 
 [node name="RaycastTimer" type="Timer" parent="." unique_id=274615750]
-wait_time = 10.0
+wait_time = 3.0
 one_shot = true
 
 [connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]

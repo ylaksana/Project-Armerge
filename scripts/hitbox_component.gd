@@ -16,7 +16,7 @@ var hitbox_position: float
 var hitbox_offset: float
 var collision_position : float
 var curr_atk: AttackData
-#var has_hit: bool = false
+var has_hit: bool = false
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
@@ -71,7 +71,7 @@ func tick(delta: float) -> void:
 
 func _on_area_entered(area):
 	if area is HurtboxComponent:
-		#has_hit = true
+		has_hit = true
 		if curr_atk:
 			damage = curr_atk.damage
 		area.take_hit(self)
@@ -80,8 +80,9 @@ func _on_area_entered(area):
 func _on_area_exited(area):
 	print("curr_atk = ", curr_atk)
 	if area is HurtboxComponent and curr_atk == null:
+		set_deferred("monitoring", false)
 		await get_tree().create_timer(0.5, true).timeout
-		#has_hit = false
+		set_deferred("monitoring", true)
 
 func set_curr_atk(animation_name: String) -> void:
 	curr_atk = null

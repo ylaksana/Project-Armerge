@@ -38,9 +38,11 @@ func tick(delta:float) -> void:
 	wants_jump = false
 	
 func animation_based_movement() -> void:
+	if not body.is_on_floor():
+		return
+		
 	var direction = 1 if animated_sprite.flip_h else -1
 	var tween = create_tween()
-	if body.is_on_floor():
-		tween.tween_interval(animation_component.hitbox.curr_atk.tween_delay)
-		tween.tween_property(body, "velocity:x", speed * animation_component.hitbox.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_interval(animation_component.hitbox.curr_atk.tween_delay)
+	tween.tween_property(body, "velocity:x", speed * animation_component.hitbox.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
