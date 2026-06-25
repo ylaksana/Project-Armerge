@@ -7,7 +7,6 @@ class_name EnemyMovementComponent extends Node
 @export var hurtbox: HurtboxComponent
 @export var raycast: RayCast2D
 @export var raycast_timer: Timer
-#@export var detection_component: DetectionComponent
 
 # parameters
 @export var knockback_speed: float = 150.0
@@ -16,6 +15,7 @@ class_name EnemyMovementComponent extends Node
 @export var jump: float = 6.0
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
+@export var stun_duration: float = 0.5
 
 # vfx
 @export var hit_vfx: PackedScene
@@ -32,23 +32,29 @@ var direction: Vector2
 var right_bounds: Vector2
 var left_bounds: Vector2
 var curr_state = State.WANDER
-var is_hit: bool = false
+var is_stunned: bool = false
+var knockback_tween: Tween
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
 	left_bounds = body.position + Vector2(-125,0)
 	right_bounds = body.position + Vector2(125,0)
-	#detection_component.detect.connect(_on_detect)
 
 func tick(delta: float):
-	if body == null:
+	if body == null or body.player.health_component.curr_health <= 0:
+		body.hitbox_component.monitoring = false
 		return
 	
-	if not is_hit:
+	# always affects the enemy
+	gravity(delta)
+	
+	# AI resumes if not hit
+	if not is_stunned:
 		movement(delta)
-		gravity(delta)
 		wander()
 		change_direction()
+	else:
+		body.move_and_slide()
 	
 func wander():
 	if raycast.is_colliding():
@@ -113,26 +119,34 @@ func _on_raycast_timer_timeout() -> void:
 	
 func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
-		is_hit = false
+		is_stunned = true
 		if hit_vfx:
 			var position = hurtbox.global_position
 			var vfx = hit_vfx.instantiate()
 			get_tree().root.add_child(vfx)
 			vfx.global_position = position
 			
-		var hit_direction = -1 if right_hit else 1
-		var tween = create_tween()
-		
-		# knockback
-		if hitbox.curr_atk.attack_weight == "light":
-			tween.tween_property(body, "velocity:x", knockback_speed * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		elif hitbox.curr_atk.attack_weight == "medium":
-			print(hitbox.curr_atk.attack_weight)
-			tween.tween_property(body, "velocity:x", knockback_speed * 1.5 * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-		elif hitbox.curr_atk.attack_weight == "heavy":
-			print(hitbox.curr_atk.attack_weight)
-			tween.tween_property(body, "velocity:x", knockback_speed * 2 * hit_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			tween.parallel().tween_property(body, "velocity:y", -speed * 0.5, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-			tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+		if hitbox.curr_atk:
+			var hit_direction = -1 if right_hit else 1
+			if knockback_tween:
+				knockback_tween.kill()
+			knockback_tween = create_tween()
+			# knockback
+			if hitbox.curr_atk.attack_weight == "light":
+				print("attack weight = ",hitbox.curr_atk.attack_weight)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			elif hitbox.curr_atk.attack_weight == "medium":
+				print("attack weight = ",hitbox.curr_atk.attack_weight)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * 1.5 * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			elif hitbox.curr_atk.attack_weight == "heavy":
+				print("attack weight = ",hitbox.curr_atk.attack_weight)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * 2 * hit_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				knockback_tween.parallel().tween_property(body, "velocity:y", -speed * 0.5, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+			knockback_tween.tween_interval(stun_duration)
+			knockback_tween.finished.connect(can_move)
+
+func can_move() -> void:
+	is_stunned = false

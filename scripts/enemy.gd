@@ -17,13 +17,7 @@ func _physics_process(delta: float) -> void:
 	enemy_animation_component.tick(delta)
 	enemy_movement_component.tick(delta)
 	
-	
-	
-	
 func _on_died() -> void:
 	died.emit()
 	await get_tree().create_timer(0.35, true).timeout
 	queue_free()
-
-	
-	

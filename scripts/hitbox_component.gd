@@ -80,6 +80,7 @@ func _on_area_entered(area):
 func _on_area_exited(area):
 	print("curr_atk = ", curr_atk)
 	if area is HurtboxComponent and curr_atk == null:
+		await get_tree().create_timer(0.5, true).timeout
 		has_hit = false
 
 func set_curr_atk(animation_name: String) -> void:
