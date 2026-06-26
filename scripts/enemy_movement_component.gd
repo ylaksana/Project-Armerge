@@ -7,6 +7,8 @@ class_name EnemyMovementComponent extends Node
 @export var raycast_timer: Timer
 @export var front_raycast: RayCast2D
 @export var rear_raycast: RayCast2D
+@export var front_raycast_len: float = 125
+@export var rear_raycast_len: float = 50
 
 # parameters
 @export var knockback_speed: float = 150.0
@@ -106,38 +108,38 @@ func change_direction():
 			animated_sprite.flip_h = not animated_sprite.flip_h
 			direction *= -1
 			if direction.x == 1:
-				front_raycast.target_position = Vector2(125,0)
-				rear_raycast.target_position = Vector2(-50,0)
+				front_raycast.target_position = Vector2(front_raycast_len,0)
+				rear_raycast.target_position = Vector2(-rear_raycast_len,0)
 			else:
-				front_raycast.target_position = Vector2(-125,0)
+				front_raycast.target_position = Vector2(-front_raycast_len,0)
 				
 		elif animated_sprite.flip_h:
 			if body.position.x <= right_bounds.x:
 				direction = Vector2(1,0)
 			else:
 				animated_sprite.flip_h = false
-				front_raycast.target_position = Vector2(-125,0)
-				rear_raycast.target_position = Vector2(50,0)
+				front_raycast.target_position = Vector2(-front_raycast_len,0)
+				rear_raycast.target_position = Vector2(rear_raycast_len,0)
 		else:
 			if body.position.x >= left_bounds.x:
 				direction = Vector2(-1,0)
 			else:
 				animated_sprite.flip_h = true
-				front_raycast.target_position = Vector2(125,0)
-				rear_raycast.target_position = Vector2(-50,0)
+				front_raycast.target_position = Vector2(front_raycast_len,0)
+				rear_raycast.target_position = Vector2(-rear_raycast_len,0)
 	# chase		
 	else:
 		direction = (body.player.position - body.position).normalized()
 		direction = sign(direction)
 		if direction.x == 1:
 			animated_sprite.flip_h = true
-			front_raycast.target_position = Vector2(125,0)
-			rear_raycast.target_position = Vector2(-50,0)
+			front_raycast.target_position = Vector2(front_raycast_len,0)
+			rear_raycast.target_position = Vector2(-rear_raycast_len,0)
 			
 		else:
 			animated_sprite.flip_h = false
-			front_raycast.target_position = Vector2(-125,0)
-			rear_raycast.target_position = Vector2(50,0)
+			front_raycast.target_position = Vector2(-front_raycast_len,0)
+			rear_raycast.target_position = Vector2(rear_raycast_len,0)
 
 
 func _on_raycast_timer_timeout() -> void:
