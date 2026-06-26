@@ -454,7 +454,7 @@ offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
-max_health = 10.0
+max_health = 1000.0
 hurtbox = NodePath("../HurtboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 

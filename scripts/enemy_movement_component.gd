@@ -9,8 +9,8 @@ class_name EnemyMovementComponent extends Node
 
 # parameters
 @export var knockback_speed: float = 150.0
-@export var speed: int = 50
-@export var chase_speed: int = 150
+@export var speed: int = 25
+@export var chase_speed: int = 75
 @export var jump: float = 6.0
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
@@ -33,9 +33,11 @@ var left_bounds: Vector2
 var curr_state = State.WANDER
 var is_stunned: bool = false
 var knockback_tween: Tween
+var rng = RandomNumberGenerator.new()
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
+	rng.randomize()
 	left_bounds = body.position + Vector2(-125,0)
 	right_bounds = body.position + Vector2(125,0)
 
@@ -47,14 +49,7 @@ func tick(delta: float):
 	# always affects the enemy
 	gravity(delta)
 	
-	# turn around if hitting wall
-	if body.is_on_wall():
-		animated_sprite.flip_h = not animated_sprite.flip_h
-		direction *= -1
-		if direction.x == 1:
-			raycast.target_position = Vector2(125,0)
-		else:
-			raycast.target_position = Vector2(-125,0)
+	
 			
 	# AI resumes if not hit
 	if not is_stunned:
@@ -87,9 +82,9 @@ func stop_chase():
 		
 func movement(delta: float):
 	if curr_state == State.WANDER:
-		body.velocity = body.velocity.move_toward(direction * speed * 0.5,  acceleration * delta)
+		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
 	else:
-		body.velocity = body.velocity.move_toward(direction * speed * 0.5,  acceleration * delta)
+		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
 	
 	body.move_and_slide()
 	
@@ -100,7 +95,15 @@ func gravity(delta: float):
 func change_direction():
 	# wander
 	if curr_state == State.WANDER:
-		if animated_sprite.flip_h:
+		# turn around if hitting wall
+		if body.is_on_wall():
+			animated_sprite.flip_h = not animated_sprite.flip_h
+			direction *= -1
+			if direction.x == 1:
+				raycast.target_position = Vector2(125,0)
+			else:
+				raycast.target_position = Vector2(-125,0)
+		elif animated_sprite.flip_h:
 			if body.position.x <= right_bounds.x:
 				direction = Vector2(1,0)
 			else:
@@ -119,6 +122,7 @@ func change_direction():
 		if direction.x == 1:
 			animated_sprite.flip_h = true
 			raycast.target_position = Vector2(125,0)
+			
 		else:
 			animated_sprite.flip_h = false
 			raycast.target_position = Vector2(-125,0)
@@ -145,15 +149,18 @@ func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 			# knockback
 			if hitbox.curr_atk.attack_weight == "light":
 				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				var random_multiplier = rng.randf_range(0.5,1.6)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			elif hitbox.curr_atk.attack_weight == "medium":
 				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * 1.5 * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				var random_multiplier = rng.randf_range(1.7, 2.5)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			elif hitbox.curr_atk.attack_weight == "heavy":
 				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * 2 * hit_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				var random_multiplier = rng.randf_range(2.8,3.5)
+				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				knockback_tween.parallel().tween_property(body, "velocity:y", -speed * 0.5, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 			knockback_tween.tween_interval(stun_duration)

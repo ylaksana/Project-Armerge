@@ -14,6 +14,8 @@ var curr_health : float = 0.0
 var is_hit : bool = false
 var change_value_tween: Tween
 var opacity_tween: Tween
+var is_dying: bool = false
+
 
 func _ready() -> void:
 	#print("ResetVisibility node: ", $ResetVisibility)
@@ -60,7 +62,9 @@ func damage(hitbox: HitboxComponent, right_hit: bool) -> void:
 			("player is dead")
 			died.emit()
 		else:
-			enemy_died.emit()
+			if not is_dying:
+				is_dying = true
+				enemy_died.emit()
 
 func _on_reset_visibility_timeout() -> void:
 	_change_opacity(0.0)

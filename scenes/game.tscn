@@ -85,7 +85,7 @@ wait_time = 1.2999999999999998
 one_shot = true
 
 [node name="player" parent="." unique_id=149138697 instance=ExtResource("1_uwrxv")]
-position = Vector2(-239, 41)
+position = Vector2(-208, -39)
 collision_layer = 5
 
 [node name="Camera2D" type="Camera2D" parent="player" unique_id=1621657272]
