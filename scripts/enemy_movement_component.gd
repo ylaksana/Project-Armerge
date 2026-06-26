@@ -4,8 +4,9 @@ class_name EnemyMovementComponent extends Node
 @export var body: Enemy
 @export var animated_sprite: AnimatedSprite2D
 @export var hurtbox: HurtboxComponent
-@export var raycast: RayCast2D
 @export var raycast_timer: Timer
+@export var front_raycast: RayCast2D
+@export var rear_raycast: RayCast2D
 
 # parameters
 @export var knockback_speed: float = 150.0
@@ -34,6 +35,7 @@ var curr_state = State.WANDER
 var is_stunned: bool = false
 var knockback_tween: Tween
 var rng = RandomNumberGenerator.new()
+var on_rear_side : bool = true
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
@@ -48,9 +50,7 @@ func tick(delta: float):
 	
 	# always affects the enemy
 	gravity(delta)
-	
-	
-			
+
 	# AI resumes if not hit
 	if not is_stunned:
 		movement(delta)
@@ -63,8 +63,14 @@ func tick(delta: float):
 		
 	
 func wander():
-	if raycast.is_colliding():
-		var collider = raycast.get_collider()
+	if front_raycast.is_colliding():
+		var collider = front_raycast.get_collider()
+		if collider == body.player:
+			chase()
+		elif curr_state == State.CHASE:
+			stop_chase()
+	if rear_raycast.is_colliding():
+		var collider = rear_raycast.get_collider()
 		if collider == body.player:
 			chase()
 		elif curr_state == State.CHASE:
@@ -100,32 +106,38 @@ func change_direction():
 			animated_sprite.flip_h = not animated_sprite.flip_h
 			direction *= -1
 			if direction.x == 1:
-				raycast.target_position = Vector2(125,0)
+				front_raycast.target_position = Vector2(125,0)
+				rear_raycast.target_position = Vector2(-50,0)
 			else:
-				raycast.target_position = Vector2(-125,0)
+				front_raycast.target_position = Vector2(-125,0)
+				
 		elif animated_sprite.flip_h:
 			if body.position.x <= right_bounds.x:
 				direction = Vector2(1,0)
 			else:
 				animated_sprite.flip_h = false
-				raycast.target_position = Vector2(-125,0)
+				front_raycast.target_position = Vector2(-125,0)
+				rear_raycast.target_position = Vector2(50,0)
 		else:
 			if body.position.x >= left_bounds.x:
 				direction = Vector2(-1,0)
 			else:
 				animated_sprite.flip_h = true
-				raycast.target_position = Vector2(125,0)
+				front_raycast.target_position = Vector2(125,0)
+				rear_raycast.target_position = Vector2(-50,0)
 	# chase		
 	else:
 		direction = (body.player.position - body.position).normalized()
 		direction = sign(direction)
 		if direction.x == 1:
 			animated_sprite.flip_h = true
-			raycast.target_position = Vector2(125,0)
+			front_raycast.target_position = Vector2(125,0)
+			rear_raycast.target_position = Vector2(-50,0)
 			
 		else:
 			animated_sprite.flip_h = false
-			raycast.target_position = Vector2(-125,0)
+			front_raycast.target_position = Vector2(-125,0)
+			rear_raycast.target_position = Vector2(50,0)
 
 
 func _on_raycast_timer_timeout() -> void:

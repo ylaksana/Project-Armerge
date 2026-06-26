@@ -395,6 +395,7 @@ size = Vector2(9.00025, 8.875)
 size = Vector2(14, 28)
 
 [node name="player" type="CharacterBody2D" unique_id=149138697]
+position = Vector2(0, 1)
 collision_mask = 3
 script = ExtResource("1_3vyb7")
 
