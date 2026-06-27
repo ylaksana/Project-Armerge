@@ -8,7 +8,7 @@ class_name EnemyMovementComponent extends Node
 @export var front_raycast: RayCast2D
 @export var rear_raycast: RayCast2D
 @export var front_raycast_len: float = 125
-@export var rear_raycast_len: float = 50
+@export var rear_raycast_len: float = 10
 
 # parameters
 @export var knockback_speed: float = 150.0
@@ -38,6 +38,7 @@ var is_stunned: bool = false
 var knockback_tween: Tween
 var rng = RandomNumberGenerator.new()
 var on_rear_side : bool = true
+var vfx: Node
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
@@ -46,7 +47,7 @@ func _ready() -> void:
 	right_bounds = body.position + Vector2(125,0)
 
 func tick(delta: float):
-	if body == null or body.player.health_component.curr_health <= 0:
+	if body == null or body.player.health_component.curr_health <= 0 or vfx:
 		body.hitbox_component.monitoring = false
 		return
 	
@@ -81,6 +82,21 @@ func wander():
 		stop_chase()
 			
 func chase():
+	if curr_state == State.WANDER:
+		if hit_vfx:
+			var body_shape: RectangleShape2D = body.get_node("body").shape as RectangleShape2D
+			var position: Vector2
+			if animated_sprite.flip_h: 
+				position = body.get_node("body").global_position + Vector2(-body_shape.size.x/2, -body_shape.size.y)
+			else:
+				position = body.get_node("body").global_position + Vector2(body_shape.size.x/2, -body_shape.size.y)
+			vfx = hit_vfx.instantiate()
+			get_tree().root.add_child(vfx)
+		
+			vfx.global_position = position
+			vfx.detect()
+
+	
 	raycast_timer.stop()
 	curr_state = State.CHASE
 	
@@ -150,10 +166,11 @@ func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
 		is_stunned = true
 		if hit_vfx:
-			var position = hurtbox.global_position
-			var vfx = hit_vfx.instantiate()
-			get_tree().root.add_child(vfx)
-			vfx.global_position = position
+			var position = body.get_node("body").global_position
+			var hurt_vfx = hit_vfx.instantiate()
+			get_tree().root.add_child(hurt_vfx)
+			hurt_vfx.global_position = position
+			hurt_vfx.hit()
 			
 		if hitbox.curr_atk:
 			var hit_direction = -1 if right_hit else 1

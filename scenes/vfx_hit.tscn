@@ -1,7 +1,20 @@
 [gd_scene format=3 uid="uid://c288oin3b1ca5"]
 
+[ext_resource type="Texture2D" uid="uid://cu8156bgyxt6c" path="res://assets/vfx/detected.png" id="1_0ty26"]
 [ext_resource type="Texture2D" uid="uid://dfbdmqv47haq8" path="res://assets/vfx/hit-vfx.png" id="1_8k1u0"]
 [ext_resource type="Script" uid="uid://bm73bwwdil5f" path="res://vfx_hit.gd" id="2_0ty26"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ks6r"]
+atlas = ExtResource("1_0ty26")
+region = Rect2(28, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cy3v6"]
+atlas = ExtResource("1_0ty26")
+region = Rect2(42, 0, 14, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suljm"]
+atlas = ExtResource("1_0ty26")
+region = Rect2(56, 0, 14, 19)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwhwf"]
 atlas = ExtResource("1_8k1u0")
@@ -22,6 +35,20 @@ region = Rect2(39, 0, 13, 11)
 [sub_resource type="SpriteFrames" id="SpriteFrames_5lsgk"]
 animations = [{
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_4ks6r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cy3v6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suljm")
+}],
+"loop": false,
+"name": &"detected",
+"speed": 10.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hwhwf")
 }, {
@@ -41,5 +68,5 @@ animations = [{
 
 [node name="vfx-hit" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"hit"
+animation = &"detected"
 script = ExtResource("2_0ty26")
