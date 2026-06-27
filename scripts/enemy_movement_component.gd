@@ -48,7 +48,6 @@ func _ready() -> void:
 
 func tick(delta: float):
 	if body == null or body.player.health_component.curr_health <= 0 or vfx:
-		body.hitbox_component.monitoring = false
 		return
 	
 	# always affects the enemy
