@@ -47,18 +47,6 @@ layer_1/tile_data = PackedInt32Array(262129, 196609, 0, 262130, 196609, 0, 26213
 position = Vector2(-443, 37)
 player = NodePath("../../player")
 
-[node name="dummy-enemy2" parent="enemies" unique_id=1906004974 node_paths=PackedStringArray("player") instance=ExtResource("3_lnu2h")]
-position = Vector2(-59, 37)
-player = NodePath("../../player")
-
-[node name="dummy-enemy3" parent="enemies" unique_id=1896354992 node_paths=PackedStringArray("player") instance=ExtResource("3_lnu2h")]
-position = Vector2(-177, 37)
-player = NodePath("../../player")
-
-[node name="dummy-enemy4" parent="enemies" unique_id=1388877663 node_paths=PackedStringArray("player") instance=ExtResource("3_lnu2h")]
-position = Vector2(-330, 37)
-player = NodePath("../../player")
-
 [node name="SceneTransition" parent="." unique_id=488066424 instance=ExtResource("5_p57ef")]
 visible = false
 

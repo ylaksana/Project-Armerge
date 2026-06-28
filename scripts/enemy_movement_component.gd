@@ -8,7 +8,7 @@ class_name EnemyMovementComponent extends Node
 @export var front_raycast: RayCast2D
 @export var rear_raycast: RayCast2D
 @export var front_raycast_len: float = 125
-@export var rear_raycast_len: float = 10
+@export var rear_raycast_len: float = 30
 
 # parameters
 @export var knockback_speed: float = 150.0
@@ -26,7 +26,8 @@ class_name EnemyMovementComponent extends Node
 # enemy state
 enum State{
 	WANDER,
-	CHASE
+	CHASE,
+	ATTACK
 }
 
 # variables
@@ -36,6 +37,7 @@ var left_bounds: Vector2
 var curr_state = State.WANDER
 var is_stunned: bool = false
 var knockback_tween: Tween
+var attack_tween: Tween
 var rng = RandomNumberGenerator.new()
 var on_rear_side : bool = true
 var vfx: Node
@@ -52,7 +54,7 @@ func tick(delta: float):
 	
 	# always affects the enemy
 	gravity(delta)
-
+	
 	# AI resumes if not hit
 	if not is_stunned:
 		movement(delta)
@@ -62,6 +64,12 @@ func tick(delta: float):
 		# AI will notice you when hit
 		chase()
 		body.move_and_slide()
+		
+	print(body.global_position.distance_to(body.player.global_position))
+	# attack logic
+	if body.global_position.distance_to(body.player.global_position) < 22.0:
+		attack()
+		
 		
 	
 func wander():
@@ -106,6 +114,8 @@ func stop_chase():
 func movement(delta: float):
 	if curr_state == State.WANDER:
 		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
+	elif curr_state == State.ATTACK:
+		body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 	else:
 		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
 	
@@ -127,7 +137,7 @@ func change_direction():
 				rear_raycast.target_position = Vector2(-rear_raycast_len,0)
 			else:
 				front_raycast.target_position = Vector2(-front_raycast_len,0)
-				
+				rear_raycast.target_position = Vector2(rear_raycast_len,0)
 		elif animated_sprite.flip_h:
 			if body.position.x <= right_bounds.x:
 				direction = Vector2(1,0)
@@ -160,7 +170,22 @@ func change_direction():
 func _on_raycast_timer_timeout() -> void:
 	curr_state = State.WANDER
 	
+func attack() -> void:
+	curr_state = State.ATTACK
+	is_stunned = true
+	var attack_direction = 1 if animated_sprite.flip_h else -1
+	if attack_tween:
+		attack_tween.kill()
+	attack_tween = create_tween()
+	attack_tween.tween_interval(0.1)
+	attack_tween.tween_property(body, "velocity:x", 2 * attack_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	attack_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	attack_tween.tween_interval(stun_duration)
+	attack_tween.finished.connect(can_move)
 	
+func attack_finished() -> void:
+	curr_state = State.CHASE
+
 func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
 		is_stunned = true

@@ -7,6 +7,7 @@ signal died
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var enemy_animation_component: EnemyAnimationComponent = $EnemyAnimationComponent
 @onready var enemy_movement_component: EnemyMovementComponent = $EnemyMovementComponent
+@onready var animated_components: AnimationPlayer = $AnimatedComponents
 
 
 func _ready() -> void:
