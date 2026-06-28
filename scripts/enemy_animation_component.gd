@@ -8,10 +8,10 @@ var hurt : bool = false
 func _ready() -> void:
 	hurtbox.hit_received.connect(hit)
 	
-func _on_animation_finished() -> void:
-	if animated_sprite.animation == "attack":
-		body.enemy_movement_component.attack_finished()
-	
+#func _on_animation_finished() -> void:
+	#if animated_sprite.animation == "attack":
+		#body.enemy_movement_component.attack_finished()
+	#
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
 	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)

@@ -18,6 +18,7 @@ class_name EnemyMovementComponent extends Node
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
 @export var stun_duration: float = 0.5
+@export var attack_cooldown: float = 0.5
 
 # vfx
 @export var hit_vfx: PackedScene
@@ -38,9 +39,11 @@ var curr_state = State.WANDER
 var is_stunned: bool = false
 var knockback_tween: Tween
 var attack_tween: Tween
+var on_cooldown: bool = false
 var rng = RandomNumberGenerator.new()
 var on_rear_side : bool = true
 var vfx: Node
+
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
@@ -60,17 +63,16 @@ func tick(delta: float):
 		movement(delta)
 		wander()
 		change_direction()
+		
+			# attack logic
+		if body.global_position.distance_to(body.player.global_position) < 22.0 and not on_cooldown:
+			attack()
+		
 	else:
 		# AI will notice you when hit
 		chase()
-		body.move_and_slide()
 		
-	print(body.global_position.distance_to(body.player.global_position))
-	# attack logic
-	if body.global_position.distance_to(body.player.global_position) < 22.0:
-		attack()
-		
-		
+	body.move_and_slide()
 	
 func wander():
 	if front_raycast.is_colliding():
@@ -114,12 +116,8 @@ func stop_chase():
 func movement(delta: float):
 	if curr_state == State.WANDER:
 		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
-	elif curr_state == State.ATTACK:
-		body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 	else:
 		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
-	
-	body.move_and_slide()
 	
 func gravity(delta: float):
 	if not body.is_on_floor():
@@ -177,15 +175,19 @@ func attack() -> void:
 	if attack_tween:
 		attack_tween.kill()
 	attack_tween = create_tween()
-	attack_tween.tween_interval(0.1)
-	attack_tween.tween_property(body, "velocity:x", 2 * attack_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	attack_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	attack_tween.tween_interval(stun_duration)
-	attack_tween.finished.connect(can_move)
+	attack_tween.tween_interval(0.3)
+	attack_tween.tween_property(body, "velocity:x", 100 * attack_direction, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	attack_tween.tween_property(body, "velocity:x", 0.0, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	attack_tween.finished.connect(attack_finished)
 	
 func attack_finished() -> void:
+	is_stunned = false
 	curr_state = State.CHASE
-
+	on_cooldown = true
+	await get_tree().create_timer(attack_cooldown).timeout
+	on_cooldown = false
+	
+	
 func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
 		is_stunned = true
@@ -223,3 +225,4 @@ func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 
 func can_move() -> void:
 	is_stunned = false
+	
