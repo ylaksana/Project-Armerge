@@ -4,6 +4,7 @@ class_name EnemyAnimationComponent extends Node
 @export var animated_sprite: AnimatedSprite2D
 @export var hurtbox: HurtboxComponent
 var hurt : bool = false
+var is_hit: bool = false
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(hit)
@@ -22,23 +23,26 @@ func hit(hitbox: HitboxComponent, right_hit: bool) -> void:
 func tick(delta: float):
 	if body == null:
 		return
-	
-	if body.is_on_floor():
-		if non_loop_animation_playing():
-			return
 		
-		if body.enemy_movement_component.curr_state == body.enemy_movement_component.State.CHASE:
-			animated_sprite.play("aggressive")
-		elif body.enemy_movement_component.curr_state == body.enemy_movement_component.State.ATTACK:
-			animated_sprite.play("attack")
-			body.animated_components.play("attack")
-			body.hitbox_component.scale.x = -1.0 if animated_sprite.flip_h else 1.0
-		else:
-			animated_sprite.play("idle")
-				
 	if hurt:
 		hurt = false
 		animated_sprite.play("hurt")
+		body.animated_components.play("RESET")
+		return
+		
+	if body.is_on_floor():
+		if non_loop_animation_playing():
+			return
+		if body.enemy_movement_component.curr_state == body.enemy_movement_component.State.ATTACK:
+			animated_sprite.play("attack")
+			body.animated_components.play("attack")
+			body.hitbox_component.scale.x = -1.0 if animated_sprite.flip_h else 1.0
+		elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.CHASE or body.enemy_movement_component.prev_state == EnemyMovementComponent.State.CHASE:
+			animated_sprite.play("aggressive")
+		else:
+			animated_sprite.play("idle")
+				
+	
 		
 	
 		

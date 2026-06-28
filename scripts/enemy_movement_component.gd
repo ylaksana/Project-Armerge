@@ -28,15 +28,16 @@ class_name EnemyMovementComponent extends Node
 enum State{
 	WANDER,
 	CHASE,
-	ATTACK
+	ATTACK,
+	STUNNED
 }
 
 # variables
 var direction: Vector2
 var right_bounds: Vector2
 var left_bounds: Vector2
+var prev_state = State.WANDER
 var curr_state = State.WANDER
-var is_stunned: bool = false
 var knockback_tween: Tween
 var attack_tween: Tween
 var on_cooldown: bool = false
@@ -55,24 +56,27 @@ func tick(delta: float):
 	if body == null or body.player.health_component.curr_health <= 0 or vfx:
 		return
 	
+	print(State.keys()[curr_state])
+	
 	# always affects the enemy
 	gravity(delta)
 	
+	
+	if curr_state in [State.ATTACK, State.STUNNED]:
+		body.move_and_slide()
+		return
+		
 	# AI resumes if not hit
-	if not is_stunned:
-		movement(delta)
-		wander()
-		change_direction()
-		
-			# attack logic
-		if body.global_position.distance_to(body.player.global_position) < 22.0 and not on_cooldown:
-			attack()
-		
-	else:
-		# AI will notice you when hit
-		chase()
-		
+	movement(delta)
+	wander()
 	body.move_and_slide()
+	change_direction()
+		
+	# attack logic
+	if body.global_position.distance_to(body.player.global_position) < 22.0 and not on_cooldown:
+		attack()
+		
+	
 	
 func wander():
 	if front_raycast.is_colliding():
@@ -116,7 +120,7 @@ func stop_chase():
 func movement(delta: float):
 	if curr_state == State.WANDER:
 		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
-	else:
+	elif curr_state == State.CHASE:
 		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
 	
 func gravity(delta: float):
@@ -167,10 +171,11 @@ func change_direction():
 
 func _on_raycast_timer_timeout() -> void:
 	curr_state = State.WANDER
+	prev_state = State.WANDER
 	
 func attack() -> void:
+	prev_state = curr_state
 	curr_state = State.ATTACK
-	is_stunned = true
 	var attack_direction = 1 if animated_sprite.flip_h else -1
 	if attack_tween:
 		attack_tween.kill()
@@ -181,8 +186,7 @@ func attack() -> void:
 	attack_tween.finished.connect(attack_finished)
 	
 func attack_finished() -> void:
-	is_stunned = false
-	curr_state = State.CHASE
+	curr_state = prev_state
 	on_cooldown = true
 	await get_tree().create_timer(attack_cooldown).timeout
 	on_cooldown = false
@@ -190,7 +194,9 @@ func attack_finished() -> void:
 	
 func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 		#print("hurt")
-		is_stunned = true
+		if curr_state not in [State.ATTACK, State.STUNNED]:
+			prev_state = curr_state
+		curr_state = State.STUNNED
 		if hit_vfx:
 			var position = body.get_node("body").global_position
 			var hurt_vfx = hit_vfx.instantiate()
@@ -224,5 +230,5 @@ func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
 			knockback_tween.finished.connect(can_move)
 
 func can_move() -> void:
-	is_stunned = false
+	curr_state = prev_state
 	
