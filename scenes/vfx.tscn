@@ -1,35 +1,35 @@
 [gd_scene format=3 uid="uid://c288oin3b1ca5"]
 
-[ext_resource type="Texture2D" uid="uid://cu8156bgyxt6c" path="res://assets/vfx/detected.png" id="1_0ty26"]
-[ext_resource type="Texture2D" uid="uid://dfbdmqv47haq8" path="res://assets/vfx/hit-vfx.png" id="1_8k1u0"]
-[ext_resource type="Script" uid="uid://bm73bwwdil5f" path="res://vfx_hit.gd" id="2_0ty26"]
+[ext_resource type="Texture2D" uid="uid://cu8156bgyxt6c" path="res://assets/vfx/detected.png" id="1_mkq35"]
+[ext_resource type="Texture2D" uid="uid://dfbdmqv47haq8" path="res://assets/vfx/hit-vfx.png" id="2_tsiwy"]
+[ext_resource type="Script" uid="uid://bm73bwwdil5f" path="res://scripts/vfx.gd" id="3_15wp8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ks6r"]
-atlas = ExtResource("1_0ty26")
+atlas = ExtResource("1_mkq35")
 region = Rect2(28, 0, 14, 19)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cy3v6"]
-atlas = ExtResource("1_0ty26")
+atlas = ExtResource("1_mkq35")
 region = Rect2(42, 0, 14, 19)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_suljm"]
-atlas = ExtResource("1_0ty26")
+atlas = ExtResource("1_mkq35")
 region = Rect2(56, 0, 14, 19)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hwhwf"]
-atlas = ExtResource("1_8k1u0")
+atlas = ExtResource("2_tsiwy")
 region = Rect2(0, 0, 13, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yr6u7"]
-atlas = ExtResource("1_8k1u0")
+atlas = ExtResource("2_tsiwy")
 region = Rect2(13, 0, 13, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_my80g"]
-atlas = ExtResource("1_8k1u0")
+atlas = ExtResource("2_tsiwy")
 region = Rect2(26, 0, 13, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7674i"]
-atlas = ExtResource("1_8k1u0")
+atlas = ExtResource("2_tsiwy")
 region = Rect2(39, 0, 13, 11)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5lsgk"]
@@ -66,7 +66,7 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="vfx-hit" type="AnimatedSprite2D" unique_id=516398212]
+[node name="vfx" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"detected"
-script = ExtResource("2_0ty26")
+animation = &"hit"
+script = ExtResource("3_15wp8")

@@ -1,7 +1,5 @@
 class_name HitboxComponent extends Area2D
 
-signal hit(hurtbox, vfx_position: float)
-
 @export var is_player: bool = true
 @export var movement_component : MovementComponent
 @export var player_animation_component : PlayerAnimationComponent
@@ -17,6 +15,7 @@ var hitbox_offset: float
 var collision_position : float
 var curr_atk: AttackData
 var has_hit: bool = false
+var right_hit: bool = false
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
@@ -74,8 +73,9 @@ func _on_area_entered(area):
 		has_hit = true
 		if curr_atk:
 			damage = curr_atk.damage
+		right_hit = global_position.x > area.global_position.x
+		print(right_hit)
 		area.take_hit(self)
-		hit.emit(area)
 		
 func _on_area_exited(area):
 	print("curr_atk = ", curr_atk)

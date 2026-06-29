@@ -1,6 +1,6 @@
 class_name HurtboxComponent extends Area2D
 
-signal hit_received(hitbox: HitboxComponent, right_hit: bool)
+signal hit_received(hitbox: HitboxComponent)
 
 @export var body: CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
@@ -15,7 +15,6 @@ func _ready() -> void:
 		collision_mask = 1
 
 func take_hit(hitbox: HitboxComponent) -> void:
-	var right_hit = hitbox.global_position.x > global_position.x
 	# emit signal to other components
-	hit_received.emit(hitbox, right_hit)
+	hit_received.emit(hitbox)
 	print("hit: ", body.name)

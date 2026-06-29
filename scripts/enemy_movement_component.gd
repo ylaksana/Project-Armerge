@@ -7,22 +7,18 @@ class_name EnemyMovementComponent extends Node
 @export var raycast_timer: Timer
 @export var front_raycast: RayCast2D
 @export var rear_raycast: RayCast2D
+@export var tween: TweenManager
+@export var vfx: VFXManager
 @export var front_raycast_len: float = 125
 @export var rear_raycast_len: float = 30
 
 # parameters
-@export var knockback_speed: float = 150.0
 @export var speed: int = 25
 @export var chase_speed: int = 75
 @export var jump: float = 6.0
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
-@export var stun_duration: float = 0.5
 @export var attack_cooldown: float = 0.5
-
-# vfx
-@export var hit_vfx: PackedScene
-
 
 # enemy state
 enum State{
@@ -38,29 +34,25 @@ var right_bounds: Vector2
 var left_bounds: Vector2
 var prev_state = State.WANDER
 var curr_state = State.WANDER
-var knockback_tween: Tween
-var attack_tween: Tween
 var on_cooldown: bool = false
-var rng = RandomNumberGenerator.new()
 var on_rear_side : bool = true
-var vfx: Node
-
+var vfx_exists: bool
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit_received)
-	rng.randomize()
+	tween.knockback_finished.connect(restore_state)
+	tween.enemy_attack_finished.connect(attack_finished)
+	vfx.vfx_freed.connect(vfx_state)
 	left_bounds = body.position + Vector2(-125,0)
 	right_bounds = body.position + Vector2(125,0)
 
 func tick(delta: float):
-	if body == null or body.player.health_component.curr_health <= 0 or vfx:
+	if body == null or body.player.health_component.curr_health <= 0 or vfx_exists:
 		return
-	
-	print(State.keys()[curr_state])
+	#print(State.keys()[curr_state])
 	
 	# always affects the enemy
 	gravity(delta)
-	
 	
 	if curr_state in [State.ATTACK, State.STUNNED]:
 		body.move_and_slide()
@@ -75,8 +67,6 @@ func tick(delta: float):
 	# attack logic
 	if body.global_position.distance_to(body.player.global_position) < 22.0 and not on_cooldown:
 		attack()
-		
-	
 	
 func wander():
 	if front_raycast.is_colliding():
@@ -96,20 +86,9 @@ func wander():
 			
 func chase():
 	if curr_state == State.WANDER:
-		if hit_vfx:
-			var body_shape: RectangleShape2D = body.get_node("body").shape as RectangleShape2D
-			var position: Vector2
-			if animated_sprite.flip_h: 
-				position = body.get_node("body").global_position + Vector2(-body_shape.size.x/2, -body_shape.size.y)
-			else:
-				position = body.get_node("body").global_position + Vector2(body_shape.size.x/2, -body_shape.size.y)
-			vfx = hit_vfx.instantiate()
-			get_tree().root.add_child(vfx)
-		
-			vfx.global_position = position
-			vfx.detect()
-
-	
+		vfx_exists = true
+		vfx.detected_vfx(body)
+			
 	raycast_timer.stop()
 	curr_state = State.CHASE
 	
@@ -122,6 +101,8 @@ func movement(delta: float):
 		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
 	elif curr_state == State.CHASE:
 		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
+	else:
+		body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 	
 func gravity(delta: float):
 	if not body.is_on_floor():
@@ -155,7 +136,7 @@ func change_direction():
 				front_raycast.target_position = Vector2(front_raycast_len,0)
 				rear_raycast.target_position = Vector2(-rear_raycast_len,0)
 	# chase		
-	else:
+	elif curr_state == State.CHASE:
 		direction = (body.player.position - body.position).normalized()
 		direction = sign(direction)
 		if direction.x == 1:
@@ -176,14 +157,7 @@ func _on_raycast_timer_timeout() -> void:
 func attack() -> void:
 	prev_state = curr_state
 	curr_state = State.ATTACK
-	var attack_direction = 1 if animated_sprite.flip_h else -1
-	if attack_tween:
-		attack_tween.kill()
-	attack_tween = create_tween()
-	attack_tween.tween_interval(0.3)
-	attack_tween.tween_property(body, "velocity:x", 100 * attack_direction, 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	attack_tween.tween_property(body, "velocity:x", 0.0, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	attack_tween.finished.connect(attack_finished)
+	tween.enemy_attack_motion(body)
 	
 func attack_finished() -> void:
 	curr_state = prev_state
@@ -191,44 +165,16 @@ func attack_finished() -> void:
 	await get_tree().create_timer(attack_cooldown).timeout
 	on_cooldown = false
 	
-	
-func _on_hit_received(hitbox: HitboxComponent, right_hit: bool) -> void:
-		#print("hurt")
+func _on_hit_received(hitbox: HitboxComponent) -> void:
 		if curr_state not in [State.ATTACK, State.STUNNED]:
 			prev_state = curr_state
 		curr_state = State.STUNNED
-		if hit_vfx:
-			var position = body.get_node("body").global_position
-			var hurt_vfx = hit_vfx.instantiate()
-			get_tree().root.add_child(hurt_vfx)
-			hurt_vfx.global_position = position
-			hurt_vfx.hit()
-			
-		if hitbox.curr_atk:
-			var hit_direction = -1 if right_hit else 1
-			if knockback_tween:
-				knockback_tween.kill()
-			knockback_tween = create_tween()
-			# knockback
-			if hitbox.curr_atk.attack_weight == "light":
-				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				var random_multiplier = rng.randf_range(0.5,1.6)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-			elif hitbox.curr_atk.attack_weight == "medium":
-				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				var random_multiplier = rng.randf_range(1.7, 2.5)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-			elif hitbox.curr_atk.attack_weight == "heavy":
-				print("attack weight = ",hitbox.curr_atk.attack_weight)
-				var random_multiplier = rng.randf_range(2.8,3.5)
-				knockback_tween.tween_property(body, "velocity:x", knockback_speed * random_multiplier * hit_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-				knockback_tween.parallel().tween_property(body, "velocity:y", -speed * 0.5, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-				knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-			knockback_tween.tween_interval(stun_duration)
-			knockback_tween.finished.connect(can_move)
+		
+		vfx.hit_vfx(body)
+		tween.knockback_motion(body, hitbox)
 
-func can_move() -> void:
+func restore_state() -> void:
 	curr_state = prev_state
 	
+func vfx_state(exists: bool) -> void:
+	vfx_exists = exists

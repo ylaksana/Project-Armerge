@@ -11,8 +11,10 @@
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="5_qwg2f"]
 [ext_resource type="Script" uid="uid://bjpplap8y0tb" path="res://scripts/enemy_animation_component.gd" id="7_c7r63"]
 [ext_resource type="Script" uid="uid://c5x432goybt7o" path="res://scripts/enemy_movement_component.gd" id="8_oq36r"]
-[ext_resource type="PackedScene" uid="uid://c288oin3b1ca5" path="res://scenes/vfx_hit.tscn" id="10_4os1g"]
+[ext_resource type="PackedScene" uid="uid://c288oin3b1ca5" path="res://scenes/vfx.tscn" id="10_4os1g"]
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="10_20u0h"]
+[ext_resource type="Script" uid="uid://bs5mx1r43qj5f" path="res://scripts/tween_manager.gd" id="14_ewmnv"]
+[ext_resource type="Script" uid="uid://ch4si6twbbct5" path="res://scripts/vfx_manager.gd" id="15_3lqk8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -380,7 +382,7 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 hurtbox = NodePath("../HurtboxComponent")
 metadata/_custom_type_script = "uid://bjpplap8y0tb"
 
-[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "hurtbox", "raycast_timer", "front_raycast", "rear_raycast")]
+[node name="EnemyMovementComponent" type="Node" parent="." unique_id=925449887 node_paths=PackedStringArray("body", "animated_sprite", "hurtbox", "raycast_timer", "front_raycast", "rear_raycast", "tween", "vfx")]
 script = ExtResource("8_oq36r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
@@ -388,7 +390,8 @@ hurtbox = NodePath("../HurtboxComponent")
 raycast_timer = NodePath("../RaycastTimer")
 front_raycast = NodePath("../AnimatedSprite2D/front_raycast")
 rear_raycast = NodePath("../AnimatedSprite2D/rear_raycast")
-hit_vfx = ExtResource("10_4os1g")
+tween = NodePath("../TweenManager")
+vfx = NodePath("../VFXManager")
 metadata/_custom_type_script = "uid://c5x432goybt7o"
 
 [node name="AnimatedComponents" type="AnimationPlayer" parent="." unique_id=1694868199]
@@ -404,5 +407,14 @@ metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 [node name="RaycastTimer" type="Timer" parent="." unique_id=274615750]
 wait_time = 5.0
 one_shot = true
+
+[node name="TweenManager" type="Node" parent="." unique_id=1849761562]
+script = ExtResource("14_ewmnv")
+metadata/_custom_type_script = "uid://bs5mx1r43qj5f"
+
+[node name="VFXManager" type="Node" parent="." unique_id=1449673127]
+script = ExtResource("15_3lqk8")
+vfx_scene = ExtResource("10_4os1g")
+metadata/_custom_type_script = "uid://ch4si6twbbct5"
 
 [connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]

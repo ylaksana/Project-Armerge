@@ -15,12 +15,12 @@
 [ext_resource type="Script" uid="uid://dglvru5gfrr4b" path="res://scripts/hurtbox_component.gd" id="8_smehm"]
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="9_ur7pv"]
 [ext_resource type="Script" uid="uid://c2afocq0flruh" path="res://scripts/player_animation_component.gd" id="11_d2wvv"]
-[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/attack_data.gd" id="12_qfm1y"]
-[ext_resource type="Resource" uid="uid://dykgn6qf45ujg" path="res://scripts/attacks/basicattack_1.tres" id="13_fulsm"]
-[ext_resource type="Resource" uid="uid://clmh54mnmw78v" path="res://scripts/attacks/basicattack_2.tres" id="14_4r5pv"]
-[ext_resource type="Resource" uid="uid://dwksjay4inab7" path="res://scripts/attacks/basicattack_3.tres" id="15_60mlk"]
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="12_qfm1y"]
+[ext_resource type="Resource" uid="uid://dykgn6qf45ujg" path="res://scripts/AttackData/basicattack_1.tres" id="13_fulsm"]
+[ext_resource type="Resource" uid="uid://clmh54mnmw78v" path="res://scripts/AttackData/basicattack_2.tres" id="14_4r5pv"]
+[ext_resource type="Resource" uid="uid://dwksjay4inab7" path="res://scripts/AttackData/basicattack_3.tres" id="15_60mlk"]
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="15_oprun"]
-[ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/attacks/basicattack_4.tres" id="17_i4ail"]
+[ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/basicattack_4.tres" id="17_i4ail"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)

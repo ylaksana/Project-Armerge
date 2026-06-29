@@ -17,7 +17,7 @@ func _ready() -> void:
 func non_loop_animation_playing() -> bool:
 	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)
 
-func hit(hitbox: HitboxComponent, right_hit: bool) -> void:
+func hit(hitbox: HitboxComponent) -> void:
 		hurt = true
 		
 func tick(delta: float):
@@ -27,7 +27,7 @@ func tick(delta: float):
 	if hurt:
 		hurt = false
 		animated_sprite.play("hurt")
-		body.animated_components.play("RESET")
+		body.animated_components.play("hit_flash")
 		return
 		
 	if body.is_on_floor():
@@ -42,7 +42,3 @@ func tick(delta: float):
 		else:
 			animated_sprite.play("idle")
 				
-	
-		
-	
-		

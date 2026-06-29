@@ -40,7 +40,7 @@ func on_death() -> void:
 		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
 	)
 	
-func _on_hit(hitbox: HitboxComponent, right_hit: bool) -> void:
+func _on_hit(hitbox: HitboxComponent) -> void:
 	var attack_type: String
 	if hitbox.curr_atk != null:
 		attack_type = hitbox.curr_atk.attack_weight
