@@ -1,6 +1,6 @@
 class_name MovementComponent extends Node
 
-@export var body : CharacterBody2D
+@export var body : Player
 @export var animated_sprite: AnimatedSprite2D
 @export var animation_component: PlayerAnimationComponent
 @export var speed: float = 150.0
@@ -43,6 +43,6 @@ func animation_based_movement() -> void:
 		
 	var direction = 1 if animated_sprite.flip_h else -1
 	var tween = create_tween()
-	tween.tween_interval(animation_component.hitbox.curr_atk.tween_delay)
-	tween.tween_property(body, "velocity:x", speed * animation_component.hitbox.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(body.attack_component.curr_atk.tween_delay)
+	tween.tween_property(body, "velocity:x", speed * body.attack_component.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

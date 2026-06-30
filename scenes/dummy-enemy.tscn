@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="10_20u0h"]
 [ext_resource type="Script" uid="uid://bs5mx1r43qj5f" path="res://scripts/tween_manager.gd" id="14_ewmnv"]
 [ext_resource type="Script" uid="uid://ch4si6twbbct5" path="res://scripts/vfx_manager.gd" id="15_3lqk8"]
+[ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="16_wx4xb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -339,13 +340,9 @@ target_position = Vector2(-125, 0)
 position = Vector2(-1, -3)
 target_position = Vector2(30, 0)
 
-[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433 node_paths=PackedStringArray("animated_sprite", "body", "body_collision")]
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433]
 collision_mask = 2
 script = ExtResource("2_a7g1i")
-is_player = false
-animated_sprite = NodePath("../AnimatedSprite2D")
-body = NodePath("..")
-body_collision = NodePath("../body")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=544301487]
@@ -365,7 +362,7 @@ position = Vector2(0.5, 4)
 scale = Vector2(1.0045236, 1)
 shape = SubResource("RectangleShape2D_ewmnv")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite") instance=ExtResource("5_qwg2f")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite", "attack_component") instance=ExtResource("5_qwg2f")]
 offset_left = -9.0
 offset_top = -13.0
 offset_right = 85.99999
@@ -374,6 +371,7 @@ max_health = 30.0
 hurtbox = NodePath("../HurtboxComponent")
 is_player = false
 animated_sprite = NodePath("../AnimatedSprite2D")
+attack_component = NodePath("../AttackComponent")
 
 [node name="EnemyAnimationComponent" type="Node" parent="." unique_id=1749495084 node_paths=PackedStringArray("body", "animated_sprite", "hurtbox")]
 script = ExtResource("7_c7r63")
@@ -416,5 +414,11 @@ metadata/_custom_type_script = "uid://bs5mx1r43qj5f"
 script = ExtResource("15_3lqk8")
 vfx_scene = ExtResource("10_4os1g")
 metadata/_custom_type_script = "uid://ch4si6twbbct5"
+
+[node name="AttackComponent" type="Node" parent="." unique_id=1252422133 node_paths=PackedStringArray("hitbox", "animated_sprite")]
+script = ExtResource("16_wx4xb")
+hitbox = NodePath("../HitboxComponent")
+animated_sprite = NodePath("../AnimatedSprite2D")
+metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
 [connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]

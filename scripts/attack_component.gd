@@ -7,7 +7,6 @@ class_name AttackComponent extends Node
 var curr_atk: AttackData
 var damage: float
 
-
 func _ready() -> void:
 	animated_sprite.frame_changed.connect(_on_frame_changed)
 
@@ -22,7 +21,7 @@ func set_curr_atk(animation_name: String) -> void:
 func _on_frame_changed() -> void:
 	if curr_atk == null:
 		return
-	#print("frame: ", animated_sprite.frame, " active_frames: ", curr_atk.active_frames)
+	print("frame: ", animated_sprite.frame, " active_frames: ", curr_atk.active_frames)
 	if animated_sprite.frame in curr_atk.active_frames:
 		hitbox.monitoring = true
 	else:

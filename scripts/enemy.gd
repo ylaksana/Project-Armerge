@@ -9,6 +9,7 @@ signal died
 @onready var enemy_movement_component: EnemyMovementComponent = $EnemyMovementComponent
 @onready var animated_components: AnimationPlayer = $AnimatedComponents
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_component: AttackComponent = $AttackComponent
 
 
 func _ready() -> void:

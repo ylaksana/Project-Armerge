@@ -11,6 +11,7 @@ class_name Player extends CharacterBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var pivot_component: PivotComponent = $PivotComponent
+@onready var attack_component: AttackComponent = $AttackComponent
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)

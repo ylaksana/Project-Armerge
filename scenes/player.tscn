@@ -447,7 +447,7 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite") instance=ExtResource("9_ur7pv")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite", "attack_component") instance=ExtResource("9_ur7pv")]
 process_mode = 3
 offset_left = -5.0
 offset_top = -29.0
@@ -456,10 +456,10 @@ offset_bottom = -19.0
 max_health = 1000.0
 hurtbox = NodePath("../HurtboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
+attack_component = NodePath("../AttackComponent")
 
-[node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component", "combo_timer")]
+[node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("body", "animated_sprite", "movement_component", "combo_timer")]
 script = ExtResource("11_d2wvv")
-hitbox = NodePath("../HitboxComponent")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 movement_component = NodePath("../MovementComponent")
@@ -486,6 +486,12 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail")])
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
+[node name="PivotComponent" type="Node" parent="." unique_id=567285442 node_paths=PackedStringArray("body_collision", "hitbox_collision")]
+script = ExtResource("24_l71n6")
+body_collision = NodePath("../CollisionShape2D")
+hitbox_collision = NodePath("../HitboxComponent/CollisionShape2D")
+metadata/_custom_type_script = "uid://c056h0la3j46o"
+
 [node name="Timers" type="Node" parent="." unique_id=69962899]
 
 [node name="SkillTimer" type="Timer" parent="Timers" unique_id=2132203243]
@@ -493,12 +499,6 @@ metadata/_custom_type_script = "uid://culvyt2nugrk4"
 [node name="ComboTimer" type="Timer" parent="Timers" unique_id=695190879]
 wait_time = 0.3
 one_shot = true
-
-[node name="PivotComponent" type="Node" parent="." unique_id=567285442 node_paths=PackedStringArray("body_collision", "hitbox_collision")]
-script = ExtResource("24_l71n6")
-body_collision = NodePath("../CollisionShape2D")
-hitbox_collision = NodePath("../HitboxComponent/CollisionShape2D")
-metadata/_custom_type_script = "uid://c056h0la3j46o"
 
 [connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="timeout" from="Timers/ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]

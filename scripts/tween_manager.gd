@@ -23,20 +23,20 @@ var attack_direction: float
 func _ready() -> void:
 	rng.randomize()
 
-func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
-	if hitbox.curr_atk:
+func knockback_motion(enemy_body: CharacterBody2D, body: CharacterBody2D, hitbox: HitboxComponent):
+	if enemy_body.attack_component.curr_atk:
 		knockback_direction = -1 if hitbox.right_hit else 1
 		if knockback_tween:
 			knockback_tween.kill()
 		knockback_tween = create_tween()
-		if hitbox.curr_atk.attack_weight == "light":
+		if enemy_body.attack_component.curr_atk.attack_weight == "light":
 			light_knockback(body)
-		elif hitbox.curr_atk.attack_weight == "medium":
+		elif enemy_body.attack_component.curr_atk.attack_weight == "medium":
 			medium_knockback(body)
-		elif hitbox.curr_atk.attack_weight == "heavy":
+		elif enemy_body.attack_component.curr_atk.attack_weight == "heavy":
 			heavy_knockback(body)
 		else:
-			print("Unknown attack weight: ", hitbox.curr_atk.attack_weight)
+			print("Unknown attack weight: ", enemy_body.attack_component.curr_atk.attack_weight)
 	
 	knockback_tween.tween_interval(knockback_stun_duration)
 	knockback_tween.finished.connect(_on_knockback_motion_finished)

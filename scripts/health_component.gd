@@ -8,6 +8,7 @@ signal enemy_died
 @export var hurtbox: HurtboxComponent
 @export var is_player: bool = true
 @export var animated_sprite: AnimatedSprite2D
+@export var attack_component: AttackComponent
 @onready var reset_scene_timer: Timer = $ResetSceneTimer
 
 var curr_health : float = 0.0
@@ -53,7 +54,7 @@ func _emit() -> void:
 	
 func damage(hitbox: HitboxComponent) -> void:
 	#print("Damage taken!")
-	curr_health = clamp(curr_health - hitbox.damage, 0.0, max_health)
+	curr_health = clamp(curr_health - attack_component.damage, 0.0, max_health)
 	_emit()
 	change_value(curr_health)
 	print("curr_health: ", curr_health)

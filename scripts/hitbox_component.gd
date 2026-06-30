@@ -18,6 +18,7 @@ func _on_area_entered(area):
 		if attack_component.curr_atk:
 			attack_component.damage = attack_component.curr_atk.damage
 		right_hit = global_position.x > area.global_position.x
+		print("hit")
 		area.take_hit(self)
 		
 func _on_area_exited(area):

@@ -1,6 +1,5 @@
 class_name PlayerAnimationComponent extends Node
 
-@export var hitbox: HitboxComponent
 @export var body: Player
 @export var animated_sprite: AnimatedSprite2D
 @export var movement_component: MovementComponent
@@ -29,7 +28,7 @@ func _on_animation_finished() -> void:
 	# stop animations and movement if dead
 	if is_dead:
 		return
-	hitbox.curr_atk = null
+	body.attack_component.curr_atk = null
 	# combo window
 	if animated_sprite.animation in attack_animations:
 		if body.is_on_floor():
@@ -52,7 +51,7 @@ func _on_animation_finished() -> void:
 		else:
 			#print("in air")
 			combo_step = 0
-			hitbox.curr_atk = null
+			body.attack_component.curr_atk = null
 			is_attacking = false
 			animated_sprite.play("jump")
 
@@ -117,7 +116,7 @@ func attack() -> void:
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
 	animated_sprite.play(attack_animations[combo_step])
-	hitbox.set_curr_atk(animated_sprite.animation)
+	body.attack_component.set_curr_atk(animated_sprite.animation)
 	movement_component.animation_based_movement() 
 	if is_aerial:
 		combo_step = 0
@@ -127,8 +126,8 @@ func attack() -> void:
 func _on_combo_timer_timeout() -> void:
 	#body.collision_mask = 3
 	is_attacking = false
-	hitbox.curr_atk = null
-	hitbox.monitoring = false
+	body.attack_component.curr_atk = null
+	body.hitbox_component.monitoring = false
 	#print("combo timeout!")
 	combo_step = 0
 	if body.is_on_floor():
