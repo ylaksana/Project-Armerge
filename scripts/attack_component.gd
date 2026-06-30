@@ -5,7 +5,6 @@ class_name AttackComponent extends Node
 @export var attacks: Array[AttackData]
 
 var curr_atk: AttackData
-var damage: float
 
 func _ready() -> void:
 	animated_sprite.frame_changed.connect(_on_frame_changed)

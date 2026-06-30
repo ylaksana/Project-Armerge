@@ -45,10 +45,9 @@ sprite_frames = SubResource("SpriteFrames_43lgj")
 animation = &"fireball"
 frame_progress = 0.99730927
 
-[node name="HitboxComponent" type="Area2D" parent="." unique_id=765151817]
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=765151817 node_paths=PackedStringArray("hitbox_shape")]
 script = ExtResource("3_cb14k")
-is_player = false
-attacks = null
+hitbox_shape = NodePath("CollisionShape2D")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1706968796]

@@ -5,6 +5,7 @@ class_name HitboxComponent extends Area2D
 
 var has_hit: bool = false
 var right_hit: bool = false
+var damage: float
 
 func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
@@ -16,7 +17,8 @@ func _on_area_entered(area):
 	if area is HurtboxComponent:
 		has_hit = true
 		if attack_component.curr_atk:
-			attack_component.damage = attack_component.curr_atk.damage
+			print("curr_atk damage: ", damage)
+			damage = attack_component.curr_atk.damage
 		right_hit = global_position.x > area.global_position.x
 		print("hit")
 		area.take_hit(self)
