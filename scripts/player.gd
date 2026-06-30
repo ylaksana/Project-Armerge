@@ -9,7 +9,8 @@ class_name Player extends CharacterBody2D
 @onready var pause_menu: Control = $"../CanvasLayer/pause_menu"
 @onready var skill_component: SkillComponent = $SkillComponent
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-
+@onready var body_collision: CollisionShape2D = $CollisionShape2D
+@onready var pivot_component: PivotComponent = $PivotComponent
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)
@@ -26,8 +27,7 @@ func _physics_process(delta: float) -> void:
 	skill_component.tick(delta)
 	player_animation_component.tick(delta)
 	movement_component.tick(delta)
-	hitbox_component.tick(delta)
-
+	
 func _on_died() -> void:
 	self.collision_layer = 0
 	self.collision_mask = 1

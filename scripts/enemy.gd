@@ -15,7 +15,7 @@ func _ready() -> void:
 	health_component.enemy_died.connect(_on_died)
 
 func _physics_process(delta: float) -> void:
-	hitbox_component.tick(delta)
+	#hitbox_component.tick(delta)
 	enemy_animation_component.tick(delta)
 	enemy_movement_component.tick(delta)
 	

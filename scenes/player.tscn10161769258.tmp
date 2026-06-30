@@ -23,7 +23,6 @@
 [ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/basicattack_4.tres" id="17_i4ail"]
 [ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="18_fulsm"]
 [ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
-[ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -435,6 +434,7 @@ attack_component = NodePath("../AttackComponent")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=79779629]
+position = Vector2(-7.499875, -2.5625)
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]
@@ -493,12 +493,6 @@ metadata/_custom_type_script = "uid://culvyt2nugrk4"
 [node name="ComboTimer" type="Timer" parent="Timers" unique_id=695190879]
 wait_time = 0.3
 one_shot = true
-
-[node name="PivotComponent" type="Node" parent="." unique_id=567285442 node_paths=PackedStringArray("body_collision", "hitbox_collision")]
-script = ExtResource("24_l71n6")
-body_collision = NodePath("../CollisionShape2D")
-hitbox_collision = NodePath("../HitboxComponent/CollisionShape2D")
-metadata/_custom_type_script = "uid://c056h0la3j46o"
 
 [connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="timeout" from="Timers/ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]

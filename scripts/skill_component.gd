@@ -8,8 +8,8 @@ const FIREBALL = preload("res://scenes/fireball.tscn")
 var wants_special_attack: bool = false
 
 func tick(delta: float) -> void:
-	if body == null:
-		print("body is null")
+	if body == null or body.player_animation_component.is_attacking:
+		return
 		
 	if wants_special_attack:
 		print("fireball!")
