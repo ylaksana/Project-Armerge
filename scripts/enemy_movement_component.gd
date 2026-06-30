@@ -9,8 +9,7 @@ class_name EnemyMovementComponent extends Node
 @export var rear_raycast: RayCast2D
 @export var tween: TweenManager
 @export var vfx: VFXManager
-@export var front_raycast_len: float = 125
-@export var rear_raycast_len: float = 30
+
 
 # parameters
 @export var speed: int = 25
@@ -19,6 +18,8 @@ class_name EnemyMovementComponent extends Node
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
 @export var attack_cooldown: float = 0.5
+@export var front_raycast_len: float = 125
+@export var rear_raycast_len: float = 30
 
 # enemy state
 enum State{

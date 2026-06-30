@@ -21,6 +21,7 @@
 [ext_resource type="Resource" uid="uid://dwksjay4inab7" path="res://scripts/AttackData/basicattack_3.tres" id="15_60mlk"]
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="15_oprun"]
 [ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/basicattack_4.tres" id="17_i4ail"]
+[ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -459,17 +460,13 @@ max_health = 1000.0
 hurtbox = NodePath("../HurtboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 
-[node name="ComboTimer" type="Timer" parent="." unique_id=695190879]
-wait_time = 0.3
-one_shot = true
-
 [node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("hitbox", "body", "animated_sprite", "movement_component", "combo_timer")]
 script = ExtResource("11_d2wvv")
 hitbox = NodePath("../HitboxComponent")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 movement_component = NodePath("../MovementComponent")
-combo_timer = NodePath("../ComboTimer")
+combo_timer = NodePath("../Timers/ComboTimer")
 metadata/_custom_type_script = "uid://c2afocq0flruh"
 
 [node name="HitstopManager" type="Node" parent="." unique_id=1326356034 node_paths=PackedStringArray("animated_sprite", "hurtbox", "health_component")]
@@ -479,5 +476,19 @@ hurtbox = NodePath("../HurtboxComponent")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 
-[connection signal="timeout" from="ComboTimer" to="." method="_on_combo_timer_timeout"]
-[connection signal="timeout" from="ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]
+[node name="SkillComponent" type="Node" parent="." unique_id=1293715402 node_paths=PackedStringArray("body", "skill_timer")]
+script = ExtResource("22_a38lo")
+body = NodePath("..")
+skill_timer = NodePath("../Timers/SkillTimer")
+metadata/_custom_type_script = "uid://duwvwirlh55ba"
+
+[node name="Timers" type="Node" parent="." unique_id=69962899]
+
+[node name="SkillTimer" type="Timer" parent="Timers" unique_id=2132203243]
+
+[node name="ComboTimer" type="Timer" parent="Timers" unique_id=695190879]
+wait_time = 0.3
+one_shot = true
+
+[connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]
+[connection signal="timeout" from="Timers/ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]
