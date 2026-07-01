@@ -16,6 +16,9 @@
 [ext_resource type="Script" uid="uid://bs5mx1r43qj5f" path="res://scripts/tween_manager.gd" id="14_ewmnv"]
 [ext_resource type="Script" uid="uid://ch4si6twbbct5" path="res://scripts/vfx_manager.gd" id="15_3lqk8"]
 [ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="16_wx4xb"]
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="17_ojhgb"]
+[ext_resource type="Resource" uid="uid://b7hcljoqm2fwe" path="res://scripts/AttackData/dummy_enemy_attacks/spike_thrust.tres" id="18_rbm2g"]
+[ext_resource type="Resource" uid="uid://b2tfmtgf5qr7n" path="res://scripts/AttackData/dummy_enemy_attacks/spike_passive.tres" id="19_1pf28"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -340,9 +343,13 @@ target_position = Vector2(-125, 0)
 position = Vector2(-1, -3)
 target_position = Vector2(30, 0)
 
-[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433]
+[node name="HitboxComponent" type="Area2D" parent="." unique_id=1271626433 node_paths=PackedStringArray("hitbox_shape", "attack_component")]
+collision_layer = 128
 collision_mask = 2
 script = ExtResource("2_a7g1i")
+hitbox_shape = NodePath("CollisionShape2D")
+attack_component = NodePath("../AttackComponent")
+passive_attack = ExtResource("19_1pf28")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=544301487]
@@ -350,11 +357,10 @@ position = Vector2(-0.5, -7.5)
 shape = SubResource("RectangleShape2D_58y37")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=1993583791 node_paths=PackedStringArray("body", "animated_sprite")]
-collision_mask = 2
+collision_layer = 8
 script = ExtResource("3_qwg2f")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
-is_player = false
 metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1656536966]
@@ -419,6 +425,7 @@ metadata/_custom_type_script = "uid://ch4si6twbbct5"
 script = ExtResource("16_wx4xb")
 hitbox = NodePath("../HitboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
+attacks = Array[ExtResource("17_ojhgb")]([ExtResource("18_rbm2g")])
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
 [connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]
