@@ -43,6 +43,6 @@ func animation_based_movement() -> void:
 		
 	var direction = 1 if animated_sprite.flip_h else -1
 	var tween = create_tween()
-	tween.tween_interval(body.attack_component.curr_atk.tween_delay)
-	tween.tween_property(body, "velocity:x", speed * body.attack_component.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)
+	tween.tween_property(body, "velocity:x", speed * body.hitbox_component.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)

@@ -28,7 +28,7 @@ func _on_animation_finished() -> void:
 	# stop animations and movement if dead
 	if is_dead:
 		return
-	body.attack_component.curr_atk = null
+	body.hitbox_component.curr_atk = null
 	# combo window
 	if animated_sprite.animation in attack_animations:
 		if body.is_on_floor():
@@ -51,7 +51,7 @@ func _on_animation_finished() -> void:
 		else:
 			#print("in air")
 			combo_step = 0
-			body.attack_component.curr_atk = null
+			body.hitbox_component.curr_atk = null
 			is_attacking = false
 			animated_sprite.play("jump")
 
@@ -126,7 +126,7 @@ func attack() -> void:
 func _on_combo_timer_timeout() -> void:
 	#body.collision_mask = 3
 	is_attacking = false
-	body.attack_component.curr_atk = null
+	body.hitbox_component.curr_atk = null
 	body.hitbox_component.monitoring = false
 	#print("combo timeout!")
 	combo_step = 0

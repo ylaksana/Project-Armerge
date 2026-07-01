@@ -1,11 +1,12 @@
 [gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://crutkmamsfhpe"]
 
-[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_5p8ye"]
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_yq0v0"]
 
 [resource]
-script = ExtResource("1_5p8ye")
+script = ExtResource("1_yq0v0")
 animation_name = "fireball"
 active_frames = Array[int]([0, 1, 2])
 damage = 15.0
 attack_weight = "medium"
+tween_delay = 0.2
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

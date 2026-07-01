@@ -16,11 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://42reagush6el" path="res://scenes/health_component.tscn" id="9_ur7pv"]
 [ext_resource type="Script" uid="uid://c2afocq0flruh" path="res://scripts/player_animation_component.gd" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="12_qfm1y"]
-[ext_resource type="Resource" uid="uid://dykgn6qf45ujg" path="res://scripts/AttackData/basicattack_1.tres" id="13_fulsm"]
-[ext_resource type="Resource" uid="uid://clmh54mnmw78v" path="res://scripts/AttackData/basicattack_2.tres" id="14_4r5pv"]
-[ext_resource type="Resource" uid="uid://dwksjay4inab7" path="res://scripts/AttackData/basicattack_3.tres" id="15_60mlk"]
+[ext_resource type="Resource" uid="uid://dykgn6qf45ujg" path="res://scripts/AttackData/player_attacks/basicattack_1.tres" id="13_fulsm"]
+[ext_resource type="Resource" uid="uid://clmh54mnmw78v" path="res://scripts/AttackData/player_attacks/basicattack_2.tres" id="14_4r5pv"]
+[ext_resource type="Resource" uid="uid://dwksjay4inab7" path="res://scripts/AttackData/player_attacks/basicattack_3.tres" id="15_60mlk"]
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="15_oprun"]
-[ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/basicattack_4.tres" id="17_i4ail"]
+[ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/player_attacks/basicattack_4.tres" id="17_i4ail"]
 [ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="18_fulsm"]
 [ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
 [ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
@@ -429,6 +429,8 @@ gravity_multiplier = 0.0
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1938364455 node_paths=PackedStringArray("hitbox_shape", "attack_component")]
+collision_layer = 2
+collision_mask = 8
 script = ExtResource("7_fjrip")
 hitbox_shape = NodePath("CollisionShape2D")
 attack_component = NodePath("../AttackComponent")
@@ -438,6 +440,7 @@ metadata/_custom_type_script = "uid://dfxkih1afv0o"
 shape = SubResource("RectangleShape2D_smehm")
 
 [node name="HurtboxComponent" type="Area2D" parent="." unique_id=610108198 node_paths=PackedStringArray("body", "animated_sprite")]
+collision_layer = 2
 script = ExtResource("8_smehm")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
@@ -453,7 +456,7 @@ offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
-max_health = 1000.0
+max_health = 10.0
 hurtbox = NodePath("../HurtboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 attack_component = NodePath("../AttackComponent")

@@ -42,7 +42,7 @@ func on_death() -> void:
 	
 func _on_hit(hitbox: HitboxComponent) -> void:
 	var attack_type: String
-	if health_component.attack_component.curr_atk != null:
+	if hitbox.curr_atk != null:
 		attack_type = hitbox.curr_atk.attack_weight
 	else:
 		attack_type = "light"

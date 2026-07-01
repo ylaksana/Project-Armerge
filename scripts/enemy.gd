@@ -14,6 +14,7 @@ signal died
 
 func _ready() -> void:
 	health_component.enemy_died.connect(_on_died)
+	hitbox_component.monitoring = true
 
 func _physics_process(delta: float) -> void:
 	#hitbox_component.tick(delta)

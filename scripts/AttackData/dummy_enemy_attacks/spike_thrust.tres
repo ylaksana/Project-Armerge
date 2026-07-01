@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://b7hcljoqm2fwe"]
+
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_dl3ga"]
+
+[resource]
+script = ExtResource("1_dl3ga")
+animation_name = "attack"
+active_frames = Array[int]([7, 8, 9])
+attack_weight = "heavy"
+tween_delay = 0.2
+metadata/_custom_type_script = "uid://d0d17vf4l00h6"
