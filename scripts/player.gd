@@ -19,11 +19,11 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# read controls from input
 	input_component.update()
-	
 	# read movement from input
 	movement_component.dir = input_component.dir
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.wants_attack = input_component.attack_pressed
+	player_animation_component.wants_special_attack = input_component.special_attack_pressed
 	skill_component.wants_special_attack = input_component.special_attack_pressed
 	skill_component.tick(delta)
 	player_animation_component.tick(delta)
@@ -37,7 +37,7 @@ func _on_died() -> void:
 	player_animation_component.animated_sprite.play("death")
 	player_animation_component.is_dead = true
 	movement_component.is_dead = true
-	attack_component.curr_atk = null
+	hitbox_component.curr_atk = null
 	health_component.reset_scene_timer.start()
 	health_component.reset_scene_timer.timeout.connect(_on_timer_timeout)
 

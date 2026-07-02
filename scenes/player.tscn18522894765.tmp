@@ -25,7 +25,6 @@
 [ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="18_fulsm"]
 [ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
 [ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
-[ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="25_ujl30"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -159,25 +158,9 @@ region = Rect2(352, 0, 32, 32)
 atlas = ExtResource("6_60mlk")
 region = Rect2(384, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
-atlas = ExtResource("3_y4r1p")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_60mlk"]
-atlas = ExtResource("3_y4r1p")
-region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
-atlas = ExtResource("3_y4r1p")
-region = Rect2(96, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a38lo"]
-atlas = ExtResource("3_y4r1p")
-region = Rect2(128, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4ni07"]
-atlas = ExtResource("3_y4r1p")
-region = Rect2(160, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gjji"]
+atlas = ExtResource("7_ke2ow")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2ulf"]
 atlas = ExtResource("7_ke2ow")
@@ -210,6 +193,30 @@ region = Rect2(224, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_74r1k"]
 atlas = ExtResource("7_ke2ow")
 region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8svfe"]
+atlas = ExtResource("7_ke2ow")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4r5pv"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60mlk"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4ail"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a38lo"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ni07"]
+atlas = ExtResource("3_y4r1p")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -364,25 +371,8 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_4r5pv")
+"texture": SubResource("AtlasTexture_4gjji")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_60mlk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i4ail")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a38lo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4ni07")
-}],
-"loop": false,
-"name": &"death",
-"speed": 9.0
-}, {
-"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u2ulf")
 }, {
@@ -406,10 +396,33 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_74r1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8svfe")
+}],
+"loop": true,
+"name": &"cast_fireball",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4r5pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60mlk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4ail")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a38lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ni07")
 }],
 "loop": false,
-"name": &"fireball",
-"speed": 12.0
+"name": &"death",
+"speed": 9.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -475,8 +488,9 @@ z_index = 5
 material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"fireball"
+animation = &"cast_fireball"
 autoplay = "basicattack_1"
+frame_progress = 0.12821886
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -547,7 +561,7 @@ metadata/_custom_type_script = "uid://duwvwirlh55ba"
 script = ExtResource("18_fulsm")
 hitbox = NodePath("../HitboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
-attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail"), ExtResource("25_ujl30")])
+attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail")])
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
 [node name="PivotComponent" type="Node" parent="." unique_id=567285442 node_paths=PackedStringArray("body_collision", "hitbox_collision")]

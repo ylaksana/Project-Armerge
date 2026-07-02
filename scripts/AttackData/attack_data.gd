@@ -6,3 +6,4 @@ class_name AttackData extends Resource
 @export var attack_weight: String
 @export var lunge_speed: float
 @export var tween_delay: float = 0.0
+@export var spawn_delay: float = 0.0

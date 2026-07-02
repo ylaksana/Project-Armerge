@@ -172,7 +172,7 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 		curr_state = State.STUNNED
 		
 		vfx.hit_vfx(body)
-		tween.knockback_motion(body.player, body, hitbox)
+		tween.knockback_motion(body, hitbox)
 
 func restore_state() -> void:
 	curr_state = prev_state

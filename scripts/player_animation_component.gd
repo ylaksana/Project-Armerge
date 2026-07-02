@@ -12,6 +12,7 @@ var is_attacking: bool = false
 var is_aerial: bool = false
 var combo_step: int = 0
 var continue_combo: bool = false
+var wants_special_attack: bool = false
 var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3", "basicattack_4"]
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
@@ -84,15 +85,18 @@ func tick(delta: float) -> void:
 	# move right
 		elif movement_component.dir > 0.0:
 			animated_sprite.flip_h = true
-			
 	
+	# if body is on floor
 	if body.is_on_floor():
+		print(wants_special_attack)
 		if non_loop_animation_playing():
 			return
-		if continue_combo:
+		elif wants_special_attack:
+			animated_sprite.play("fireball")
+			
+		elif continue_combo:
 			continue_combo = false
 			attack()
-			
 		elif not combo_timer.is_stopped():
 			if movement_component.dir != 0:
 				combo_timer.stop()
@@ -103,6 +107,7 @@ func tick(delta: float) -> void:
 				animated_sprite.play("idle") 
 			else:
 				animated_sprite.play("run")
+	# if body is in the air
 	else:
 		# jump_attack
 		if continue_combo:

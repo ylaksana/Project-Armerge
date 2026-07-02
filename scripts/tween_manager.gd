@@ -23,7 +23,7 @@ var attack_direction: float
 func _ready() -> void:
 	rng.randomize()
 
-func knockback_motion(enemy_body: CharacterBody2D, body: CharacterBody2D, hitbox: HitboxComponent):
+func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
 	var attack: AttackData
 	
 	if hitbox.curr_atk:
