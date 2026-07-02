@@ -541,6 +541,7 @@ metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 script = ExtResource("22_a38lo")
 body = NodePath("..")
 skill_timer = NodePath("../Timers/SkillTimer")
+skills = Array[ExtResource("12_qfm1y")]([ExtResource("25_ujl30")])
 metadata/_custom_type_script = "uid://duwvwirlh55ba"
 
 [node name="AttackComponent" type="Node" parent="." unique_id=225662518 node_paths=PackedStringArray("hitbox", "animated_sprite")]
