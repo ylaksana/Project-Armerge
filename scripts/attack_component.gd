@@ -21,7 +21,7 @@ func set_curr_atk(animation_name: String) -> void:
 func _on_frame_changed() -> void:
 	if hitbox.curr_atk == null:
 		return
-	print("frame: ", animated_sprite.frame, " active_frames: ", hitbox.curr_atk.active_frames)
+	print("frame: ", animated_sprite.frame, " active_frames: ", hitbox.curr_atk.active_frames, ", curr_atk: ", hitbox.curr_atk)
 	if animated_sprite.frame in hitbox.curr_atk.active_frames:
 		hitbox.monitoring = true
 	else:

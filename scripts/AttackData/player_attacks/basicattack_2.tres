@@ -7,6 +7,7 @@ script = ExtResource("1_8jtlc")
 animation_name = "basicattack_2"
 active_frames = Array[int]([0])
 damage = 5.0
+damage_type = "physical"
 attack_weight = "light"
 lunge_speed = 0.3
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

@@ -7,6 +7,7 @@ signal vfx_freed(exists: bool)
 
 var detect_vfx_node: Node
 var hit_vfx_node: Node
+var fireball_hit_vfx_node: Node
  
 
 func detected_vfx(body: CharacterBody2D) -> void:
@@ -35,3 +36,14 @@ func hit_vfx(body: CharacterBody2D)-> void:
 		get_tree().root.add_child(hit_vfx_node)
 		hit_vfx_node.global_position = position
 		hit_vfx_node.hit()
+		
+func fireball_hit_vfx(body: CharacterBody2D)-> void:
+	#print("hit vfx activated!")
+	#print(hit_vfx)
+	if hit_vfx:
+		#print("hit vfx activated!")
+		var position = body.get_node("body").global_position
+		fireball_hit_vfx_node = vfx_scene.instantiate()
+		get_tree().root.add_child(fireball_hit_vfx_node)
+		fireball_hit_vfx_node.global_position = position
+		fireball_hit_vfx_node.fireball_hit()

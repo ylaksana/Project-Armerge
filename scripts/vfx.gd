@@ -6,6 +6,10 @@ func hit() -> void:
 	play("hit")
 	animation_finished.connect(_on_finished)
 	
+func fireball_hit() -> void:
+	play("fireball_hit")
+	animation_finished.connect(_on_finished)
+	
 func detect() -> void:
 	play("detected")
 	

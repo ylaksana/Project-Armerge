@@ -6,6 +6,7 @@
 script = ExtResource("1_dl3ga")
 animation_name = "attack"
 active_frames = Array[int]([7, 8, 9])
+damage_type = "physical"
 attack_weight = "heavy"
 tween_delay = 0.2
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

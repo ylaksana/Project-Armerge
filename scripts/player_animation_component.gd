@@ -55,6 +55,8 @@ func _on_animation_finished() -> void:
 			body.hitbox_component.curr_atk = null
 			is_attacking = false
 			animated_sprite.play("jump")
+	else:
+		is_attacking = false
 
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
@@ -88,12 +90,11 @@ func tick(delta: float) -> void:
 	
 	# if body is on floor
 	if body.is_on_floor():
-		print(wants_special_attack)
 		if non_loop_animation_playing():
 			return
 		elif wants_special_attack:
 			animated_sprite.play("fireball")
-			
+			is_attacking = true
 		elif continue_combo:
 			continue_combo = false
 			attack()

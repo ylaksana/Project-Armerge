@@ -170,8 +170,11 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 		if curr_state not in [State.ATTACK, State.STUNNED]:
 			prev_state = curr_state
 		curr_state = State.STUNNED
-		
-		vfx.hit_vfx(body)
+		print("damage_type: ",hitbox.curr_atk.damage_type)
+		if hitbox.curr_atk.damage_type == "physical":
+			vfx.hit_vfx(body)
+		elif hitbox.curr_atk.damage_type == "fire":
+			vfx.fireball_hit_vfx(body)
 		tween.knockback_motion(body, hitbox)
 
 func restore_state() -> void:

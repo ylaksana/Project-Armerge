@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_l4gt4")
+damage_type = "physical"
 attack_weight = "heavy"
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"
