@@ -469,7 +469,7 @@ z_index = 5
 material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"basicattack_1"
+animation = &"fireball"
 autoplay = "basicattack_1"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]

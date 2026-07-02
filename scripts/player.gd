@@ -12,6 +12,9 @@ class_name Player extends CharacterBody2D
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var pivot_component: PivotComponent = $PivotComponent
 @onready var attack_component: AttackComponent = $AttackComponent
+@onready var combo_component: ComboComponent = $ComboComponent
+@onready var skill_timer: Timer = $Timers/SkillTimer
+@onready var combo_timer: Timer = $Timers/ComboTimer
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)
@@ -28,6 +31,7 @@ func _physics_process(delta: float) -> void:
 	skill_component.tick(delta)
 	player_animation_component.tick(delta)
 	movement_component.tick(delta)
+	combo_component.tick(delta)
 	
 func _on_died() -> void:
 	self.collision_layer = 0

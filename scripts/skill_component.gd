@@ -14,7 +14,7 @@ func non_loop_animation_playing() -> bool:
 	return body.animated_sprite.is_playing() and not body.animated_sprite.sprite_frames.get_animation_loop(body.animated_sprite.animation)
 
 func tick(delta: float) -> void:
-	if body == null or body.player_animation_component.is_attacking:
+	if body == null or body.combo_component.is_attacking:
 		return
 	
 	if body.is_on_floor():

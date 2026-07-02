@@ -10,5 +10,5 @@ damage = 15.0
 damage_type = "fire"
 attack_weight = "medium"
 tween_delay = 1.0
-spawn_delay = 0.3
+spawn_delay = 0.2
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

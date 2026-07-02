@@ -3,90 +3,60 @@ class_name PlayerAnimationComponent extends Node
 @export var body: Player
 @export var animated_sprite: AnimatedSprite2D
 @export var movement_component: MovementComponent
-@export var combo_timer: Timer
+
+signal animation_finished
 
 var body_shape: RectangleShape2D
 var offset: float
 var is_dead: bool = false
-var is_attacking: bool = false
-var is_aerial: bool = false
-var combo_step: int = 0
-var continue_combo: bool = false
 var wants_special_attack: bool = false
-var attack_animations = ["basicattack_1", "basicattack_2", "basicattack_3", "basicattack_4"]
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
 	animated_sprite.play("idle")
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	if not combo_timer.timeout.is_connected(_on_combo_timer_timeout):
-		combo_timer.timeout.connect(_on_combo_timer_timeout)
-	#TO-DO: figure out hitbox flip logic
 	offset = (body.get_node("CollisionShape2D").shape as RectangleShape2D).size.x / 2
+	call_deferred("_connect_signals")
+
+func _connect_signals() -> void:
+	body.combo_component.attack_triggered.connect(_on_attack_triggered)
 	
 # logic for how animations should behave after finishing
 func _on_animation_finished() -> void:
-	# stop animations and movement if dead
+	animation_finished.emit()
 	if is_dead:
 		return
-	body.hitbox_component.curr_atk = null
 	# combo window
-	if animated_sprite.animation in attack_animations:
+	if animated_sprite.animation in body.combo_component.attack_animations:
 		if body.is_on_floor():
-			#print("on ground")
-			#print("animation: ",animated_sprite.animation)
-			if is_aerial:
+			if body.combo_component.is_aerial:
 				if movement_component.dir != 0.0:
-					#print("run after jump attack")
 					animated_sprite.play("run")
 				else:	
 					animated_sprite.play("idle")
-				_on_combo_timer_timeout()
-			else:
-				if animated_sprite.animation != attack_animations[-1]:
-					combo_timer.start()
-				else:
-					_on_combo_timer_timeout()
+			#else:
+				#_on_combo_timer_timeout()
 	
 		# if in the air, reset combo_step
 		else:
-			#print("in air")
-			combo_step = 0
-			body.hitbox_component.curr_atk = null
-			is_attacking = false
 			animated_sprite.play("jump")
-	else:
-		is_attacking = false
 
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
 	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)
 		
-		
 func tick(delta: float) -> void:
-	# disable movement if the character is freed or dead
+	# disable animation if the character is freed or dead
 	if body == null or is_dead:
 		return
 	
 	flip_hitbox()
-		
-	if movement_component.wants_attack and animated_sprite.animation != attack_animations[-1]:
-		continue_combo = true
-	
-	if is_aerial and is_attacking and body.is_on_floor():
-		is_aerial = false
-		_on_combo_timer_timeout()
+	flip_animated_sprite()
+	combo()
+
+func combo() -> void:
+	if body.combo_component.is_aerial and body.combo_component.is_attacking and body.is_on_floor():
 		animated_sprite.play("run")
-	
-	# body movement:
-	# move left
-	if not is_attacking:
-		if movement_component.dir < 0.0:
-			animated_sprite.flip_h = false
-		
-	# move right
-		elif movement_component.dir > 0.0:
-			animated_sprite.flip_h = true
 	
 	# if body is on floor
 	if body.is_on_floor():
@@ -94,51 +64,36 @@ func tick(delta: float) -> void:
 			return
 		elif wants_special_attack:
 			animated_sprite.play("fireball")
-			is_attacking = true
-		elif continue_combo:
-			continue_combo = false
-			attack()
-		elif not combo_timer.is_stopped():
+		elif not body.combo_component.combo_timer.is_stopped():
 			if movement_component.dir != 0:
-				combo_timer.stop()
-				_on_combo_timer_timeout()
 				animated_sprite.play("run")
-		elif combo_timer.is_stopped():
+		elif body.combo_component.combo_timer.is_stopped():
 			if movement_component.dir == 0.0:
 				animated_sprite.play("idle") 
 			else:
 				animated_sprite.play("run")
 	# if body is in the air
 	else:
-		# jump_attack
-		if continue_combo:
-			continue_combo = false
-			attack()
-		elif not non_loop_animation_playing():
+		if not non_loop_animation_playing():
 			animated_sprite.play("jump")
+			
+func _on_attack_triggered(animation_name:String) -> void:
+	print("attack animation: ", animation_name)
+	animated_sprite.play(animation_name)
 
-func attack() -> void:
-	combo_timer.stop()
-	is_attacking = true
-	is_aerial = not body.is_on_floor() and is_attacking
-	animated_sprite.play(attack_animations[combo_step])
-	body.attack_component.set_curr_atk(animated_sprite.animation)
-	movement_component.animation_based_movement() 
-	if is_aerial:
-		combo_step = 0
-	else:
-		combo_step = (combo_step + 1) % len(attack_animations)
-	
 func _on_combo_timer_timeout() -> void:
-	#body.collision_mask = 3
-	is_attacking = false
-	body.hitbox_component.curr_atk = null
-	body.hitbox_component.monitoring = false
-	#print("combo timeout!")
-	combo_step = 0
 	if body.is_on_floor():
 		animated_sprite.play("idle")
+	
+func flip_animated_sprite() -> void:
+	if not body.combo_component.is_attacking:
+		if movement_component.dir < 0.0:
+			animated_sprite.flip_h = false
+		
+	# move right
+		elif movement_component.dir > 0.0:
+			animated_sprite.flip_h = true
 
 func flip_hitbox() -> void:
-	if not is_attacking:
+	if not body.combo_component.is_attacking:
 		body.pivot_component.flip_hitbox(animated_sprite.flip_h)

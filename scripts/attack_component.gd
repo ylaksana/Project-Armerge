@@ -4,15 +4,18 @@ class_name AttackComponent extends Node
 @export var animated_sprite: AnimatedSprite2D
 @export var attacks: Array[AttackData]
 
-
+var is_attacking: bool = false
+var is_aerial: bool = false
 
 func _ready() -> void:
 	animated_sprite.frame_changed.connect(_on_frame_changed)
+	
+func tick(delta: float) -> void:
+	pass
 
 func set_curr_atk(animation_name: String) -> void:
 	hitbox.curr_atk = null
 	hitbox.monitoring = false
-	#has_hit = false
 	print(animation_name)
 	hitbox.curr_atk = attacks.filter(func(atk): return atk.animation_name == animation_name).front()
 	_on_frame_changed()

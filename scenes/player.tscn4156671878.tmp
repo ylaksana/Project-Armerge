@@ -26,7 +26,6 @@
 [ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
 [ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
 [ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="25_ujl30"]
-[ext_resource type="Script" uid="uid://bnhea2j45nh3o" path="res://scripts/EnemyData/combo_component.gd" id="27_31cv2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -207,6 +206,10 @@ region = Rect2(192, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_apa73"]
 atlas = ExtResource("7_ke2ow")
 region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74r1k"]
+atlas = ExtResource("7_ke2ow")
+region = Rect2(256, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -400,6 +403,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_apa73")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74r1k")
 }],
 "loop": false,
 "name": &"fireball",
@@ -469,7 +475,7 @@ z_index = 5
 material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"basicattack_1"
+animation = &"fireball"
 autoplay = "basicattack_1"
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
@@ -516,11 +522,12 @@ hurtbox = NodePath("../HurtboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 attack_component = NodePath("../AttackComponent")
 
-[node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("body", "animated_sprite", "movement_component")]
+[node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("body", "animated_sprite", "movement_component", "combo_timer")]
 script = ExtResource("11_d2wvv")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 movement_component = NodePath("../MovementComponent")
+combo_timer = NodePath("../Timers/ComboTimer")
 metadata/_custom_type_script = "uid://c2afocq0flruh"
 
 [node name="HitstopManager" type="Node" parent="." unique_id=1326356034 node_paths=PackedStringArray("animated_sprite", "hurtbox", "health_component")]
@@ -550,13 +557,6 @@ body_collision = NodePath("../CollisionShape2D")
 hitbox_collision = NodePath("../HitboxComponent/CollisionShape2D")
 metadata/_custom_type_script = "uid://c056h0la3j46o"
 
-[node name="ComboComponent" type="Node" parent="." unique_id=1637369422 node_paths=PackedStringArray("body", "combo_timer", "animation_component")]
-script = ExtResource("27_31cv2")
-body = NodePath("..")
-combo_timer = NodePath("../Timers/ComboTimer")
-animation_component = NodePath("../PlayerAnimationComponent")
-metadata/_custom_type_script = "uid://bnhea2j45nh3o"
-
 [node name="Timers" type="Node" parent="." unique_id=69962899]
 
 [node name="SkillTimer" type="Timer" parent="Timers" unique_id=2132203243]
@@ -565,5 +565,5 @@ metadata/_custom_type_script = "uid://bnhea2j45nh3o"
 wait_time = 0.3
 one_shot = true
 
+[connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="timeout" from="Timers/ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]
-[connection signal="timeout" from="Timers/ComboTimer" to="ComboComponent" method="_on_combo_timer_timeout"]

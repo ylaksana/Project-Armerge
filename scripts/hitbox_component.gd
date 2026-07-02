@@ -35,7 +35,6 @@ func _on_area_entered(area):
 		hit.emit()
 		
 func _on_area_exited(area):
-	if area is HurtboxComponent and curr_atk == null:
-			set_deferred("monitoring", false)
-			await get_tree().create_timer(0.5, true).timeout
-			set_deferred("monitoring", true)
+	if area is HurtboxComponent and has_hit:
+		await get_tree().create_timer(0.5, true).timeout
+		has_hit = true
