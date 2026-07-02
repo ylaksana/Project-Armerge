@@ -9,9 +9,6 @@ var is_aerial: bool = false
 
 func _ready() -> void:
 	animated_sprite.frame_changed.connect(_on_frame_changed)
-	
-func tick(delta: float) -> void:
-	pass
 
 func set_curr_atk(animation_name: String) -> void:
 	hitbox.curr_atk = null

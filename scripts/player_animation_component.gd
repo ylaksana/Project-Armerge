@@ -23,24 +23,9 @@ func _connect_signals() -> void:
 	
 # logic for how animations should behave after finishing
 func _on_animation_finished() -> void:
+	# emit that animation finished
 	animation_finished.emit()
-	if is_dead:
-		return
-	# combo window
-	if animated_sprite.animation in body.combo_component.attack_animations:
-		if body.is_on_floor():
-			if body.combo_component.is_aerial:
-				if movement_component.dir != 0.0:
-					animated_sprite.play("run")
-				else:	
-					animated_sprite.play("idle")
-			#else:
-				#_on_combo_timer_timeout()
 	
-		# if in the air, reset combo_step
-		else:
-			animated_sprite.play("jump")
-
 # return whether the animated sprite playing doesn't have a loop
 func non_loop_animation_playing() -> bool:
 	return animated_sprite.is_playing() and not animated_sprite.sprite_frames.get_animation_loop(animated_sprite.animation)
@@ -49,15 +34,12 @@ func tick(delta: float) -> void:
 	# disable animation if the character is freed or dead
 	if body == null or is_dead:
 		return
-	
+	print(body.combo_component.is_aerial)
 	flip_hitbox()
 	flip_animated_sprite()
 	combo()
 
 func combo() -> void:
-	if body.combo_component.is_aerial and body.combo_component.is_attacking and body.is_on_floor():
-		animated_sprite.play("run")
-	
 	# if body is on floor
 	if body.is_on_floor():
 		if non_loop_animation_playing():

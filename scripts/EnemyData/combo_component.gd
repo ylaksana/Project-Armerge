@@ -31,10 +31,8 @@ func non_loop_animation_playing() -> bool:
 func combo() -> void:
 	if body.movement_component.wants_attack and body.animated_sprite.animation != attack_animations[-1]:
 		continue_combo = true
-		
-	if is_aerial and is_attacking and body.is_on_floor():
-		is_aerial = false
-		is_attacking = false
+	# landing from an aerial attack
+	if is_aerial and body.is_on_floor():
 		_on_combo_timer_timeout()
 		
 	# if body is on floor
@@ -63,8 +61,9 @@ func attack() -> void:
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
 	body.attack_component.set_curr_atk(attack_animations[combo_step])
-	body.movement_component.animation_based_movement() 
+	body.movement_component.animation_based_movement()
 	attack_triggered.emit(attack_animations[combo_step])
+	
 	if is_aerial:
 		combo_step = 0
 	else:
@@ -95,6 +94,7 @@ func _on_animation_finished() -> void:
 
 func _on_combo_timer_timeout() -> void:
 	is_attacking = false
+	is_aerial = false
 	body.hitbox_component.monitoring = false
 	body.hitbox_component.curr_atk = null
 	combo_step = 0
