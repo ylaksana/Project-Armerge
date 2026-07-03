@@ -21,8 +21,8 @@ func tick(delta: float) -> void:
 		if non_loop_animation_playing():
 			return
 		if wants_special_attack:
-			#print("fireball!")
 			fireball()
+			body.combo_component.attack(true)
 		
 
 func fireball() -> void:

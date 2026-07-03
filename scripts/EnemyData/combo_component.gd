@@ -40,8 +40,6 @@ func combo() -> void:
 	if body.is_on_floor():
 		if non_loop_animation_playing():
 			return
-		elif wants_special_attack:
-			attack(true)
 		elif continue_combo:
 			continue_combo = false
 			attack(false)
@@ -59,6 +57,7 @@ func combo() -> void:
 			
 func attack(special_attack_pressed: bool) -> void:
 	combo_timer.stop()
+	print("attack_pressed: ", is_attacking)
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
 	if not special_attack_pressed:
@@ -75,6 +74,7 @@ func attack(special_attack_pressed: bool) -> void:
 
 func _on_animation_finished() -> void:
 	# combo window
+	print("animation_finished: ", is_attacking)
 	if body.animated_sprite.animation in attack_animations:
 		if body.is_on_floor():
 			if is_aerial:
