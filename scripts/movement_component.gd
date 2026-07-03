@@ -26,23 +26,24 @@ func tick(delta:float) -> void:
 func movement() -> void:
 	# if body is on the floor
 	if body.is_on_floor():
-		# the player just landed from an aerial attack mid-animation
-		if body.combo_component.is_attacking and body.combo_component.is_aerial:
-			print("landed mid animation")
-			body.velocity.x = dir * speed
-		# if the player is attacking with a combo, they shouldn't be able to move
-		elif (animation_component.non_loop_animation_playing() or not body.combo_component.combo_timer.is_stopped()):
-			print("is_attacking: ", body.combo_component.is_attacking)
-			body.velocity.x = 0
-		# if not, then if the player wants to 
+		# if an non-looping animation is playing
+		if animation_component.non_loop_animation_playing():
+			if body.hitbox_component.curr_atk and body.hitbox_component.curr_atk.movement_disabling:
+				if not body.combo_component.is_aerial:
+					body.velocity.x = 0
+			else:
+				body.velocity.x = dir * speed
+		# if not, then if the player wants to move, they change the velocity
 		elif dir != 0.0:
 			body.velocity.x = dir * speed
+		# if dir is 0.0, then they stop in place
 		else:
 			body.velocity.x = move_toward(body.velocity.x, 0, speed)
 
 		# jump:
 		if wants_jump and body.is_on_floor() and not body.combo_component.is_attacking:
 			body.velocity.y = jump
+	# if body is in the air
 	else:
 		if dir != 0.0:
 			body.velocity.x = dir * speed

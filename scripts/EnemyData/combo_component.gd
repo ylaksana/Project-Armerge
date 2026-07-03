@@ -33,6 +33,7 @@ func combo() -> void:
 		continue_combo = true
 	# landing from an aerial attack
 	if is_aerial and body.is_on_floor():
+		is_aerial = false
 		_on_combo_timer_timeout()
 		
 	# if body is on floor
@@ -40,10 +41,10 @@ func combo() -> void:
 		if non_loop_animation_playing():
 			return
 		elif wants_special_attack:
-			is_attacking = true
+			attack(true)
 		elif continue_combo:
 			continue_combo = false
-			attack()
+			attack(false)
 		elif not combo_timer.is_stopped():
 			if body.movement_component.dir != 0:
 				combo_timer.stop()
@@ -54,20 +55,23 @@ func combo() -> void:
 		# jump_attack
 		if continue_combo:
 			continue_combo = false
-			attack()
+			attack(false)
 			
-func attack() -> void:
+func attack(special_attack_pressed: bool) -> void:
 	combo_timer.stop()
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
-	body.attack_component.set_curr_atk(attack_animations[combo_step])
+	if not special_attack_pressed:
+		body.attack_component.set_curr_atk(attack_animations[combo_step])
 	body.movement_component.animation_based_movement()
-	attack_triggered.emit(attack_animations[combo_step])
-	
-	if is_aerial:
-		combo_step = 0
+	if not special_attack_pressed:
+		attack_triggered.emit(attack_animations[combo_step])
+		if is_aerial:
+			combo_step = 0
+		else:
+			combo_step = (combo_step + 1) % len(attack_animations)
 	else:
-		combo_step = (combo_step + 1) % len(attack_animations)
+		attack_triggered.emit("fireball")
 
 func _on_animation_finished() -> void:
 	# combo window
@@ -94,7 +98,6 @@ func _on_animation_finished() -> void:
 
 func _on_combo_timer_timeout() -> void:
 	is_attacking = false
-	is_aerial = false
 	body.hitbox_component.monitoring = false
 	body.hitbox_component.curr_atk = null
 	combo_step = 0

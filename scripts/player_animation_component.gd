@@ -34,7 +34,7 @@ func tick(delta: float) -> void:
 	# disable animation if the character is freed or dead
 	if body == null or is_dead:
 		return
-	print(body.combo_component.is_aerial)
+	#print(body.combo_component.is_aerial)
 	flip_hitbox()
 	flip_animated_sprite()
 	combo()
@@ -42,18 +42,20 @@ func tick(delta: float) -> void:
 func combo() -> void:
 	# if body is on floor
 	if body.is_on_floor():
+		# when animation without loop is playing, return and stop the tick
 		if non_loop_animation_playing():
-			return
-		elif wants_special_attack:
-			animated_sprite.play("fireball")
-		elif not body.combo_component.combo_timer.is_stopped():
-			if movement_component.dir != 0:
-				animated_sprite.play("run")
-		elif body.combo_component.combo_timer.is_stopped():
-			if movement_component.dir == 0.0:
-				animated_sprite.play("idle") 
+			if body.hitbox_component.curr_atk and body.hitbox_component.curr_atk.movement_disabling:
+				if not body.combo_component.is_aerial:
+					return
 			else:
 				animated_sprite.play("run")
+		# if special attack pressed, fireball animation
+		elif wants_special_attack:
+			animated_sprite.play("fireball")
+		elif movement_component.dir == 0.0:
+			animated_sprite.play("idle") 
+		else:
+			animated_sprite.play("run")
 	# if body is in the air
 	else:
 		if not non_loop_animation_playing():

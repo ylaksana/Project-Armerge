@@ -26,7 +26,8 @@ func tick(delta: float) -> void:
 		
 
 func fireball() -> void:
-	skill = skills.filter(func(atk): return atk.animation_name == "fireball").front()
+	body.attack_component.set_curr_atk("fireball")
+	skill = body.hitbox_component.curr_atk 
 	spawn_delay = skill.spawn_delay
 	await get_tree().create_timer(spawn_delay).timeout
 	var fireball_instance = FIREBALL.instantiate()
