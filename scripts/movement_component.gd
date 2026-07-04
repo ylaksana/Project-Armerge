@@ -1,6 +1,6 @@
 class_name MovementComponent extends Node
 
-@export var body : Player
+@export var body: Player
 @export var animated_sprite: AnimatedSprite2D
 @export var animation_component: PlayerAnimationComponent
 @export var speed: float = 150.0
@@ -12,43 +12,31 @@ var wants_jump : bool = false
 var wants_attack: bool = false
 var is_dead: bool = false
 
-
 func tick(delta:float) -> void:
 	if body == null:
 		return	
 
 	if is_dead:
 		return
-
+	#print(body.velocity.x)
 	gravity(delta)
 	movement()
 	
 func movement() -> void:
 	# if body is on the floor
 	if body.is_on_floor():
-		# if an non-looping animation is playing
-		if animation_component.non_loop_animation_playing():
-			if body.hitbox_component.curr_atk and body.hitbox_component.curr_atk.movement_disabling:
-				if not body.combo_component.is_aerial:
-					body.velocity.x = 0
-			else:
-				body.velocity.x = dir * speed
-		# if not, then if the player wants to move, they change the velocity
+		if body.combo_component.is_attacking:
+			if body.player_animation_component.non_loop_animation_playing():
+				body.velocity.x = 0
+		elif wants_jump:
+			body.velocity.y = jump
 		elif dir != 0.0:
 			body.velocity.x = dir * speed
-		# if dir is 0.0, then they stop in place
 		else:
-			body.velocity.x = move_toward(body.velocity.x, 0, speed)
-
-		# jump:
-		if wants_jump and body.is_on_floor() and not body.combo_component.is_attacking:
-			body.velocity.y = jump
+			body.velocity.x = dir * speed
 	# if body is in the air
 	else:
-		if dir != 0.0:
-			body.velocity.x = dir * speed
-		else:
-			body.velocity.x = move_toward(body.velocity.x, 0, speed)
+		body.velocity.x = dir * speed
 			
 func gravity(delta:float) -> void:
 	# gravity:

@@ -40,25 +40,26 @@ func tick(delta: float) -> void:
 	combo()
 
 func combo() -> void:
-	# if body is on floor
+	# if the player is on the ground
 	if body.is_on_floor():
-		# when animation without loop is playing, return and stop the tick
-		if non_loop_animation_playing():
-			if body.hitbox_component.curr_atk and body.hitbox_component.curr_atk.movement_disabling:
-				if not body.combo_component.is_aerial:
-					return
+		# when attacking, don't move
+		if body.combo_component.is_attacking:
+			if non_loop_animation_playing():
+				return
+		# if not, we just do idle or run depending on the movement input
+		elif body.combo_component.combo_timer.is_stopped():
+			if movement_component.dir == 0:
+				animated_sprite.play("idle") 
 			else:
 				animated_sprite.play("run")
-		# if special attack pressed, fireball animation
-		elif wants_special_attack:
-			animated_sprite.play("fireball")
-		elif movement_component.dir == 0.0:
-			animated_sprite.play("idle") 
-		else:
-			animated_sprite.play("run")
-	# if body is in the air
+	# if the player is in the air
 	else:
-		if not non_loop_animation_playing():
+		# if attacking
+		if body.combo_component.is_attacking:
+			if non_loop_animation_playing():
+				return
+		# if not
+		else:
 			animated_sprite.play("jump")
 			
 func _on_attack_triggered(animation_name:String) -> void:
