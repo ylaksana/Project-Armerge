@@ -9,7 +9,6 @@ signal animation_finished
 var body_shape: RectangleShape2D
 var offset: float
 var is_dead: bool = false
-var wants_special_attack: bool = false
 
 # if an animation finishes, then a signal will be sent out to call _on_animation_finished
 func _ready() -> void:
@@ -34,7 +33,7 @@ func tick(delta: float) -> void:
 	# disable animation if the character is freed or dead
 	if body == null or is_dead:
 		return
-	#print(body.combo_component.is_aerial)
+
 	flip_hitbox()
 	flip_animated_sprite()
 	combo()
@@ -72,6 +71,7 @@ func _on_combo_timer_timeout() -> void:
 	
 func flip_animated_sprite() -> void:
 	if not body.combo_component.is_attacking:
+	# move left
 		if movement_component.dir < 0.0:
 			animated_sprite.flip_h = false
 		

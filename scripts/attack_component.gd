@@ -10,7 +10,7 @@ func _ready() -> void:
 func set_curr_atk(animation_name: String) -> void:
 	hitbox.curr_atk = null
 	hitbox.monitoring = false
-	print(animation_name)
+	print("previous_atk set to: ", hitbox.curr_atk)
 	hitbox.curr_atk = attacks.filter(func(atk): return atk.animation_name == animation_name).front()
 	_on_frame_changed()
 	print("curr_atk set to: ", hitbox.curr_atk)

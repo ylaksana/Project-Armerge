@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _on_area_entered(area):
 	#print(self.owner, " hit ", area.owner)
-	if area is HurtboxComponent:
+	if area is HurtboxComponent and not has_hit:
 		#print(self.owner, " hit ", area.owner)
 		has_hit = true
 		if curr_atk:
@@ -36,5 +36,5 @@ func _on_area_entered(area):
 		
 func _on_area_exited(area):
 	if area is HurtboxComponent and has_hit:
-		await get_tree().create_timer(0.5, true).timeout
-		has_hit = true
+		monitoring = false
+		has_hit = false

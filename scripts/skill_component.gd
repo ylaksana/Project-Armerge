@@ -5,7 +5,6 @@ class_name SkillComponent extends Node
 @export var skills: Array[AttackData]
 const FIREBALL = preload("res://scenes/fireball.tscn")
 
-var wants_special_attack: bool = false
 var spawn_delay: float
 var skill: AttackData
 
@@ -20,9 +19,8 @@ func tick(delta: float) -> void:
 	if body.is_on_floor():
 		if non_loop_animation_playing():
 			return
-		if wants_special_attack:
+		if body.combo_component.wants_special_attack:
 			fireball()
-			body.combo_component.attack(true)
 		
 
 func fireball() -> void:

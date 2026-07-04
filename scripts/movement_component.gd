@@ -27,13 +27,13 @@ func movement() -> void:
 	if body.is_on_floor():
 		if body.combo_component.is_attacking:
 			if body.player_animation_component.non_loop_animation_playing():
-				body.velocity.x = 0
+				body.velocity.x = move_toward(body.velocity.x, 0, speed)
 		elif wants_jump:
 			body.velocity.y = jump
 		elif dir != 0.0:
 			body.velocity.x = dir * speed
 		else:
-			body.velocity.x = dir * speed
+			body.velocity.x = move_toward(body.velocity.x, 0, speed)
 	# if body is in the air
 	else:
 		body.velocity.x = dir * speed
@@ -45,9 +45,12 @@ func gravity(delta:float) -> void:
 	body.move_and_slide()
 
 func animation_based_movement() -> void:
+	print("using lunge speed from curr_atk: ", body.hitbox_component.curr_atk)
+	print("lunge speed: ", body.hitbox_component.curr_atk.lunge_speed)
 	if not body.is_on_floor():
 		return
-		
+	if body.hitbox_component.curr_atk.lunge_speed == 0.0:
+		return
 	var direction = 1 if animated_sprite.flip_h else -1
 	var tween = create_tween()
 	tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)

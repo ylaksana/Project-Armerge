@@ -17,4 +17,6 @@ func _process(delta: float) -> void:
 
 
 func _on_hit() -> void:
+	hitbox_component.monitoring = false
 	queue_free()
+	
