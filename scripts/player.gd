@@ -27,7 +27,6 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.wants_attack = input_component.attack_pressed
 	combo_component.wants_special_attack = input_component.special_attack_pressed
-	skill_component.tick(delta)
 	player_animation_component.tick(delta)
 	movement_component.tick(delta)
 	combo_component.tick(delta)

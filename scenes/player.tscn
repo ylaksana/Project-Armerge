@@ -542,6 +542,7 @@ script = ExtResource("18_fulsm")
 hitbox = NodePath("../HitboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
 attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail"), ExtResource("25_ujl30")])
+special_attack = ExtResource("25_ujl30")
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
 [node name="PivotComponent" type="Node" parent="." unique_id=567285442 node_paths=PackedStringArray("body_collision", "hitbox_collision")]

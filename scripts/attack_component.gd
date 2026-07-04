@@ -3,6 +3,7 @@ class_name AttackComponent extends Node
 @export var hitbox: HitboxComponent
 @export var animated_sprite: AnimatedSprite2D
 @export var attacks: Array[AttackData]
+@export var special_attack: AttackData
 
 func _ready() -> void:
 	animated_sprite.frame_changed.connect(_on_frame_changed)

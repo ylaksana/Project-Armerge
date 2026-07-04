@@ -21,6 +21,7 @@ func _ready() -> void:
 func tick(delta: float) -> void:
 	if body == null:
 		return
+		
 	combo() 
 
 # return whether the animated sprite playing doesn't have a loop
@@ -43,7 +44,6 @@ func combo() -> void:
 			return
 		# special attack
 		elif wants_special_attack:
-			wants_special_attack = true
 			attack()
 		elif continue_combo:
 			continue_combo = false
@@ -66,30 +66,31 @@ func attack() -> void:
 	is_aerial = not body.is_on_floor() and is_attacking
 	if not wants_special_attack:
 		body.attack_component.set_curr_atk(attack_animations[combo_step])
-	body.movement_component.animation_based_movement()
-	if not wants_special_attack:
 		attack_triggered.emit(attack_animations[combo_step])
 		if is_aerial:
 			combo_step = 0
 		else:
 			combo_step = (combo_step + 1) % len(attack_animations)
 	else:
-		wants_special_attack = true
-		body.skill_component.fireball()
+		body.attack_component.set_curr_atk("fireball")
 		attack_triggered.emit("fireball")
+	body.movement_component.animation_based_movement()
 
 func _on_animation_finished() -> void:
 	# combo window
-	print("animation_finished: ", is_attacking)
-	if body.animated_sprite.animation in attack_animations:
+	print("animation_finished - is_attacking: ", is_attacking)
+	print("animation_finished - wants_special_attack: ", wants_special_attack)
+	if (body.animated_sprite.animation in attack_animations) or body.hitbox_component.curr_atk == body.attack_component.special_attack:
 		if body.is_on_floor():
 			if is_aerial:
 				is_aerial = false
 				_on_combo_timer_timeout()
 			else:
-				if body.animated_sprite.animation != attack_animations[-1]:
+				# continue if attack is valid in combo
+				if (body.animated_sprite.animation != attack_animations[-1]) or body.hitbox_component.curr_atk == body.attack_component.special_attack:
 					print("combo timer start!")
 					combo_timer.start()
+				# end if end of the combo
 				else:
 					_on_combo_timer_timeout()
 	

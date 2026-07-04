@@ -36,5 +36,4 @@ func _on_area_entered(area):
 		
 func _on_area_exited(area):
 	if area is HurtboxComponent and has_hit:
-		monitoring = false
 		has_hit = false

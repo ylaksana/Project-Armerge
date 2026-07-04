@@ -8,23 +8,18 @@ const FIREBALL = preload("res://scenes/fireball.tscn")
 var spawn_delay: float
 var skill: AttackData
 
-# return whether the animated sprite playing doesn't have a loop
-func non_loop_animation_playing() -> bool:
-	return body.animated_sprite.is_playing() and not body.animated_sprite.sprite_frames.get_animation_loop(body.animated_sprite.animation)
-
-func tick(delta: float) -> void:
-	if body == null or body.combo_component.is_attacking:
-		return
+func _ready() -> void:
+	call_deferred("_signals")
 	
-	if body.is_on_floor():
-		if non_loop_animation_playing():
-			return
-		if body.combo_component.wants_special_attack:
-			fireball()
-		
+func _signals() -> void:
+	body.combo_component.attack_triggered.connect(_on_attack_triggered)	
+
+func _on_attack_triggered(animation_name: String) -> void:
+	print("_on_attack_triggered: ", body.attack_component.special_attack == body.hitbox_component.curr_atk)
+	if body.attack_component.special_attack == body.hitbox_component.curr_atk:
+		fireball()
 
 func fireball() -> void:
-	body.attack_component.set_curr_atk("fireball")
 	skill = body.hitbox_component.curr_atk 
 	spawn_delay = skill.spawn_delay
 	await get_tree().create_timer(spawn_delay).timeout
