@@ -15,6 +15,7 @@ class_name Player extends CharacterBody2D
 @onready var combo_component: ComboComponent = $ComboComponent
 @onready var skill_timer: Timer = $Timers/SkillTimer
 @onready var combo_timer: Timer = $Timers/ComboTimer
+@onready var special_attack_wheel: Node = $SpecialAttackWheel
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)
@@ -27,6 +28,9 @@ func _physics_process(delta: float) -> void:
 	movement_component.wants_jump = input_component.jump_pressed
 	movement_component.wants_attack = input_component.attack_pressed
 	combo_component.wants_special_attack = input_component.special_attack_pressed
+	special_attack_wheel.toggle_pressed = input_component.sp_atk_wheel_pressed
+	special_attack_wheel.toggle_released = input_component.sp_atk_wheel_released
+	special_attack_wheel.tick(delta)
 	player_animation_component.tick(delta)
 	movement_component.tick(delta)
 	combo_component.tick(delta)
