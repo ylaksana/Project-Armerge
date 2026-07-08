@@ -1,4 +1,4 @@
-class_name SpecialAttack extends Node2D
+extends Node2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
@@ -7,6 +7,7 @@ var curr_special_attack: AttackData
 var speed: float = 0.0
 
 func _ready() -> void:
+	print("curr_special_attack: ", curr_special_attack)
 	if curr_special_attack:
 		speed = curr_special_attack.projectile_speed
 		animated_sprite.play(curr_special_attack.animation_name)
