@@ -3,7 +3,6 @@ extends Node
 @export var body: Player
 @onready var selection_wheel: Control = $UI/SelectionWheel
 @onready var equip: Label = $UI/equip
-@onready var special_attack: SpecialAttack = $special_attack
 
 var toggle_pressed: bool
 var toggle_released: bool
@@ -17,5 +16,5 @@ func tick(delta: float) -> void:
 		selection_wheel.show()
 	elif toggle_released:
 		var special_attack_name = selection_wheel.Close()
-		special_attack.set_special_attack(special_attack_name)
+		body.special_attack_component.set_special_attack(special_attack_name)
 		equip.text = "Player equipped special attack: " + special_attack_name

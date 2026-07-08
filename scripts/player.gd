@@ -7,7 +7,6 @@ class_name Player extends CharacterBody2D
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var player_animation_component: PlayerAnimationComponent = $PlayerAnimationComponent
 @onready var pause_menu: Control = $"../CanvasLayer/pause_menu"
-@onready var skill_component: SkillComponent = $SkillComponent
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var body_collision: CollisionShape2D = $CollisionShape2D
 @onready var pivot_component: PivotComponent = $PivotComponent
@@ -16,6 +15,7 @@ class_name Player extends CharacterBody2D
 @onready var skill_timer: Timer = $Timers/SkillTimer
 @onready var combo_timer: Timer = $Timers/ComboTimer
 @onready var special_attack_wheel: Node = $SpecialAttackWheel
+@onready var special_attack_component: SpecialAttackComponent = $SpecialAttackComponent
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)

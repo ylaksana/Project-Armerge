@@ -3,10 +3,7 @@ class_name SpecialAttack extends Node2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 
-@export var special_attacks: Array[AttackData] = []
-
 var curr_special_attack: AttackData
-
 var speed: float = 0.0
 
 func _ready() -> void:
@@ -27,10 +24,5 @@ func _on_hit() -> void:
 	hitbox_component.set_deferred("monitoring", false)
 	queue_free()
 	
-func set_special_attack(icon_name: String) -> void:
-	var special_attack = special_attacks.filter(func(sp_atk): return icon_name == sp_atk.animation_name).front()
-	if special_attack:
-		curr_special_attack = special_attack
-	else:
-		print("Unknown or mismatched special attack name")
+
 	
