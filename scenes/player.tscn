@@ -564,7 +564,8 @@ metadata/_custom_type_script = "uid://bnhea2j45nh3o"
 script = ExtResource("28_pf23h")
 metadata/_custom_type_script = "uid://bmbnh4unnrorp"
 
-[node name="SpecialAttackWheel" parent="." unique_id=1316423248 instance=ExtResource("29_dt7fs")]
+[node name="SpecialAttackWheel" parent="." unique_id=1316423248 node_paths=PackedStringArray("body") instance=ExtResource("29_dt7fs")]
+body = NodePath("..")
 
 [node name="Timers" type="Node" parent="." unique_id=69962899]
 

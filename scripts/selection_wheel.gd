@@ -82,7 +82,6 @@ func _process(delta: float) -> void:
 	else:
 		var mouse_rads = fposmod(mouse_pos.angle() * -1, TAU)
 		selection = ceil((mouse_rads/TAU) * (len(options) - 1))
-		
-	print(selection)
+	
 	queue_redraw()
 	

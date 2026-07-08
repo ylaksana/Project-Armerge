@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://c8k5yt4nawl3n"]
+
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_5aueg"]
+
+[resource]
+script = ExtResource("1_5aueg")
+animation_name = "wind_blast"
+damage = 5.0
+damage_type = "wind"
+attack_weight = "heavy"
+tween_delay = 1.0
+spawn_delay = 0.2
+melee = false
+metadata/_custom_type_script = "uid://d0d17vf4l00h6"

@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://creiycyjmjwc4" path="res://scripts/fireball.gd" id="1_1gl40"]
 [ext_resource type="Texture2D" uid="uid://csda7wfu41tqn" path="res://assets/fireball.png" id="1_3s14c"]
+[ext_resource type="Texture2D" uid="uid://yq0v5b3k2wjd" path="res://assets/wind_blast.png" id="3_43lgj"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="3_cb14k"]
+[ext_resource type="Texture2D" uid="uid://dkluecd5mllyd" path="res://assets/ice-blast.png" id="3_vqoxj"]
 [ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="4_7kba2"]
+[ext_resource type="Texture2D" uid="uid://ddh6e6q6fu6fi" path="res://assets/lightning-bolt.png" id="4_86oub"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1gl40"]
 atlas = ExtResource("1_3s14c")
@@ -16,6 +19,46 @@ region = Rect2(64, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_7kba2"]
 atlas = ExtResource("1_3s14c")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qaphm"]
+atlas = ExtResource("3_vqoxj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mi4h5"]
+atlas = ExtResource("3_vqoxj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyo3q"]
+atlas = ExtResource("3_vqoxj")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fb5b"]
+atlas = ExtResource("3_vqoxj")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tyqc2"]
+atlas = ExtResource("3_vqoxj")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pq144"]
+atlas = ExtResource("4_86oub")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rtms"]
+atlas = ExtResource("4_86oub")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxa2u"]
+atlas = ExtResource("4_86oub")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqoxj"]
+atlas = ExtResource("3_43lgj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86oub"]
+atlas = ExtResource("3_43lgj")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_43lgj"]
 animations = [{
@@ -32,6 +75,51 @@ animations = [{
 "loop": true,
 "name": &"fireball",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qaphm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mi4h5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyo3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1fb5b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tyqc2")
+}],
+"loop": true,
+"name": &"ice_blast",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pq144")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0rtms")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxa2u")
+}],
+"loop": true,
+"name": &"lightning_bolt",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqoxj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86oub")
+}],
+"loop": true,
+"name": &"wind_blast",
+"speed": 10.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cb14k"]
@@ -43,8 +131,8 @@ script = ExtResource("1_1gl40")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=798713564]
 sprite_frames = SubResource("SpriteFrames_43lgj")
-animation = &"fireball"
-frame_progress = 0.99730927
+animation = &"ice_blast"
+frame_progress = 0.7652176
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=765151817 node_paths=PackedStringArray("hitbox_shape")]
 collision_layer = 2
@@ -55,6 +143,6 @@ passive_attack = ExtResource("4_7kba2")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1706968796]
-position = Vector2(-1, 2)
+position = Vector2(0, 2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_cb14k")

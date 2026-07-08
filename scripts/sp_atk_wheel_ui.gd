@@ -1,5 +1,6 @@
 extends Node
 
+@export var body: Player
 @onready var selection_wheel: Control = $UI/SelectionWheel
 @onready var equip: Label = $UI/equip
 
@@ -11,6 +12,7 @@ func _ready() -> void:
 
 func tick(delta: float) -> void:
 	if toggle_pressed:
+		print("showing wheel")
 		selection_wheel.show()
 	elif toggle_released:
 		var special_attack = selection_wheel.Close()

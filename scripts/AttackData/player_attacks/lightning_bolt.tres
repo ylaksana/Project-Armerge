@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://ct6b57pd1viei"]
+
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_vnxdw"]
+
+[resource]
+script = ExtResource("1_vnxdw")
+animation_name = "lightning_bolt"
+damage = 20.0
+damage_type = "lightning"
+attack_weight = "light"
+tween_delay = 0.2
+spawn_delay = 1.0
+melee = false
+metadata/_custom_type_script = "uid://d0d17vf4l00h6"
