@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://bx6sug35tndoa"]
 
-[ext_resource type="Script" uid="uid://creiycyjmjwc4" path="res://scripts/fireball.gd" id="1_1gl40"]
+[ext_resource type="Script" uid="uid://creiycyjmjwc4" path="res://scripts/special_attack.gd" id="1_1gl40"]
 [ext_resource type="Texture2D" uid="uid://csda7wfu41tqn" path="res://assets/fireball.png" id="1_3s14c"]
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="2_d25t8"]
 [ext_resource type="Texture2D" uid="uid://yq0v5b3k2wjd" path="res://assets/wind_blast.png" id="3_43lgj"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="3_cb14k"]
 [ext_resource type="Texture2D" uid="uid://dkluecd5mllyd" path="res://assets/ice-blast.png" id="3_vqoxj"]
 [ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="4_7kba2"]
 [ext_resource type="Texture2D" uid="uid://ddh6e6q6fu6fi" path="res://assets/lightning-bolt.png" id="4_86oub"]
+[ext_resource type="Resource" uid="uid://ly7h4tqulljh" path="res://scripts/AttackData/player_attacks/ice_blast.tres" id="4_i6wiq"]
+[ext_resource type="Resource" uid="uid://ct6b57pd1viei" path="res://scripts/AttackData/player_attacks/lightning_bolt.tres" id="5_in1q6"]
+[ext_resource type="Resource" uid="uid://c8k5yt4nawl3n" path="res://scripts/AttackData/player_attacks/wind_blast.tres" id="6_tjbeh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1gl40"]
 atlas = ExtResource("1_3s14c")
@@ -126,13 +130,14 @@ animations = [{
 radius = 5.0
 height = 20.0
 
-[node name="fireball" type="Node2D" unique_id=1422143699]
+[node name="special_attack" type="Node2D" unique_id=1422143699]
 script = ExtResource("1_1gl40")
+special_attacks = Array[ExtResource("2_d25t8")]([ExtResource("4_7kba2"), ExtResource("4_i6wiq"), ExtResource("5_in1q6"), ExtResource("6_tjbeh")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=798713564]
 sprite_frames = SubResource("SpriteFrames_43lgj")
 animation = &"ice_blast"
-frame_progress = 0.7652176
+frame_progress = 0.94894814
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=765151817 node_paths=PackedStringArray("hitbox_shape")]
 collision_layer = 2

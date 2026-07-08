@@ -80,14 +80,14 @@ func _on_animation_finished() -> void:
 	# combo window
 	print("animation_finished - is_attacking: ", is_attacking)
 	print("animation_finished - wants_special_attack: ", wants_special_attack)
-	if (body.animated_sprite.animation in attack_animations) or body.hitbox_component.curr_atk == body.attack_component.special_attack:
+	if (body.animated_sprite.animation in attack_animations) or body.hitbox_component.curr_atk.is_special_attack:
 		if body.is_on_floor():
 			if is_aerial:
 				is_aerial = false
 				_on_combo_timer_timeout()
 			else:
 				# continue if attack is valid in combo
-				if (body.animated_sprite.animation != attack_animations[-1]) or body.hitbox_component.curr_atk == body.attack_component.special_attack:
+				if (body.animated_sprite.animation != attack_animations[-1]) or body.hitbox_component.curr_atk.is_special_attack:
 					print("combo timer start!")
 					combo_timer.start()
 				# end if end of the combo

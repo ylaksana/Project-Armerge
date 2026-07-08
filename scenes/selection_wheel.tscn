@@ -20,7 +20,7 @@ resource_name = "lightning"
 atlas = ExtResource("4_01igl")
 region = Rect2(0, 0, 32, 32)
 script = ExtResource("2_nkeuc")
-name = "lightning"
+name = "lightning_bolt"
 metadata/_custom_type_script = "uid://c1cexbc62u4y2"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i6x0t"]
@@ -29,7 +29,7 @@ atlas = ExtResource("5_gu6r8")
 region = Rect2(0, 0, 32, 32)
 filter_clip = true
 script = ExtResource("2_nkeuc")
-name = "ice"
+name = "ice_blast"
 metadata/_custom_type_script = "uid://c1cexbc62u4y2"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gu6r8"]
@@ -37,7 +37,7 @@ resource_name = "wind"
 atlas = ExtResource("6_01igl")
 region = Rect2(0, 0, 32, 32)
 script = ExtResource("2_nkeuc")
-name = "wind"
+name = "wind_blast"
 metadata/_custom_type_script = "uid://c1cexbc62u4y2"
 
 [node name="SelectionWheel" type="Control" unique_id=349020001]

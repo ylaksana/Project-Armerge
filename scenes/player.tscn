@@ -23,11 +23,11 @@
 [ext_resource type="Script" uid="uid://c5nogp5tvbpi2" path="res://scripts/hitstop_manager.gd" id="15_oprun"]
 [ext_resource type="Resource" uid="uid://nhjtrl0pcpg" path="res://scripts/AttackData/player_attacks/basicattack_4.tres" id="17_i4ail"]
 [ext_resource type="Script" uid="uid://culvyt2nugrk4" path="res://scripts/attack_component.gd" id="18_fulsm"]
+[ext_resource type="PackedScene" uid="uid://bx6sug35tndoa" path="res://scenes/special_attack.tscn" id="19_dt7fs"]
 [ext_resource type="Script" uid="uid://duwvwirlh55ba" path="res://scripts/skill_component.gd" id="22_a38lo"]
 [ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
 [ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="25_ujl30"]
 [ext_resource type="Script" uid="uid://bnhea2j45nh3o" path="res://scripts/combo_component.gd" id="27_31cv2"]
-[ext_resource type="Script" uid="uid://bmbnh4unnrorp" path="res://scripts/special_attack_component.gd" id="28_pf23h"]
 [ext_resource type="PackedScene" uid="uid://cf3rx7jxl816b" path="res://scenes/special_attack_UI.tscn" id="29_dt7fs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
@@ -532,11 +532,11 @@ hurtbox = NodePath("../HurtboxComponent")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 
-[node name="SkillComponent" type="Node" parent="." unique_id=1293715402 node_paths=PackedStringArray("body", "skill_timer")]
+[node name="SpecialAttackComponent" type="Node" parent="." unique_id=1293715402 node_paths=PackedStringArray("body", "skill_timer")]
 script = ExtResource("22_a38lo")
 body = NodePath("..")
 skill_timer = NodePath("../Timers/SkillTimer")
-skills = Array[ExtResource("12_qfm1y")]([ExtResource("25_ujl30")])
+SPECIAL_ATTACK = ExtResource("19_dt7fs")
 metadata/_custom_type_script = "uid://duwvwirlh55ba"
 
 [node name="AttackComponent" type="Node" parent="." unique_id=225662518 node_paths=PackedStringArray("hitbox", "animated_sprite")]
@@ -559,10 +559,6 @@ body = NodePath("..")
 combo_timer = NodePath("../Timers/ComboTimer")
 animation_component = NodePath("../PlayerAnimationComponent")
 metadata/_custom_type_script = "uid://bnhea2j45nh3o"
-
-[node name="SpecialAttackComponent" type="Node" parent="." unique_id=220219426]
-script = ExtResource("28_pf23h")
-metadata/_custom_type_script = "uid://bmbnh4unnrorp"
 
 [node name="SpecialAttackWheel" parent="." unique_id=1316423248 node_paths=PackedStringArray("body") instance=ExtResource("29_dt7fs")]
 body = NodePath("..")
