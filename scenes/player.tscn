@@ -32,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://ly7h4tqulljh" path="res://scripts/AttackData/player_attacks/ice_blast.tres" id="30_gl8cc"]
 [ext_resource type="Resource" uid="uid://ct6b57pd1viei" path="res://scripts/AttackData/player_attacks/lightning_bolt.tres" id="31_487ah"]
 [ext_resource type="Resource" uid="uid://c8k5yt4nawl3n" path="res://scripts/AttackData/player_attacks/wind_blast.tres" id="32_md1ol"]
+[ext_resource type="Script" uid="uid://d188tehfqfdn2" path="res://scripts/ailment_component.gd" id="33_487ah"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -511,15 +512,14 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite", "attack_component") instance=ExtResource("9_ur7pv")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "ailment_component") instance=ExtResource("9_ur7pv")]
 process_mode = 3
 offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
 hurtbox = NodePath("../HurtboxComponent")
-animated_sprite = NodePath("../AnimatedSprite2D")
-attack_component = NodePath("../AttackComponent")
+ailment_component = NodePath("../AilmentComponent")
 
 [node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("body", "animated_sprite", "movement_component")]
 script = ExtResource("11_d2wvv")
@@ -567,7 +567,17 @@ SPECIAL_ATTACK = ExtResource("19_dt7fs")
 special_attacks = Array[ExtResource("12_qfm1y")]([ExtResource("25_ujl30"), ExtResource("30_gl8cc"), ExtResource("31_487ah"), ExtResource("32_md1ol")])
 metadata/_custom_type_script = "uid://duwvwirlh55ba"
 
+[node name="AilmentComponent" type="Node" parent="." unique_id=13921916 node_paths=PackedStringArray("body", "duration_timer", "tick_timer", "health_component")]
+script = ExtResource("33_487ah")
+body = NodePath("..")
+duration_timer = NodePath("../Timers/AilmentTimer")
+tick_timer = NodePath("../Timers/TickTimer")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://d188tehfqfdn2"
+
 [node name="Timers" type="Node" parent="." unique_id=69962899]
+
+[node name="AilmentTimer" type="Timer" parent="Timers" unique_id=1833286203]
 
 [node name="SkillTimer" type="Timer" parent="Timers" unique_id=2132203243]
 
@@ -575,5 +585,8 @@ metadata/_custom_type_script = "uid://duwvwirlh55ba"
 wait_time = 0.3
 one_shot = true
 
+[node name="TickTimer" type="Timer" parent="Timers" unique_id=1702994960]
+
 [connection signal="timeout" from="Timers/ComboTimer" to="PlayerAnimationComponent" method="_on_combo_timer_timeout"]
 [connection signal="timeout" from="Timers/ComboTimer" to="ComboComponent" method="_on_combo_timer_timeout"]
+[connection signal="timeout" from="Timers/TickTimer" to="AilmentComponent" method="_on_tick_timer_timeout"]

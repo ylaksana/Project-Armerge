@@ -1,9 +1,30 @@
 [gd_scene format=3 uid="uid://c288oin3b1ca5"]
 
+[ext_resource type="Texture2D" uid="uid://dounusmv12dm8" path="res://assets/vfx/burn-vfx.png" id="1_15wp8"]
 [ext_resource type="Texture2D" uid="uid://cu8156bgyxt6c" path="res://assets/vfx/detected.png" id="1_mkq35"]
 [ext_resource type="Texture2D" uid="uid://dtx3oake61cpx" path="res://assets/vfx/fireball-hit-vfx.png" id="2_15wp8"]
 [ext_resource type="Texture2D" uid="uid://dfbdmqv47haq8" path="res://assets/vfx/hit-vfx.png" id="2_tsiwy"]
 [ext_resource type="Script" uid="uid://bm73bwwdil5f" path="res://scripts/vfx.gd" id="3_15wp8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a2jm6"]
+atlas = ExtResource("1_15wp8")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t1sy"]
+atlas = ExtResource("1_15wp8")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nbij"]
+atlas = ExtResource("1_15wp8")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1j5i"]
+atlas = ExtResource("1_15wp8")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6jve"]
+atlas = ExtResource("1_15wp8")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ks6r"]
 atlas = ExtResource("1_mkq35")
@@ -51,6 +72,26 @@ region = Rect2(39, 0, 13, 11)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5lsgk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a2jm6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2t1sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nbij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1j5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w6jve")
+}],
+"loop": true,
+"name": &"burn",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_4ks6r")
@@ -102,7 +143,6 @@ animations = [{
 
 [node name="vfx" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"fireball_hit"
-frame = 3
-frame_progress = 1.0
+animation = &"burn"
+frame_progress = 0.64727193
 script = ExtResource("3_15wp8")

@@ -4,11 +4,12 @@ signal vfx_freed(exists: bool)
 
 # vfx
 @export var vfx_scene: PackedScene
+@export var ailment_component: AilmentComponent
 
 var detect_vfx_node: Node
 var hit_vfx_node: Node
 var fireball_hit_vfx_node: Node
- 
+var ailment_vfx_node: Node
 
 func detected_vfx(body: CharacterBody2D) -> void:
 	if vfx_scene:
@@ -47,3 +48,33 @@ func fireball_hit_vfx(body: CharacterBody2D)-> void:
 		get_tree().root.add_child(fireball_hit_vfx_node)
 		fireball_hit_vfx_node.global_position = position
 		fireball_hit_vfx_node.fireball_hit()
+
+func burn_vfx(body) -> void:
+	if ailment_vfx_node:
+		return
+	ailment_vfx_node = vfx_scene.instantiate()
+	body.add_child(ailment_vfx_node)
+	ailment_vfx_node.burn(ailment_component.duration_timer)
+
+func freeze_vfx(body) -> void:
+	pass
+	
+func poison_vfx(body) -> void:
+	pass
+	
+func stun_vfx(body) -> void:
+	pass
+	
+func _on_ailment(body: CharacterBody2D, curr_atk: AttackData):
+	if curr_atk.has_burn:
+		print("attack has burn effect")
+		burn_vfx(body)
+	if curr_atk.has_freeze:
+		print("attack has freeze effect")
+		freeze_vfx(body)
+	if curr_atk.has_poison:
+		print("attack has poison effect")
+		poison_vfx(body)
+	if curr_atk.has_stun:
+		print("attack has stun effect")
+		stun_vfx(body)

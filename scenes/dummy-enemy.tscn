@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="17_ojhgb"]
 [ext_resource type="Resource" uid="uid://b7hcljoqm2fwe" path="res://scripts/AttackData/dummy_enemy_attacks/spike_thrust.tres" id="18_rbm2g"]
 [ext_resource type="Resource" uid="uid://b2tfmtgf5qr7n" path="res://scripts/AttackData/dummy_enemy_attacks/spike_passive.tres" id="19_1pf28"]
+[ext_resource type="Script" uid="uid://d188tehfqfdn2" path="res://scripts/ailment_component.gd" id="20_rbm2g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -367,16 +368,14 @@ position = Vector2(0.5, 4)
 scale = Vector2(1.0045236, 1)
 shape = SubResource("RectangleShape2D_ewmnv")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "animated_sprite", "attack_component") instance=ExtResource("5_qwg2f")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "ailment_component") instance=ExtResource("5_qwg2f")]
 offset_left = -9.0
 offset_top = -13.0
 offset_right = 85.99999
 offset_bottom = -2.9999924
 max_health = 200.0
 hurtbox = NodePath("../HurtboxComponent")
-is_player = false
-animated_sprite = NodePath("../AnimatedSprite2D")
-attack_component = NodePath("../AttackComponent")
+ailment_component = NodePath("../AilmentComponent")
 
 [node name="EnemyAnimationComponent" type="Node" parent="." unique_id=1749495084 node_paths=PackedStringArray("body", "animated_sprite", "hurtbox")]
 script = ExtResource("7_c7r63")
@@ -390,11 +389,19 @@ script = ExtResource("8_oq36r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
 hurtbox = NodePath("../HurtboxComponent")
-raycast_timer = NodePath("../RaycastTimer")
+raycast_timer = NodePath("../Timers/RaycastTimer")
 front_raycast = NodePath("../AnimatedSprite2D/front_raycast")
 rear_raycast = NodePath("../AnimatedSprite2D/rear_raycast")
 tween = NodePath("../TweenManager")
 vfx = NodePath("../VFXManager")
+speed = null
+chase_speed = null
+jump = null
+gravity_multiplier = null
+acceleration = null
+attack_cooldown = null
+front_raycast_len = null
+rear_raycast_len = null
 metadata/_custom_type_script = "uid://c5x432goybt7o"
 
 [node name="AnimatedComponents" type="AnimationPlayer" parent="." unique_id=1694868199]
@@ -407,17 +414,14 @@ hurtbox = NodePath("../HurtboxComponent")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 
-[node name="RaycastTimer" type="Timer" parent="." unique_id=274615750]
-wait_time = 5.0
-one_shot = true
-
 [node name="TweenManager" type="Node" parent="." unique_id=1849761562]
 script = ExtResource("14_ewmnv")
 metadata/_custom_type_script = "uid://bs5mx1r43qj5f"
 
-[node name="VFXManager" type="Node" parent="." unique_id=1449673127]
+[node name="VFXManager" type="Node" parent="." unique_id=1449673127 node_paths=PackedStringArray("ailment_component")]
 script = ExtResource("15_3lqk8")
 vfx_scene = ExtResource("10_4os1g")
+ailment_component = NodePath("../AilmentComponent")
 metadata/_custom_type_script = "uid://ch4si6twbbct5"
 
 [node name="AttackComponent" type="Node" parent="." unique_id=1252422133 node_paths=PackedStringArray("hitbox", "animated_sprite")]
@@ -427,4 +431,24 @@ animated_sprite = NodePath("../AnimatedSprite2D")
 attacks = Array[ExtResource("17_ojhgb")]([ExtResource("18_rbm2g")])
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
-[connection signal="timeout" from="RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]
+[node name="AilmentComponent" type="Node" parent="." unique_id=827567875 node_paths=PackedStringArray("body", "duration_timer", "tick_timer", "health_component")]
+script = ExtResource("20_rbm2g")
+body = NodePath("..")
+duration_timer = NodePath("../Timers/AilmentTimer")
+tick_timer = NodePath("../Timers/TickTimer")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://d188tehfqfdn2"
+
+[node name="Timers" type="Node" parent="." unique_id=1228902529]
+
+[node name="RaycastTimer" type="Timer" parent="Timers" unique_id=274615750]
+wait_time = 5.0
+one_shot = true
+
+[node name="AilmentTimer" type="Timer" parent="Timers" unique_id=1239001555]
+
+[node name="TickTimer" type="Timer" parent="Timers" unique_id=1504332660]
+
+[connection signal="timeout" from="Timers/RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]
+[connection signal="timeout" from="Timers/AilmentTimer" to="AilmentComponent" method="_on_ailment_timer_timeout"]
+[connection signal="timeout" from="Timers/TickTimer" to="AilmentComponent" method="_on_tick_timer_timeout"]

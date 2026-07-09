@@ -17,7 +17,10 @@ func detect() -> void:
 		finished.emit()
 		_on_finished()
 	)
-
+	
+func burn(timer: Timer) -> void:
+	play("burn")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
 
 func _on_finished() -> void:
 	queue_free()

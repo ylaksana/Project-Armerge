@@ -4,11 +4,10 @@ signal health_changed(curr:float,max:float)
 signal died
 signal enemy_died
 
+@export var body: CharacterBody2D
 @export var max_health: float = 100.0
 @export var hurtbox: HurtboxComponent
-@export var is_player: bool = true
-@export var animated_sprite: AnimatedSprite2D
-@export var attack_component: AttackComponent
+@export var ailment_component: AilmentComponent
 @onready var reset_scene_timer: Timer = $ResetSceneTimer
 
 var curr_health : float = 0.0
@@ -22,7 +21,7 @@ func _ready() -> void:
 	#print("ResetVisibility node: ", $ResetVisibility)
 	curr_health = max_health
 	_setup_health_bar(curr_health)
-	hurtbox.hit_received.connect(damage)
+	hurtbox.hit_received.connect(_hit_taken)
 	_emit()
 	
 func _setup_health_bar(max_val: float) -> void:
@@ -52,22 +51,31 @@ func change_value(new_value: float) -> void:
 func _emit() -> void:
 	health_changed.emit(curr_health, max_health)
 	
-func damage(hitbox: HitboxComponent) -> void:
+	
+func _hit_taken(hitbox: HitboxComponent):
 	print("hitbox_owner: ", hitbox.owner)
 	print(hitbox.damage, " damage taken!")
-	curr_health = clamp(curr_health - hitbox.damage, 0.0, max_health)
+	damage(hitbox.damage)
+	if hitbox.curr_atk:
+		print("hitbox.curr_atk.has_ailment = ", hitbox.curr_atk.has_ailment)
+		if hitbox.curr_atk.has_ailment:
+			print("ailment dealt!")
+			ailment_component.inflict_ailment(hitbox.curr_atk)
+	
+func damage(damage_amount: float) -> void:
+	curr_health = clamp(curr_health - damage_amount, 0.0, max_health)
 	_emit()
 	change_value(curr_health)
 	print("curr_health: ", curr_health)
 	if curr_health == 0.0:
-		if is_player:
+		if body is Player:
 			("player is dead")
 			died.emit()
 		else:
 			if not is_dying:
 				is_dying = true
 				enemy_died.emit()
-
+	
 func _on_reset_visibility_timeout() -> void:
 	_change_opacity(0.0)
 	

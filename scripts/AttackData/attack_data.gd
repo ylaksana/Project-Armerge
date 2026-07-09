@@ -17,7 +17,13 @@ class_name AttackData extends Resource
 @export var projectile_speed: float = 0.0
 @export var projectile_duration: float = 0.0
 @export var is_special_attack: bool = false
+
+# ailments
+@export var has_ailment: bool = false
 @export var has_poison: bool = false 
 @export var has_burn: bool = false
 @export var has_freeze: bool = false
 @export var has_stun: bool = false
+@export var tick_damage: float = 0.0
+@export var tick_duration: float = 0.0
+@export var ailment_duration: float = 0.0
