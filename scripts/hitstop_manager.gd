@@ -6,30 +6,25 @@ class_name HitstopManager extends Node
 
 func _ready() -> void:
 	hurtbox.hit_received.connect(_on_hit)
-	
-func light_hit() -> void:
+	health_component.health_changed.connect(_on_health_changed)
+
+func damage_flash() -> void:
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
 	get_tree().create_timer(0.1, true, false, true).timeout.connect(
 		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
 	)
+
+func light_hit() -> void:
 	get_tree().paused = true
 	await get_tree().create_timer(0.01, true).timeout
 	get_tree().paused = false
 	
 func medium_hit() -> void:
-	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
-	await get_tree().create_timer(0.1, true, false, true).timeout
-	animated_sprite.material.set_shader_parameter("hit_flash_on", false)
 	get_tree().paused = true
 	await get_tree().create_timer(0.05, true).timeout
 	get_tree().paused = false
 	
-	
 func heavy_hit() -> void:
-	animated_sprite.material.set_shader_parameter("hit_flash_on",true)
-	get_tree().create_timer(0.25, true, false, true).timeout.connect(
-		func(): animated_sprite.material.set_shader_parameter("hit_flash_on",false)
-	)
 	get_tree().paused = true
 	await get_tree().create_timer(0.15, true).timeout
 	get_tree().paused = false
@@ -55,5 +50,5 @@ func _on_hit(hitbox: HitboxComponent) -> void:
 	elif attack_type == "heavy":
 		heavy_hit()
 		
-
-		
+func _on_health_changed() -> void:
+	damage_flash()

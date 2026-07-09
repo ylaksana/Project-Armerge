@@ -1,6 +1,6 @@
 class_name HealthComponent extends ProgressBar
 
-signal health_changed(curr:float,max:float)
+signal health_changed()
 signal died
 signal enemy_died
 
@@ -49,7 +49,7 @@ func change_value(new_value: float) -> void:
 	change_value_tween.tween_property(self, "value", new_value, 0.35).set_trans(Tween.TRANS_SINE)
 
 func _emit() -> void:
-	health_changed.emit(curr_health, max_health)
+	health_changed.emit()
 	
 	
 func _hit_taken(hitbox: HitboxComponent):
