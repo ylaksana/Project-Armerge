@@ -53,6 +53,7 @@ func _emit() -> void:
 	health_changed.emit(curr_health, max_health)
 	
 func damage(hitbox: HitboxComponent) -> void:
+	print("hitbox_owner: ", hitbox.owner)
 	print(hitbox.damage, " damage taken!")
 	curr_health = clamp(curr_health - hitbox.damage, 0.0, max_health)
 	_emit()

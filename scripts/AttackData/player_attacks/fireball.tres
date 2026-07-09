@@ -15,4 +15,5 @@ melee = false
 projectile_speed = 300.0
 projectile_duration = 0.5
 is_special_attack = true
+has_burn = true
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"
