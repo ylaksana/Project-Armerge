@@ -13,7 +13,7 @@ class_name EnemyMovementComponent extends Node
 
 # parameters
 @export var speed: int = 25
-@export var chase_speed: int = 75
+@export var chase_speed_multiplier: int = 3
 @export var jump: float = 6.0
 @export var gravity_multiplier: float = 3.0
 @export var acceleration: int = 300
@@ -26,6 +26,7 @@ enum State{
 	WANDER,
 	CHASE,
 	ATTACK,
+	HURT,
 	STUNNED
 }
 
@@ -55,10 +56,15 @@ func tick(delta: float):
 	# always affects the enemy
 	gravity(delta)
 	
-	if curr_state in [State.ATTACK, State.STUNNED]:
+	if curr_state in [State.ATTACK, State.HURT]:
 		body.move_and_slide()
 		return
-		
+	
+	if curr_state == State.STUNNED:
+		movement(delta)
+		body.move_and_slide()
+		return
+	
 	# AI resumes if not hit
 	movement(delta)
 	wander()
@@ -98,12 +104,15 @@ func stop_chase():
 		raycast_timer.start()
 		
 func movement(delta: float):
-	if curr_state == State.WANDER:
-		body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
-	elif curr_state == State.CHASE:
-		body.velocity = body.velocity.move_toward(direction * chase_speed,  acceleration * delta)
-	else:
-		body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
+	match curr_state:
+		State.WANDER:
+			body.velocity = body.velocity.move_toward(direction * speed,  acceleration * delta)
+		State.CHASE:
+			body.velocity = body.velocity.move_toward(direction * speed * chase_speed_multiplier,  acceleration * delta)
+		State.HURT, State.ATTACK, State.STUNNED:
+			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
+		_:
+			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 	
 func gravity(delta: float):
 	if not body.is_on_floor():
@@ -167,25 +176,29 @@ func attack_finished() -> void:
 	on_cooldown = false
 	
 func _on_hit_received(hitbox: HitboxComponent) -> void:
-		if curr_state not in [State.ATTACK, State.STUNNED]:
+	if curr_state != State.STUNNED:
+		if curr_state not in [State.ATTACK, State.HURT]:
 			prev_state = curr_state
-		curr_state = State.STUNNED
+		curr_state = State.HURT
 		
-		# THIS IS BAD, FIX LATER AND CONSOLIDATE HIT AND AILMENT VFX
-		if hitbox.curr_atk:
-			print("damage_type: ",hitbox.curr_atk.damage_type)
-			# hit vfx
-			if hitbox.curr_atk.damage_type == "physical":
-				vfx.hit_vfx(body)
-			elif hitbox.curr_atk.damage_type == "fire":
-				vfx.fireball_hit_vfx(body)
-			# ailment vfx
-			if hitbox.curr_atk.has_ailment:
-				vfx._on_ailment(body, hitbox.curr_atk)
-			
-		tween.knockback_motion(body, hitbox)
+	# THIS IS BAD, FIX LATER AND CONSOLIDATE HIT AND AILMENT VFXs
+	if hitbox.curr_atk:
+		print("damage_type: ",hitbox.curr_atk.damage_type)
+		# hit vfx
+		if hitbox.curr_atk.damage_type == "physical":
+			vfx.hit_vfx(body)
+		elif hitbox.curr_atk.damage_type == "fire":
+			vfx.fireball_hit_vfx(body)
+		# ailment vfx
+		if hitbox.curr_atk.has_ailment:
+			vfx._on_ailment(body, hitbox.curr_atk)
+		
+	tween.knockback_motion(body, hitbox)
 
 func restore_state() -> void:
+	#print(State.keys()[prev_state])
+	if curr_state == State.STUNNED:
+		return
 	curr_state = prev_state
 	
 func vfx_state(exists: bool) -> void:

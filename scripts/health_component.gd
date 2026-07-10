@@ -51,7 +51,6 @@ func change_value(new_value: float) -> void:
 func _emit() -> void:
 	health_changed.emit()
 	
-	
 func _hit_taken(hitbox: HitboxComponent):
 	print("hitbox_owner: ", hitbox.owner)
 	print(hitbox.damage, " damage taken!")

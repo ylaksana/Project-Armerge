@@ -512,12 +512,13 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 position = Vector2(4, -7)
 shape = SubResource("RectangleShape2D_y4r1p")
 
-[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("hurtbox", "ailment_component") instance=ExtResource("9_ur7pv")]
+[node name="HealthComponent" parent="." unique_id=1749989123 node_paths=PackedStringArray("body", "hurtbox", "ailment_component") instance=ExtResource("9_ur7pv")]
 process_mode = 3
 offset_left = -5.0
 offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
+body = NodePath("..")
 hurtbox = NodePath("../HurtboxComponent")
 ailment_component = NodePath("../AilmentComponent")
 
@@ -567,9 +568,9 @@ SPECIAL_ATTACK = ExtResource("19_dt7fs")
 special_attacks = Array[ExtResource("12_qfm1y")]([ExtResource("25_ujl30"), ExtResource("30_gl8cc"), ExtResource("31_487ah"), ExtResource("32_md1ol")])
 metadata/_custom_type_script = "uid://duwvwirlh55ba"
 
-[node name="AilmentComponent" type="Node" parent="." unique_id=13921916 node_paths=PackedStringArray("body", "duration_timer", "tick_timer", "health_component")]
+[node name="AilmentComponent" type="Node" parent="." unique_id=13921916 node_paths=PackedStringArray("movement_component", "duration_timer", "tick_timer", "health_component")]
 script = ExtResource("33_487ah")
-body = NodePath("..")
+movement_component = NodePath("../MovementComponent")
 duration_timer = NodePath("../Timers/AilmentTimer")
 tick_timer = NodePath("../Timers/TickTimer")
 health_component = NodePath("../HealthComponent")

@@ -6,7 +6,7 @@
 script = ExtResource("1_vnxdw")
 animation_name = "lightning_bolt"
 active_frames = Array[int]([0, 1, 2])
-damage = 20.0
+damage = 5.0
 damage_type = "lightning"
 attack_weight = "light"
 tween_delay = 1.0
@@ -15,5 +15,7 @@ melee = false
 projectile_speed = 300.0
 projectile_duration = 0.5
 is_special_attack = true
+has_ailment = true
 has_stun = true
+ailment_duration = 5.0
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

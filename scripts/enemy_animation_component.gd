@@ -35,6 +35,8 @@ func tick(delta: float):
 			body.hitbox_component.scale.x = -1.0 if animated_sprite.flip_h else 1.0
 		elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.CHASE or body.enemy_movement_component.prev_state == EnemyMovementComponent.State.CHASE:
 			animated_sprite.play("aggressive")
+		elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.STUNNED:
+			animated_sprite.play("stunned")
 		else:
 			animated_sprite.play("idle")
 				
