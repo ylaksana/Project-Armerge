@@ -22,5 +22,13 @@ func burn(timer: Timer) -> void:
 	play("burn")
 	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
 
+func freeze(timer:Timer) -> void:
+	play("freeze")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
+	
+func electric_stun(timer:Timer) -> void:
+	play("electric_stun")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
+	
 func _on_finished() -> void:
 	queue_free()

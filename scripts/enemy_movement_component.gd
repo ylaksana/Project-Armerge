@@ -51,7 +51,7 @@ func _ready() -> void:
 func tick(delta: float):
 	if body == null or body.player.health_component.curr_health <= 0 or vfx_exists:
 		return
-	#print(State.keys()[curr_state])
+	print(State.keys()[curr_state])
 	
 	# always affects the enemy
 	gravity(delta)

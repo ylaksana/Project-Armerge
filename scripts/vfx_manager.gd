@@ -50,22 +50,24 @@ func fireball_hit_vfx(body: CharacterBody2D)-> void:
 		fireball_hit_vfx_node.fireball_hit()
 
 func burn_vfx(body) -> void:
-	if ailment_vfx_node:
-		return
-	ailment_vfx_node = vfx_scene.instantiate()
 	body.add_child(ailment_vfx_node)
 	ailment_vfx_node.burn(ailment_component.duration_timer)
 
 func freeze_vfx(body) -> void:
-	pass
+	body.add_child(ailment_vfx_node)
+	ailment_vfx_node.freeze(ailment_component.duration_timer)
 	
 func poison_vfx(body) -> void:
 	pass
 	
 func stun_vfx(body) -> void:
-	pass
+	body.add_child(ailment_vfx_node)
+	ailment_vfx_node.electric_stun(ailment_component.duration_timer)
 	
 func _on_ailment(body: CharacterBody2D, curr_atk: AttackData):
+	if ailment_vfx_node:
+		ailment_vfx_node._on_finished()
+	ailment_vfx_node = vfx_scene.instantiate()
 	if curr_atk.has_burn:
 		print("attack has burn effect")
 		burn_vfx(body)
