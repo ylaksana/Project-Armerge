@@ -1,0 +1,75 @@
+[33m37479b1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Reapply "added elementalstate component"
+[33m7730751[m Revert "added elementalstate component"
+[33ma14115b[m added elementalstate component
+[33m1a4e748[m started working on elemental reactions
+[33mcada9f4[m implemented ailments v1
+[33m8662322[m rewrote hitstop logic
+[33mf1ff467[m added ailment component and burn effect
+[33ma0e579a[m fixed double on_attack_triggered
+[33m9d93428[m finished implementing special attack swap
+[33me9cee57[m still reconfiguring special attack instantiation
+[33m051c72e[m reconfiguring special attacks to one scene
+[33m494c8e6[m added elemental attack animations
+[33m200a99f[m added special attack menu
+[33mde298c0[m added flame slash sprite sheet
+[33mdaae672[m fireball can now be used between strikes in combos
+[33m17f56fc[m fixed movement component and added special attack to the combo chain
+[33m920dc26[m simplified movement and animation component to react to combo_component states rather than syncing with states
+[33mad89db7[m reconfigured fireball firing
+[33m59c7c63[m still fixing combo and fireball logic
+[33m5b16286[m fixed more bugs in combo, animation, and movement logic
+[33mdd886c0[m decoupled combo and animation logic
+[33m9845367[m made skill search in skillcomponent to separate basic attacks from special attacks
+[33m5b694a1[m added fire hit vfx
+[33m2eb2489[m added fireball cast animation
+[33m150baaa[m hitbox reconfiguration
+[33m1af6309[m reconfigured attack and hitbox functionality
+[33md36c229[m fixed bugs to original functionality before restructuring
+[33m60eb93e[m fixed some bugs from restructuring code
+[33m8bf0f3d[m refactored code to have hitbox pivot and attack logic in separate components
+[33md48f14f[m added skill_component and fireball
+[33mee187c1[m restructured codebase, added vfx_manager and tween_manager
+[33mbd90c1d[m fixed stunned and attack bugs
+[33m7a89c6a[m updated attack logic
+[33m701684b[m added attack logic and animations
+[33m893ec75[m removed hitbox disabling in tick disable
+[33m7d48e73[m enemies stop momentarily when detecting player
+[33m2aabba2[m replaced magic numbers with raycast set lens
+[33m7e3f225[m added rear_raycast
+[33m26402dd[m fixed health_component enemy_died duplicate signal emit
+[33mca41feb[m improved enemy AI tracking
+[33mafd82ef[m tweaked the enemy ai logic and removed has_hit flag from hitbox
+[33m0061249[m made enemy AI tracking v1
+[33m3965a24[m started on enemy detection AI
+[33m6b99231[m added basicattack_4 and hit_vfx test logic
+[33md92bec5[m hitstop logic v1
+[33m4f77104[m switched to resource-based hitstop logic
+[33m32ac106[m adding more knockback logic
+[33m80442ad[m added knockback logic to enemy
+[33mb7d3842[m added hitstop shader and timing to hits
+[33md4d7e42[m added basicattack_3 and attack tweening
+[33m7cf3864[m completed attack combo logic v1
+[33mbab9540[m improved attack combo logic
+[33m0b9c483[m fixed hitbox position logic
+[33m47074a8[m improved combo attack logic
+[33mc2b4332[m started on combos
+[33m567496f[m added basicattack_2 animation, CooldownTimer, and ComboTimer
+[33maccf7ce[m reset player collision layer 3
+[33m5b595dd[m restructured animation and hitbox logic to their own components
+[33m3afb2fe[m added pausing to winning and losing
+[33m30712fc[m added menus and killzone
+[33mc91eccc[m pause menu added
+[33madd661b[m improved death animation and logic
+[33m805ec37[m added death animation and logic
+[33m460ab40[m implemented healthbar v1
+[33m045dcf3[m separated attack damage from contact damage
+[33m7c0d8f7[m created a working first iteration of the hitbox system
+[33m124c064[m improved hitbox logic
+[33m38b1e5c[m improved hitbox logic
+[33m866b1b6[m worked on hitbox logic
+[33mfbfb250[m started making hitbox and hurtbox detection
+[33mb6b7382[m moved around more animation logic
+[33m662b154[m added change to animation logic
+[33m50e4fe0[m fixed animation logic
+[33mcab01c2[m updated input animations so that they fuily play out
+[33ma1b74d8[m Initial commit
