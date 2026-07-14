@@ -2,6 +2,7 @@ class_name MovementComponent extends Node
 
 @export var body: Player
 @export var animated_sprite: AnimatedSprite2D
+@export var animation_component: PlayerAnimationComponent
 @export var speed: float = 150.0
 @export var jump = 6.0
 @export var gravity_multiplier = 3.0
