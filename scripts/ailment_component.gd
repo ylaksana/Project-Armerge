@@ -55,27 +55,6 @@ func stun():
 		duration_timer.start(ailment_duration)
 		duration_timer.timeout.connect(func(): movement_component.curr_state = prev_state)
 
-# TODO - elemental reactions
-# fire -> lightning
-func combust() -> void:
-	pass
-	
-# lightning -> fire
-func supercombust() -> void:
-	pass
-	
-#wind -> lightning
-func storm() -> void:
-	pass
-
-# ice -> lightning
-func supercharged() -> void:
-	pass
-
-# wind -> fire
-func ignite() -> void:
-	pass
-
 func _on_ailment_timer_timeout() -> void:
 	print("ailment stopped!")
 	if not tick_timer.is_stopped():
