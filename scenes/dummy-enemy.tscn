@@ -454,6 +454,9 @@ one_shot = true
 
 [node name="TickTimer" type="Timer" parent="Timers" unique_id=1504332660]
 
+[node name="ElementalCooldownTimer" type="Timer" parent="Timers" unique_id=2116290650]
+one_shot = true
+
 [connection signal="timeout" from="Timers/RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]
 [connection signal="timeout" from="Timers/AilmentTimer" to="AilmentComponent" method="_on_ailment_timer_timeout"]
 [connection signal="timeout" from="Timers/TickTimer" to="AilmentComponent" method="_on_tick_timer_timeout"]

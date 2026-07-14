@@ -27,3 +27,8 @@ class_name AttackData extends Resource
 @export var tick_damage: float = 0.0
 @export var tick_duration: float = 0.0
 @export var ailment_duration: float = 0.0
+
+# elemental reactions
+enum ElementType {FIRE, ICE, ELECTRIC}
+@export var has_element: bool = false
+@export var element_type: ElementType

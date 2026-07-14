@@ -15,6 +15,7 @@ melee = false
 projectile_speed = 300.0
 projectile_duration = 0.5
 is_special_attack = true
+has_element = true
 has_ailment = true
 has_freeze = true
 ailment_duration = 5.0
