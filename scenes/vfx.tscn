@@ -5,8 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://dtx3oake61cpx" path="res://assets/vfx/fireball-hit-vfx.png" id="2_15wp8"]
 [ext_resource type="Texture2D" uid="uid://dfbdmqv47haq8" path="res://assets/vfx/hit-vfx.png" id="2_tsiwy"]
 [ext_resource type="Script" uid="uid://bm73bwwdil5f" path="res://scripts/vfx.gd" id="3_15wp8"]
+[ext_resource type="Texture2D" uid="uid://l4lqco7awcrk" path="res://assets/vfx/electric-afflicted-icon.png" id="3_a2jm6"]
 [ext_resource type="Texture2D" uid="uid://cugy4k1dxr05f" path="res://assets/vfx/stun-vfx.png" id="3_yl47v"]
 [ext_resource type="Texture2D" uid="uid://b1hmmwhh1iqun" path="res://assets/vfx/freeze_vfx.png" id="4_chsux"]
+[ext_resource type="Texture2D" uid="uid://cjj74u1rhwtj1" path="res://assets/vfx/fireball-afflict-icon.png" id="5_2t1sy"]
+[ext_resource type="Texture2D" uid="uid://d3c2m08qs3xtu" path="res://assets/vfx/ice-afflicted-icon.png" id="9_7nbij"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a2jm6"]
 atlas = ExtResource("1_15wp8")
@@ -40,6 +43,34 @@ region = Rect2(42, 0, 14, 19)
 atlas = ExtResource("1_mkq35")
 region = Rect2(56, 0, 14, 19)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6h5o"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o10w8"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1dg3"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmm45"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57e4o"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kaoa8"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwhmx"]
+atlas = ExtResource("3_a2jm6")
+region = Rect2(192, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_2ebds"]
 atlas = ExtResource("3_yl47v")
 region = Rect2(0, 0, 32, 32)
@@ -55,6 +86,26 @@ region = Rect2(64, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_h3jx4"]
 atlas = ExtResource("3_yl47v")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0atfs"]
+atlas = ExtResource("5_2t1sy")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_173j4"]
+atlas = ExtResource("5_2t1sy")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpj06"]
+atlas = ExtResource("5_2t1sy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47k0v"]
+atlas = ExtResource("5_2t1sy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg85r"]
+atlas = ExtResource("5_2t1sy")
+region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_chsux"]
 atlas = ExtResource("2_15wp8")
@@ -104,6 +155,22 @@ region = Rect2(26, 0, 13, 11)
 atlas = ExtResource("2_tsiwy")
 region = Rect2(39, 0, 13, 11)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ipon"]
+atlas = ExtResource("9_7nbij")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfcqi"]
+atlas = ExtResource("9_7nbij")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewysq"]
+atlas = ExtResource("9_7nbij")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21v12"]
+atlas = ExtResource("9_7nbij")
+region = Rect2(96, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_5lsgk"]
 animations = [{
 "frames": [{
@@ -142,6 +209,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_o6h5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o10w8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1dg3")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_cmm45")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57e4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kaoa8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwhmx")
+}],
+"loop": true,
+"name": &"electric-afflict",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_2ebds")
 }, {
 "duration": 1.0,
@@ -156,6 +249,26 @@ animations = [{
 "loop": true,
 "name": &"electric_stun",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0atfs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_173j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpj06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47k0v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg85r")
+}],
+"loop": true,
+"name": &"fire-afflict",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,9 +320,27 @@ animations = [{
 "loop": false,
 "name": &"hit",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ipon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfcqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewysq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21v12")
+}],
+"loop": true,
+"name": &"ice-afflict",
+"speed": 5.0
 }]
 
 [node name="vfx" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"freeze"
+animation = &"electric-afflict"
+frame_progress = 0.3012503
 script = ExtResource("3_15wp8")
