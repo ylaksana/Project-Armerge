@@ -94,7 +94,7 @@ func wander():
 func chase():
 	if curr_state == State.WANDER:
 		vfx_exists = true
-		vfx.detected_vfx(body)
+		vfx.detected_vfx()
 			
 	raycast_timer.stop()
 	curr_state = State.CHASE
@@ -188,10 +188,10 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 		if hitbox.curr_atk.damage_type == "physical":
 			vfx.hit_vfx(body)
 		elif hitbox.curr_atk.damage_type == "fire":
-			vfx.fireball_hit_vfx(body)
+			vfx.fireball_hit_vfx()
 		# ailment vfx
 		if hitbox.curr_atk.has_ailment:
-			vfx._on_ailment(body, hitbox.curr_atk)
+			vfx._on_ailment(hitbox.curr_atk)
 		
 	tween.knockback_motion(body, hitbox)
 

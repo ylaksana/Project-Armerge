@@ -5,7 +5,7 @@ uniform bool hit_flash_on = false;
 
 
 void fragment(){
-	vec4 sprite_color = texture(TEXTURE, UV);
-    vec3 final_rgb = hit_flash_on ? hit_flash_color.rgb : sprite_color.rgb;
-    COLOR = vec4(final_rgb, sprite_color.a) * COLOR;
+    if (hit_flash_on) {
+        COLOR = vec4(1.0, 1.0, 1.0, COLOR.a);
+    }
 }

@@ -1,6 +1,6 @@
 class_name ElementalStateComponent extends Node
 
-@export var animated_sprite: AnimatedSprite2D
+@export var body: CharacterBody2D
 @export var hurtbox: HurtboxComponent
 @export var elemental_cooldown_timer: Timer
 @export var elemental_residue_timer: Timer
@@ -35,6 +35,7 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 				print("applying elemental state to unafflicted entity")
 				apply_element(hitbox.curr_atk)
 				elemental_residue_timer.start(residue_duration)
+				
 			else:
 				print("curr_elemental_state = ", ElementState.keys()[curr_elemental_state])
 				print("attacking element = ", AttackData.ElementType.keys()[hitbox.curr_atk.element_type])
@@ -52,6 +53,7 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 			if ElementState.keys()[curr_elemental_state] == AttackData.ElementType.keys()[hitbox.curr_atk.element_type]:
 				print("apply the curr_elemental_state again!")
 				elemental_residue_timer.start(residue_duration)
+		body.vfx_manager.elemental_afflict(curr_elemental_state)
 		
 		
 	#else:
@@ -76,13 +78,13 @@ func apply_element(curr_atk: AttackData) -> void:
 func element_vfx() -> void:
 	#print("current element afflicted: ", ElementState.keys()[curr_elemental_state])
 	if curr_elemental_state == ElementState.FIRE:
-		animated_sprite.modulate = Color("ffa50074")
+		body.animated_sprite.modulate = Color("ffa500ff")
 	elif curr_elemental_state == ElementState.ICE:
-		animated_sprite.modulate = Color("abffff8e")
+		body.animated_sprite.modulate = Color("abffffff")
 	elif curr_elemental_state == ElementState.ELECTRIC:
-		animated_sprite.modulate = Color("ffff0076")
+		body.animated_sprite.modulate = Color("ffff00ff")
 	else:
-		animated_sprite.modulate = Color("WHITE")
+		body.animated_sprite.modulate = Color("WHITE")
 		
 
 

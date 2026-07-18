@@ -26,8 +26,20 @@ func freeze(timer:Timer) -> void:
 	play("freeze")
 	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
 	
-func electric_stun(timer:Timer) -> void:
+func electric_stun(timer: Timer) -> void:
 	play("electric_stun")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
+	
+func electric_afflict(timer: Timer) -> void:
+	play("electric_afflict")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
+	
+func fire_afflict(timer: Timer) -> void:
+	play("fire_afflict")
+	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
+	
+func ice_afflict(timer: Timer) -> void:
+	play("ice_afflict")
 	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
 	
 func _on_finished() -> void:

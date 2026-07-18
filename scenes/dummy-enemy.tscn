@@ -425,10 +425,10 @@ metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 script = ExtResource("14_ewmnv")
 metadata/_custom_type_script = "uid://bs5mx1r43qj5f"
 
-[node name="VFXManager" type="Node" parent="." unique_id=1449673127 node_paths=PackedStringArray("ailment_component")]
+[node name="VFXManager" type="Node" parent="." unique_id=1449673127 node_paths=PackedStringArray("body")]
 script = ExtResource("15_3lqk8")
+body = NodePath("..")
 vfx_scene = ExtResource("10_4os1g")
-ailment_component = NodePath("../AilmentComponent")
 metadata/_custom_type_script = "uid://ch4si6twbbct5"
 
 [node name="AttackComponent" type="Node" parent="." unique_id=1252422133 node_paths=PackedStringArray("hitbox", "animated_sprite")]
@@ -446,9 +446,9 @@ tick_timer = NodePath("../Timers/TickTimer")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://d188tehfqfdn2"
 
-[node name="ElementalStateComponent" type="Node" parent="." unique_id=1645682245 node_paths=PackedStringArray("animated_sprite", "hurtbox", "elemental_cooldown_timer", "elemental_residue_timer", "reaction_component")]
+[node name="ElementalStateComponent" type="Node" parent="." unique_id=1645682245 node_paths=PackedStringArray("body", "hurtbox", "elemental_cooldown_timer", "elemental_residue_timer", "reaction_component")]
 script = ExtResource("21_1pf28")
-animated_sprite = NodePath("../AnimatedSprite2D")
+body = NodePath("..")
 hurtbox = NodePath("../HurtboxComponent")
 elemental_cooldown_timer = NodePath("../Timers/ElementalCooldownTimer")
 elemental_residue_timer = NodePath("../Timers/ElementalResidueTimer")

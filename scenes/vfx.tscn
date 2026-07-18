@@ -230,7 +230,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_fwhmx")
 }],
 "loop": true,
-"name": &"electric-afflict",
+"name": &"electric_afflict",
 "speed": 10.0
 }, {
 "frames": [{
@@ -267,7 +267,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_yg85r")
 }],
 "loop": true,
-"name": &"fire-afflict",
+"name": &"fire_afflict",
 "speed": 5.0
 }, {
 "frames": [{
@@ -335,12 +335,11 @@ animations = [{
 "texture": SubResource("AtlasTexture_21v12")
 }],
 "loop": true,
-"name": &"ice-afflict",
+"name": &"ice_afflict",
 "speed": 5.0
 }]
 
 [node name="vfx" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"electric-afflict"
-frame_progress = 0.3012503
+animation = &"fire_afflict"
 script = ExtResource("3_15wp8")

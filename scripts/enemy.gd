@@ -11,6 +11,8 @@ signal died
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_component: AttackComponent = $AttackComponent
 @onready var elemental_state_component: ElementalStateComponent = $ElementalStateComponent
+@onready var ailment_component: AilmentComponent = $AilmentComponent
+@onready var vfx_manager: VFXManager = $VFXManager
 
 
 func _ready() -> void:
