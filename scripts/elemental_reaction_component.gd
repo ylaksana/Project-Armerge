@@ -2,7 +2,10 @@
 class_name ElementalReactionComponent extends Node
 
 func reaction(element_state: ElementalStateComponent.ElementState, element_attack: AttackData.ElementType) -> void:
-	pass
+	if element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.ELECTRIC:
+		combust()
+	elif element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.WIND:
+		ignite()
 	
 # TODO - elemental reactions
 # fire -> lightning

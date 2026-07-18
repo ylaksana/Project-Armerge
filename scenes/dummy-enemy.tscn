@@ -20,6 +20,8 @@
 [ext_resource type="Resource" uid="uid://b7hcljoqm2fwe" path="res://scripts/AttackData/dummy_enemy_attacks/spike_thrust.tres" id="18_rbm2g"]
 [ext_resource type="Resource" uid="uid://b2tfmtgf5qr7n" path="res://scripts/AttackData/dummy_enemy_attacks/spike_passive.tres" id="19_1pf28"]
 [ext_resource type="Script" uid="uid://d188tehfqfdn2" path="res://scripts/ailment_component.gd" id="20_rbm2g"]
+[ext_resource type="Script" uid="uid://m6naofn6tey5" path="res://scripts/elemental_state_component.gd" id="21_1pf28"]
+[ext_resource type="Script" uid="uid://b363v8ybcjmui" path="res://scripts/elemental_reaction_component.gd" id="22_2uoas"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m0er"]
 size = Vector2(21, 14)
@@ -444,6 +446,19 @@ tick_timer = NodePath("../Timers/TickTimer")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://d188tehfqfdn2"
 
+[node name="ElementalStateComponent" type="Node" parent="." unique_id=1645682245 node_paths=PackedStringArray("animated_sprite", "hurtbox", "elemental_cooldown_timer", "elemental_residue_timer", "reaction_component")]
+script = ExtResource("21_1pf28")
+animated_sprite = NodePath("../AnimatedSprite2D")
+hurtbox = NodePath("../HurtboxComponent")
+elemental_cooldown_timer = NodePath("../Timers/ElementalCooldownTimer")
+elemental_residue_timer = NodePath("../Timers/ElementalResidueTimer")
+reaction_component = NodePath("../ElementalReactionComponent")
+metadata/_custom_type_script = "uid://m6naofn6tey5"
+
+[node name="ElementalReactionComponent" type="Node" parent="." unique_id=775563853]
+script = ExtResource("22_2uoas")
+metadata/_custom_type_script = "uid://b363v8ybcjmui"
+
 [node name="Timers" type="Node" parent="." unique_id=1228902529]
 
 [node name="RaycastTimer" type="Timer" parent="Timers" unique_id=274615750]
@@ -457,6 +472,11 @@ one_shot = true
 [node name="ElementalCooldownTimer" type="Timer" parent="Timers" unique_id=2116290650]
 one_shot = true
 
+[node name="ElementalResidueTimer" type="Timer" parent="Timers" unique_id=1590655744]
+
 [connection signal="timeout" from="Timers/RaycastTimer" to="EnemyMovementComponent" method="_on_raycast_timer_timeout"]
 [connection signal="timeout" from="Timers/AilmentTimer" to="AilmentComponent" method="_on_ailment_timer_timeout"]
 [connection signal="timeout" from="Timers/TickTimer" to="AilmentComponent" method="_on_tick_timer_timeout"]
+[connection signal="timeout" from="Timers/ElementalCooldownTimer" to="." method="_on_elemental_cooldown_timer_timeout"]
+[connection signal="timeout" from="Timers/ElementalCooldownTimer" to="ElementalStateComponent" method="_on_elemental_cooldown_timer_timeout"]
+[connection signal="timeout" from="Timers/ElementalResidueTimer" to="ElementalStateComponent" method="_on_elemental_residue_timer_timeout"]

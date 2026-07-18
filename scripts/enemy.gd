@@ -10,6 +10,7 @@ signal died
 @onready var animated_components: AnimationPlayer = $AnimatedComponents
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_component: AttackComponent = $AttackComponent
+@onready var elemental_state_component: ElementalStateComponent = $ElementalStateComponent
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _physics_process(delta: float) -> void:
 	#hitbox_component.tick(delta)
 	enemy_animation_component.tick(delta)
 	enemy_movement_component.tick(delta)
+	elemental_state_component.tick()
 	
 func _on_died() -> void:
 	died.emit()

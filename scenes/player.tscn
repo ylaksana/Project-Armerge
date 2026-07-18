@@ -482,11 +482,10 @@ autoplay = "basicattack_1"
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://bd2gw28n1owvf"
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "animation_component")]
+[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite")]
 script = ExtResource("4_qlg0r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
-animation_component = NodePath("../PlayerAnimationComponent")
 jump = -300.0
 gravity_multiplier = 0.0
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
