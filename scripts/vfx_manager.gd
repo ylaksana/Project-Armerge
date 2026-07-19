@@ -57,7 +57,6 @@ func freeze_vfx() -> void:
 	ailment_vfx_node.freeze(body.ailment_component.duration_timer)
 	
 func stun_vfx() -> void:
-	body.add_child(ailment_vfx_node)
 	ailment_vfx_node.electric_stun(body.ailment_component.duration_timer)
 	
 func poison_vfx() -> void:
@@ -71,13 +70,13 @@ func _on_ailment(curr_atk: AttackData):
 	if curr_atk.has_burn:
 		print("attack has burn effect")
 		burn_vfx()
-	if curr_atk.has_freeze:
+	elif curr_atk.has_freeze:
 		print("attack has freeze effect")
 		freeze_vfx()
-	if curr_atk.has_poison:
+	elif curr_atk.has_poison:
 		print("attack has poison effect")
 		poison_vfx()
-	if curr_atk.has_stun:
+	elif curr_atk.has_stun:
 		print("attack has stun effect")
 		stun_vfx()
 
@@ -92,16 +91,19 @@ func ice_afflict() -> void:
 	
 func elemental_afflict(curr_elemental_state: ElementalStateComponent.ElementState) -> void:
 	if elemental_state_vfx_node:
-		ailment_vfx_node._on_finished()
-	elemental_state_vfx_node = vfx_scene.instantiate()
-	body.add_child(elemental_state_vfx_node)
-	elemental_state_vfx_node.global_position = body.global_position + Vector2(0, -25)
-	if curr_elemental_state == ElementalStateComponent.ElementState.FIRE:
-		print("attack has burn effect")
-		fire_afflict()
-	elif curr_elemental_state == ElementalStateComponent.ElementState.ICE:
-		print("attack has freeze effect")
-		ice_afflict()
-	elif curr_elemental_state == ElementalStateComponent.ElementState.ELECTRIC:
-		print("attack has electric effect")
-		electric_afflict()
+		elemental_state_vfx_node._on_finished()
+		
+	if curr_elemental_state != ElementalStateComponent.ElementState.NONE:
+		elemental_state_vfx_node = vfx_scene.instantiate()
+		body.add_child(elemental_state_vfx_node)
+		elemental_state_vfx_node.global_position = body.global_position + Vector2(0, -25)
+		if curr_elemental_state == ElementalStateComponent.ElementState.FIRE:
+			print("attack has burn effect")
+			fire_afflict()
+		elif curr_elemental_state == ElementalStateComponent.ElementState.ICE:
+			print("attack has freeze effect")
+			ice_afflict()
+		elif curr_elemental_state == ElementalStateComponent.ElementState.ELECTRIC:
+			print("attack has electric effect")
+			electric_afflict()
+		

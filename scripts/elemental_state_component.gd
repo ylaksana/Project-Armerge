@@ -53,6 +53,7 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 			if ElementState.keys()[curr_elemental_state] == AttackData.ElementType.keys()[hitbox.curr_atk.element_type]:
 				print("apply the curr_elemental_state again!")
 				elemental_residue_timer.start(residue_duration)
+				
 		body.vfx_manager.elemental_afflict(curr_elemental_state)
 		
 		
