@@ -8,6 +8,7 @@ class_name AilmentComponent extends Node
 var tick_damage: float = 0.0
 var tick_duration: float = 0.0
 var ailment_duration: float = 0.0
+var stunned: bool = false
 
 func _ready() -> void:
 	duration_timer.one_shot = true
@@ -45,10 +46,11 @@ func freeze():
 # TODO: remove casting issue by adding the same states in both enemymovementcomponent and movementcomponent
 func stun():
 	print("stun ailment start")
-	if movement_component.curr_state != EnemyMovementComponent.State.STUNNED:
+	if movement_component.curr_state not in [EnemyMovementComponent.State.STUNNED, EnemyMovementComponent.State.ATTACK]:
 		#var movement = movement_component as EnemyMovementComponent
 		movement_component.save_state()
 	movement_component.curr_state = EnemyMovementComponent.State.STUNNED
+	stunned = true
 	duration_timer.start(ailment_duration)
 
 func _on_ailment_timer_timeout() -> void:
@@ -56,8 +58,9 @@ func _on_ailment_timer_timeout() -> void:
 	if not tick_timer.is_stopped():
 		tick_timer.stop()
 	#var movement = movement_component as EnemyMovementComponent
-	movement_component.curr_state = movement_component.prev_state
-
+	if stunned:
+		movement_component.curr_state = movement_component.prev_state
+		stunned = false
 func _on_tick_timer_timeout() -> void:
 	print("tick timer timeout!")
 	if not duration_timer.is_stopped():

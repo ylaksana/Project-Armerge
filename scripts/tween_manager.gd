@@ -82,6 +82,7 @@ func heavy_knockback(body:CharacterBody2D) -> void:
 	knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 func _on_knockback_motion_finished() -> void:
+	print("knockback")
 	knockback_finished.emit()
 
 func _on_enemy_attack_finished() -> void:

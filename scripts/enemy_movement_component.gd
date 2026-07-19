@@ -110,9 +110,9 @@ func movement(delta: float):
 		State.CHASE:
 			body.velocity = body.velocity.move_toward(direction * speed * chase_speed_multiplier,  acceleration * delta)
 		State.HURT, State.ATTACK, State.STUNNED:
-			body.velocity.x = 0
+			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 		_:
-			body.velocity.x = 0
+			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
 	
 func gravity(delta: float):
 	if not body.is_on_floor():
@@ -172,7 +172,8 @@ func attack() -> void:
 	tween.enemy_attack_motion(body)
 	
 func attack_finished() -> void:
-	curr_state = prev_state
+	if curr_state != State.STUNNED:
+		curr_state = prev_state
 	on_cooldown = true
 	await get_tree().create_timer(attack_cooldown).timeout
 	on_cooldown = false
