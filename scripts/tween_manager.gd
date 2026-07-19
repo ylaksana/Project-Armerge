@@ -12,20 +12,21 @@ signal enemy_attack_finished
 @export var heavy_knockback_max: float = 3.5
 @export var knockback_speed_x: float = 150.0
 @export var knockback_speed_y: float = 25.0
-@export var knockback_stun_duration: float = 0.5
+
+
 
 var knockback_tween: Tween = null
 var attack_tween: Tween = null
 var rng = RandomNumberGenerator.new()
 var knockback_direction: float
 var attack_direction: float
+var knockback_stun_duration: float = 0.5
 
 func _ready() -> void:
 	rng.randomize()
 
 func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
 	var attack: AttackData
-	
 	if hitbox.curr_atk:
 		attack = hitbox.curr_atk
 	else:

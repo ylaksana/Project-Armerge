@@ -10,5 +10,4 @@ damage = 15.0
 damage_type = "physical"
 attack_weight = "heavy"
 lunge_speed = 3.0
-movement_disabling = true
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

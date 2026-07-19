@@ -110,9 +110,9 @@ func movement(delta: float):
 		State.CHASE:
 			body.velocity = body.velocity.move_toward(direction * speed * chase_speed_multiplier,  acceleration * delta)
 		State.HURT, State.ATTACK, State.STUNNED:
-			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
+			body.velocity.x = 0
 		_:
-			body.velocity = body.velocity.move_toward(direction * 0,  acceleration * delta)
+			body.velocity.x = 0
 	
 func gravity(delta: float):
 	if not body.is_on_floor():
@@ -161,8 +161,10 @@ func change_direction():
 
 
 func _on_raycast_timer_timeout() -> void:
-	curr_state = State.WANDER
-	prev_state = State.WANDER
+	print("raycast state timeout, restoring state = ", State.keys()[prev_state])
+	if curr_state != State.STUNNED:
+		curr_state = State.WANDER
+		prev_state = State.WANDER
 	
 func attack() -> void:
 	prev_state = curr_state
@@ -178,7 +180,7 @@ func attack_finished() -> void:
 func _on_hit_received(hitbox: HitboxComponent) -> void:
 	if curr_state != State.STUNNED:
 		if curr_state not in [State.ATTACK, State.HURT]:
-			prev_state = curr_state
+			save_state()
 		curr_state = State.HURT
 		
 	# THIS IS BAD, FIX LATER AND CONSOLIDATE HIT AND AILMENT VFXs
@@ -195,10 +197,15 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 		
 	tween.knockback_motion(body, hitbox)
 
+func save_state() -> void:
+	print("saving state = ", State.keys()[prev_state])
+	prev_state = curr_state
+
 func restore_state() -> void:
-	#print(State.keys()[prev_state])
+	print("restoring state while curr_state = ", State.keys()[curr_state])
 	if curr_state == State.STUNNED:
 		return
+	print("restoring state = ", State.keys()[prev_state])
 	curr_state = prev_state
 	
 func vfx_state(exists: bool) -> void:
