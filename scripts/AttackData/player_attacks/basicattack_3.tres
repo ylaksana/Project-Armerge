@@ -10,4 +10,5 @@ damage = 5.0
 damage_type = "physical"
 attack_weight = "medium"
 lunge_speed = 2.0
+tween_delay = 0.2
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

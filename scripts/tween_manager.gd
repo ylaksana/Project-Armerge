@@ -26,6 +26,7 @@ func _ready() -> void:
 	rng.randomize()
 
 func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
+	#print("knockback_motion called")
 	var attack: AttackData
 	if hitbox.curr_atk:
 		attack = hitbox.curr_atk
@@ -50,8 +51,8 @@ func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
 		print("Unknown attack weight: ", attack.attack_weight)
 	
 	knockback_tween.tween_interval(knockback_stun_duration)
-	knockback_tween.finished.connect(_on_knockback_motion_finished)
-
+	knockback_tween.finished.connect(_on_knockback_motion_finished, CONNECT_ONE_SHOT)
+	print("tween state: ", knockback_tween.is_running())
 func enemy_attack_motion(body: CharacterBody2D):
 	attack_direction = 1 if body.animated_sprite.flip_h else -1
 	if attack_tween:
@@ -82,7 +83,7 @@ func heavy_knockback(body:CharacterBody2D) -> void:
 	knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 func _on_knockback_motion_finished() -> void:
-	print("knockback")
+	#print("emitting knockback_finished signal!")
 	knockback_finished.emit()
 
 func _on_enemy_attack_finished() -> void:

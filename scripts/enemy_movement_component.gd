@@ -57,6 +57,7 @@ func tick(delta: float):
 	gravity(delta)
 	
 	if curr_state in [State.ATTACK, State.HURT]:
+		#print("hurt()")
 		body.move_and_slide()
 		return
 	
@@ -76,18 +77,10 @@ func tick(delta: float):
 		attack()
 	
 func wander():
-	if front_raycast.is_colliding():
+	if front_raycast.is_colliding() or rear_raycast.is_colliding():
 		var collider = front_raycast.get_collider()
 		if collider == body.player:
 			chase()
-		elif curr_state == State.CHASE:
-			stop_chase()
-	if rear_raycast.is_colliding():
-		var collider = rear_raycast.get_collider()
-		if collider == body.player:
-			chase()
-		elif curr_state == State.CHASE:
-			stop_chase()
 	elif curr_state == State.CHASE:
 		stop_chase()
 			
@@ -161,12 +154,14 @@ func change_direction():
 
 
 func _on_raycast_timer_timeout() -> void:
+	print("raycast timer timeout! curr_state: ", State.keys()[curr_state])
 	print("raycast state timeout, restoring state = ", State.keys()[prev_state])
 	if curr_state != State.STUNNED:
 		curr_state = State.WANDER
 		prev_state = State.WANDER
 	
 func attack() -> void:
+	print("attack start!")
 	prev_state = curr_state
 	curr_state = State.ATTACK
 	tween.enemy_attack_motion(body)
@@ -179,10 +174,13 @@ func attack_finished() -> void:
 	on_cooldown = false
 	
 func _on_hit_received(hitbox: HitboxComponent) -> void:
+	if tween.attack_tween:
+		tween.attack_tween.kill()
 	if curr_state != State.STUNNED:
 		if curr_state not in [State.ATTACK, State.HURT]:
 			save_state()
 		curr_state = State.HURT
+		
 		
 	# THIS IS BAD, FIX LATER AND CONSOLIDATE HIT AND AILMENT VFXs
 	if hitbox.curr_atk:
