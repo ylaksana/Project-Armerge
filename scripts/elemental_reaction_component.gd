@@ -7,15 +7,28 @@ class_name ElementalReactionComponent extends Node
 var elemental_reaction_node: Node
 
 func reaction(element_state: ElementalStateComponent.ElementState, element_attack: AttackData.ElementType) -> void:
+	if element_state == ElementalStateComponent.ElementState.NONE:
+		return
+	
 	create_reaction_vfx()
-	if element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.ELECTRIC:
-		scorchspark()
-	elif element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.WIND:
-		ignite()
+	
+	if elemental_reaction_node:
+		print("element_state: ", element_state)
+		print("element_attack: ", element_attack)
+		print("created reaction scene")
+		if element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.ELECTRIC:
+			print("scorchspark!")
+			scorchspark()
+		elif element_state == ElementalStateComponent.ElementState.FIRE and element_attack == AttackData.ElementType.WIND:
+			ignite()
+		else:
+			elemental_reaction_node._on_finished()
+		
 	
 # TODO - elemental reactions
 # fire -> lightning
 func scorchspark() -> void:
+	elemental_reaction_node.global_position = body.global_position
 	elemental_reaction_node.scorchspark()
 	
 # lightning -> fire

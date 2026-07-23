@@ -9,7 +9,8 @@ func _ready() -> void:
 	hitbox_component.monitoring = false
 	
 func scorchspark() -> void:
-	pass
+	play("scorchspark")
+	animation_finished.connect(_on_finished)
 
 func _on_finished() -> void:
 	queue_free()
