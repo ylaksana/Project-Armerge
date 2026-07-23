@@ -341,5 +341,5 @@ animations = [{
 
 [node name="vfx" type="AnimatedSprite2D" unique_id=516398212]
 sprite_frames = SubResource("SpriteFrames_5lsgk")
-animation = &"fire_afflict"
+animation = &"burn"
 script = ExtResource("3_15wp8")

@@ -1,5 +1,7 @@
 extends AnimatedSprite2D
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 signal finished
 
 func hit() -> void:
@@ -43,4 +45,5 @@ func ice_afflict(timer: Timer) -> void:
 	timer.timeout.connect(_on_finished, CONNECT_ONE_SHOT)
 	
 func _on_finished() -> void:
+	hitbox_component.monitoring = false
 	queue_free()
