@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://dy5mnf0sttxqg"]
+
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_vxt0q"]
+
+[resource]
+script = ExtResource("1_vxt0q")
+animation_name = "scorchspark"
+active_frames = Array[int]([0, 1, 2])
+damage = 50.0
+damage_type = "explosion"
+attack_weight = "heavy"
+melee = false
+has_ailment = true
+has_burn = true
+metadata/_custom_type_script = "uid://d0d17vf4l00h6"

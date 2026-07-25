@@ -193,7 +193,8 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 		# ailment vfx
 		if hitbox.curr_atk.has_ailment:
 			vfx._on_ailment(hitbox.curr_atk)
-		
+	
+	print("enemy hit!, knockback tween playing using curr_atk: ", hitbox.curr_atk)
 	tween.knockback_motion(body, hitbox)
 
 func save_state() -> void:

@@ -46,7 +46,7 @@ func _on_hit_received(hitbox: HitboxComponent) -> void:
 					print("elemental reaction!")
 					elemental_residue_timer.stop()
 					elemental_cooldown_timer.start(reaction_cooldown_duration)
-					reaction_component.reaction(curr_elemental_state, hitbox.curr_atk.element_type)
+					reaction_component.elemental_reaction(curr_elemental_state, hitbox.curr_atk.element_type)
 					curr_elemental_state = ElementState.NONE
 		# we can't apply a reaction at this moment, but we can reapply the current element
 		else:

@@ -3,10 +3,12 @@ class_name ElementalReactionComponent extends Node
 
 @export var body: CharacterBody2D
 @export var elemental_reaction_scene: PackedScene
+@export var reactions: Array[AttackData]
 
 var elemental_reaction_node: Node
 
-func reaction(element_state: ElementalStateComponent.ElementState, element_attack: AttackData.ElementType) -> void:
+
+func elemental_reaction(element_state: ElementalStateComponent.ElementState, element_attack: AttackData.ElementType) -> void:
 	if element_state == ElementalStateComponent.ElementState.NONE:
 		return
 	
@@ -28,8 +30,16 @@ func reaction(element_state: ElementalStateComponent.ElementState, element_attac
 # TODO - elemental reactions
 # fire -> lightning
 func scorchspark() -> void:
+	get_tree().root.add_child(elemental_reaction_node)
 	elemental_reaction_node.global_position = body.global_position
-	elemental_reaction_node.scorchspark()
+	set_reaction("scorchspark")
+	if body.is_on_floor():
+		var body_shape = body.get_node("body").shape as RectangleShape2D
+		var body_bottom = body.global_position.y + body_shape.size.y / 2
+		elemental_reaction_node.global_position.y = body_bottom - (elemental_reaction_node.global_position.y / 2)
+		elemental_reaction_node.scorchspark_on_floor()
+	else:
+		elemental_reaction_node.scorchspark()
 	
 # lightning -> fire
 func flamecharged() -> void:
@@ -51,4 +61,11 @@ func create_reaction_vfx() -> void:
 	if elemental_reaction_node:
 		elemental_reaction_node._on_finished()
 	elemental_reaction_node = elemental_reaction_scene.instantiate()
-	body.add_child(elemental_reaction_node)
+	
+func set_reaction(reaction_name: String) -> void:
+	var reaction = reactions.filter(func(r): return reaction_name == r.animation_name).front()
+	print("set reaction to: ", reaction)
+	if reaction and elemental_reaction_node:
+		elemental_reaction_node.hitbox_component.curr_atk = reaction
+	else:
+		print("Unknown or mismatched special attack name")

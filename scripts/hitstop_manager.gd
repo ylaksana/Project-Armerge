@@ -26,7 +26,7 @@ func medium_hit() -> void:
 	
 func heavy_hit() -> void:
 	get_tree().paused = true
-	await get_tree().create_timer(0.15, true).timeout
+	await get_tree().create_timer(0.05, true).timeout
 	get_tree().paused = false
 	
 func on_death() -> void:

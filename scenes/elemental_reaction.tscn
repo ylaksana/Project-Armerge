@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ddavtjtum0wuy"]
 
 [ext_resource type="Texture2D" uid="uid://bx2oekff61635" path="res://assets/vfx/explosion-reaction.png" id="1_qv347"]
+[ext_resource type="Texture2D" uid="uid://bh1wj4aarjx8q" path="res://assets/explosion_reaction_on_floor.png" id="1_xett6"]
 [ext_resource type="Script" uid="uid://yy5vftat1n4c" path="res://scripts/elemental_reaction.gd" id="2_xett6"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="3_ny78s"]
 
@@ -8,13 +9,13 @@
 atlas = ExtResource("1_qv347")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kquu1"]
-atlas = ExtResource("1_qv347")
-region = Rect2(32, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_ouj8s"]
 atlas = ExtResource("1_qv347")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kquu1"]
+atlas = ExtResource("1_qv347")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0gvou"]
 atlas = ExtResource("1_qv347")
@@ -28,6 +29,50 @@ region = Rect2(128, 0, 32, 32)
 atlas = ExtResource("1_qv347")
 region = Rect2(160, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny78s"]
+atlas = ExtResource("1_xett6")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cdldm"]
+atlas = ExtResource("1_xett6")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kq8yo"]
+atlas = ExtResource("1_xett6")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d14fu"]
+atlas = ExtResource("1_xett6")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frjl2"]
+atlas = ExtResource("1_xett6")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kemr"]
+atlas = ExtResource("1_xett6")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3glu6"]
+atlas = ExtResource("1_xett6")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3buob"]
+atlas = ExtResource("1_xett6")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muubh"]
+atlas = ExtResource("1_xett6")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4aia3"]
+atlas = ExtResource("1_xett6")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_386mj"]
+atlas = ExtResource("1_xett6")
+region = Rect2(480, 0, 48, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_cdldm"]
 animations = [{
 "frames": [{
@@ -35,10 +80,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_wncoq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kquu1")
+"texture": SubResource("AtlasTexture_ouj8s")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ouj8s")
+"texture": SubResource("AtlasTexture_kquu1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0gvou")
@@ -52,21 +97,192 @@ animations = [{
 "loop": false,
 "name": &"scorchspark",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ny78s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cdldm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kq8yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d14fu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frjl2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kemr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3glu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3buob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muubh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4aia3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_386mj")
+}],
+"loop": false,
+"name": &"scorchspark_on_floor",
+"speed": 15.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kq8yo"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_xett6"]
+
+[sub_resource type="Animation" id="Animation_8di2s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitboxComponent/CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("CircleShape2D_xett6")]
+}
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ny78s"]
+points = PackedVector2Array(16, -6, 0, -15, -16, -6, -23, 10, 23, 10)
+
+[sub_resource type="Animation" id="Animation_c60p5"]
+resource_name = "ground_explosion_on_floor"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ConvexPolygonShape2D_ny78s")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 9.12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:shape:points")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(16, -6, 0, -15, -16, -6, -23, 10, 23, 10)]
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wncoq"]
+
+[sub_resource type="Animation" id="Animation_xett6"]
+resource_name = "small_explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitboxComponent/CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(0, -4.88), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("CircleShape2D_wncoq")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7fjww"]
+_data = {
+&"RESET": SubResource("Animation_8di2s"),
+&"ground_explosion_on_floor": SubResource("Animation_c60p5"),
+&"small_explosion": SubResource("Animation_xett6")
+}
 
 [node name="elemental_reaction" type="AnimatedSprite2D" unique_id=8929795]
 sprite_frames = SubResource("SpriteFrames_cdldm")
-animation = &"scorchspark"
+animation = &"scorchspark_on_floor"
 script = ExtResource("2_xett6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=496021283]
+libraries/ = SubResource("AnimationLibrary_7fjww")
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=308067394 node_paths=PackedStringArray("hitbox_shape")]
+position = Vector2(0, 4.88)
+collision_layer = 2
+collision_mask = 8
 script = ExtResource("3_ny78s")
 hitbox_shape = NodePath("CollisionShape2D")
 metadata/_custom_type_script = "uid://dfxkih1afv0o"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=17562950]
-shape = SubResource("CircleShape2D_kq8yo")
+shape = SubResource("CircleShape2D_xett6")

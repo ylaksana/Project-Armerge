@@ -1,7 +1,5 @@
 extends AnimatedSprite2D
 
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-
 signal finished
 
 func hit() -> void:

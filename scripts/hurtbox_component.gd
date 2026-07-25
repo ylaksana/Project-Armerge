@@ -12,3 +12,4 @@ func take_hit(hitbox: HitboxComponent) -> void:
 	# emit signal to other components
 	hit_received.emit(hitbox)
 	print("hit: ", body.name)
+	print("hurtbox - hitbox.curr_atk: ", hitbox.curr_atk)
