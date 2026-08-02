@@ -14,7 +14,7 @@ func _ready() -> void:
 	#print("I am: ", get_parent().name, " hitbox layer: ", collision_layer, " mask: ", collision_mask)
 	monitoring = false
 	area_entered.connect(_on_area_entered)
-	area_exited.connect(_on_area_exited)
+	#area_exited.connect(_on_area_exited)
 	
 
 func _on_area_entered(area):
@@ -34,6 +34,6 @@ func _on_area_entered(area):
 		area.take_hit(self)
 		hit.emit()
 		
-func _on_area_exited(area):
-	if area is HurtboxComponent and has_hit:
-		has_hit = false
+#func _on_area_exited(area):
+	#if area is HurtboxComponent and has_hit:
+		#has_hit = false

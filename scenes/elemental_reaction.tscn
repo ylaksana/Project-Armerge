@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bx2oekff61635" path="res://assets/vfx/explosion-reaction.png" id="1_qv347"]
 [ext_resource type="Texture2D" uid="uid://bh1wj4aarjx8q" path="res://assets/explosion_reaction_on_floor.png" id="1_xett6"]
+[ext_resource type="Texture2D" uid="uid://5vgvve7totje" path="res://assets/explosion.png" id="2_ny78s"]
 [ext_resource type="Script" uid="uid://yy5vftat1n4c" path="res://scripts/elemental_reaction.gd" id="2_xett6"]
 [ext_resource type="Script" uid="uid://dfxkih1afv0o" path="res://scripts/hitbox_component.gd" id="3_ny78s"]
 
@@ -28,6 +29,46 @@ region = Rect2(128, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8o00a"]
 atlas = ExtResource("1_qv347")
 region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8di2s"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c60p5"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fjww"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yua5n"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_af4ab"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lalpn"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82stg"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5bga"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bm8n"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjf7m"]
+atlas = ExtResource("2_ny78s")
+region = Rect2(432, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ny78s"]
 atlas = ExtResource("1_xett6")
@@ -95,8 +136,43 @@ animations = [{
 "texture": SubResource("AtlasTexture_8o00a")
 }],
 "loop": false,
-"name": &"scorchspark",
+"name": &"flamecharged",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_8di2s")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_c60p5")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_7fjww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yua5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_af4ab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lalpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82stg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5bga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bm8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjf7m")
+}],
+"loop": false,
+"name": &"scorchspark",
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -178,6 +254,47 @@ tracks/2/keys = {
 "values": [SubResource("CircleShape2D_xett6")]
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ny78s"]
+
+[sub_resource type="Animation" id="Animation_ny78s"]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HitboxComponent/CollisionShape2D:shape:radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.09975]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("HitboxComponent/CollisionShape2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, -3.88)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:shape")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("CircleShape2D_ny78s")]
+}
+
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ny78s"]
 points = PackedVector2Array(16, -6, 0, -15, -16, -6, -23, 10, 23, 10)
 
@@ -221,6 +338,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wncoq"]
+radius = 20.09975
 
 [sub_resource type="Animation" id="Animation_xett6"]
 resource_name = "small_explosion"
@@ -264,13 +382,15 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7fjww"]
 _data = {
 &"RESET": SubResource("Animation_8di2s"),
+&"explosion": SubResource("Animation_ny78s"),
 &"ground_explosion_on_floor": SubResource("Animation_c60p5"),
 &"small_explosion": SubResource("Animation_xett6")
 }
 
 [node name="elemental_reaction" type="AnimatedSprite2D" unique_id=8929795]
 sprite_frames = SubResource("SpriteFrames_cdldm")
-animation = &"scorchspark_on_floor"
+animation = &"scorchspark"
+frame_progress = 0.11229041
 script = ExtResource("2_xett6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=496021283]

@@ -11,6 +11,8 @@ func _ready() -> void:
 func scorchspark() -> void:
 	play("scorchspark")
 	animation_finished.connect(_on_finished)
+	animation_player.play("explosion")
+	
 	
 func scorchspark_on_floor() -> void:
 	print("reaction_monitoring: ", hitbox_component.monitoring)
