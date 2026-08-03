@@ -61,6 +61,7 @@ func combo() -> void:
 			attack()
 			
 func attack() -> void:
+	
 	combo_timer.stop()
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
