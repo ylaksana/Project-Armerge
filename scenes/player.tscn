@@ -518,6 +518,7 @@ offset_top = -29.0
 offset_right = 84.99999
 offset_bottom = -19.0
 body = NodePath("..")
+max_health = 50.0
 hurtbox = NodePath("../HurtboxComponent")
 ailment_component = NodePath("../AilmentComponent")
 

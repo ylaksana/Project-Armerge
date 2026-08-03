@@ -21,7 +21,6 @@ func _on_area_entered(area):
 	print(self.owner, " hit ", area.owner)
 	if area is HurtboxComponent:
 		#print(self.owner, " hit ", area.owner)
-		#has_hit = true
 		if curr_atk:
 			damage = curr_atk.damage
 			print("active damage: ", damage, " damage!")
@@ -34,6 +33,3 @@ func _on_area_entered(area):
 		area.take_hit(self)
 		hit.emit()
 		
-func _on_area_exited(area):
-	if area is HurtboxComponent and curr_atk == null:
-		has_hit = false

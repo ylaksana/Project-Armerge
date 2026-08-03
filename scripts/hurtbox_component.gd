@@ -5,6 +5,8 @@ signal hit_received(hitbox: HitboxComponent)
 @export var body: CharacterBody2D
 @export var animated_sprite : AnimatedSprite2D
 
+var on_cooldown: bool = false
+
 #func _ready() -> void:
 	#print("I am: ", get_parent().name, " hurtbox layer: ", collision_layer, " mask: ", collision_mask)
 
