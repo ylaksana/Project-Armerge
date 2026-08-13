@@ -12,7 +12,7 @@ var combo_step: int = 0
 var continue_combo: bool = false
 var wants_special_attack: bool = false
 var attack_animations: Array[String] = ["basicattack_1", "basicattack_2", "basicattack_3", "basicattack_4"]
-
+var aerial_attack_animations: Array[String] = ["aerialattack_1","aerialattack_2","aerialattack_3","aerialattack_4"]
 func _ready() -> void:
 	if not combo_timer.timeout.is_connected(_on_combo_timer_timeout):
 		combo_timer.timeout.connect(_on_combo_timer_timeout)
@@ -61,7 +61,6 @@ func combo() -> void:
 			attack()
 			
 func attack() -> void:
-	
 	combo_timer.stop()
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
