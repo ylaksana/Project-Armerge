@@ -9,10 +9,12 @@ signal attack_triggered(animation_name:String)
 var is_attacking: bool = false
 var is_aerial: bool = false
 var combo_step: int = 0
+var aerial_step: int = 0
 var continue_combo: bool = false
 var wants_special_attack: bool = false
 var attack_animations: Array[String] = ["basicattack_1", "basicattack_2", "basicattack_3", "basicattack_4"]
 var aerial_attack_animations: Array[String] = ["aerialattack_1","aerialattack_2","aerialattack_3","aerialattack_4"]
+
 func _ready() -> void:
 	if not combo_timer.timeout.is_connected(_on_combo_timer_timeout):
 		combo_timer.timeout.connect(_on_combo_timer_timeout)
@@ -65,11 +67,14 @@ func attack() -> void:
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
 	if not wants_special_attack:
-		body.attack_component.set_curr_atk(attack_animations[combo_step])
-		attack_triggered.emit(attack_animations[combo_step])
+		
 		if is_aerial:
-			combo_step = 0
+			body.attack_component.set_curr_atk(aerial_attack_animations[combo_step])
+			attack_triggered.emit(aerial_attack_animations[combo_step])
+			aerial_step = (aerial_step + 1) % len(aerial_attack_animations)
 		else:
+			body.attack_component.set_curr_atk(attack_animations[combo_step])
+			attack_triggered.emit(attack_animations[combo_step])
 			combo_step = (combo_step + 1) % len(attack_animations)
 	else:
 		body.attack_component.set_curr_atk("fireball")

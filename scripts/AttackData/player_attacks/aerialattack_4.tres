@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AttackData" format=3 uid="uid://d184mqj6b1co6"]
+
+[ext_resource type="Script" uid="uid://d0d17vf4l00h6" path="res://scripts/AttackData/attack_data.gd" id="1_8y3vf"]
+
+[resource]
+script = ExtResource("1_8y3vf")
+animation_name = "aerialattack_4"
+active_frames = Array[int]([1, 2])
+metadata/_custom_type_script = "uid://d0d17vf4l00h6"

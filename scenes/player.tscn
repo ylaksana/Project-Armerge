@@ -32,9 +32,13 @@
 [ext_resource type="Script" uid="uid://c056h0la3j46o" path="res://scripts/pivot.gd" id="24_l71n6"]
 [ext_resource type="Resource" uid="uid://crutkmamsfhpe" path="res://scripts/AttackData/player_attacks/fireball.tres" id="25_ujl30"]
 [ext_resource type="Script" uid="uid://bnhea2j45nh3o" path="res://scripts/combo_component.gd" id="27_31cv2"]
+[ext_resource type="Resource" uid="uid://corntf8gfwi24" path="res://scripts/AttackData/player_attacks/aerialattack_1.tres" id="29_2dvfe"]
 [ext_resource type="PackedScene" uid="uid://cf3rx7jxl816b" path="res://scenes/special_attack_UI.tscn" id="29_dt7fs"]
+[ext_resource type="Resource" uid="uid://c8dtg8hxoj3bs" path="res://scripts/AttackData/player_attacks/aerialattack_2.tres" id="30_giy8y"]
 [ext_resource type="Resource" uid="uid://ly7h4tqulljh" path="res://scripts/AttackData/player_attacks/ice_blast.tres" id="30_gl8cc"]
 [ext_resource type="Resource" uid="uid://ct6b57pd1viei" path="res://scripts/AttackData/player_attacks/lightning_bolt.tres" id="31_487ah"]
+[ext_resource type="Resource" uid="uid://nkrhmeddhg7c" path="res://scripts/AttackData/player_attacks/aerialattack_3.tres" id="31_fdfoy"]
+[ext_resource type="Resource" uid="uid://d184mqj6b1co6" path="res://scripts/AttackData/player_attacks/aerialattack_4.tres" id="32_hhpqf"]
 [ext_resource type="Resource" uid="uid://c8k5yt4nawl3n" path="res://scripts/AttackData/player_attacks/wind_blast.tres" id="32_md1ol"]
 [ext_resource type="Script" uid="uid://d188tehfqfdn2" path="res://scripts/ailment_component.gd" id="33_487ah"]
 
@@ -753,7 +757,6 @@ position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"aerialattack_4"
 autoplay = "basicattack_1"
-frame_progress = 0.011574148
 
 [node name="InputComponent" type="Node" parent="." unique_id=1273875027]
 script = ExtResource("3_dqkch")
@@ -817,7 +820,7 @@ metadata/_custom_type_script = "uid://c5nogp5tvbpi2"
 script = ExtResource("18_fulsm")
 hitbox = NodePath("../HitboxComponent")
 animated_sprite = NodePath("../AnimatedSprite2D")
-attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail"), ExtResource("25_ujl30")])
+attacks = Array[ExtResource("12_qfm1y")]([ExtResource("13_fulsm"), ExtResource("14_4r5pv"), ExtResource("15_60mlk"), ExtResource("17_i4ail"), ExtResource("25_ujl30"), ExtResource("29_2dvfe"), ExtResource("30_giy8y"), ExtResource("31_fdfoy"), ExtResource("32_hhpqf")])
 special_attack = ExtResource("25_ujl30")
 metadata/_custom_type_script = "uid://culvyt2nugrk4"
 
