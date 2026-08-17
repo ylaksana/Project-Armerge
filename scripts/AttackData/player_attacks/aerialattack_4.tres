@@ -6,4 +6,5 @@
 script = ExtResource("1_8y3vf")
 animation_name = "aerialattack_4"
 active_frames = Array[int]([1, 2])
+attack_weight = "heavy"
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

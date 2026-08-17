@@ -8,6 +8,7 @@ signal attack_triggered(animation_name:String)
 
 var is_attacking: bool = false
 var is_aerial: bool = false
+var has_hit: bool = false
 var combo_step: int = 0
 var aerial_step: int = 0
 var continue_combo: bool = false
@@ -30,9 +31,12 @@ func tick(delta: float) -> void:
 func non_loop_animation_playing() -> bool:
 	return body.animated_sprite.is_playing() and not body.animated_sprite.sprite_frames.get_animation_loop(body.animated_sprite.animation)
 
+func attack_animation_playing() -> bool:
+	return body.animated_sprite.animation != attack_animations[-1] or body.animated_sprite.animation != aerial_attack_animations[-1]
+
 func combo() -> void:
 	# combo buffer
-	if body.movement_component.wants_attack and body.animated_sprite.animation != attack_animations[-1]:
+	if body.movement_component.wants_attack and attack_animation_playing():
 		continue_combo = true
 		
 	# landing from an aerial attack
@@ -57,6 +61,8 @@ func combo() -> void:
 				
 	# if body is in the air
 	else:
+		if non_loop_animation_playing():
+			return
 		# jump_attack
 		if continue_combo:
 			continue_combo = false
@@ -67,10 +73,9 @@ func attack() -> void:
 	is_attacking = true
 	is_aerial = not body.is_on_floor() and is_attacking
 	if not wants_special_attack:
-		
 		if is_aerial:
 			body.attack_component.set_curr_atk(aerial_attack_animations[combo_step])
-			attack_triggered.emit(aerial_attack_animations[combo_step])
+			attack_triggered.emit(aerial_attack_animations[aerial_step])
 			aerial_step = (aerial_step + 1) % len(aerial_attack_animations)
 		else:
 			body.attack_component.set_curr_atk(attack_animations[combo_step])

@@ -4,7 +4,7 @@ class_name MovementComponent extends Node
 @export var animated_sprite: AnimatedSprite2D
 @export var speed: float = 150.0
 @export var jump = 6.0
-@export var gravity_multiplier = 3.0
+@export var gravity_multiplier = 0.0
 
 var dir : float = 0.0
 var wants_jump : bool = false

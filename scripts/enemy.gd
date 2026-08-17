@@ -3,6 +3,7 @@ class_name Enemy extends CharacterBody2D
 signal died
 
 @export var player: Player
+@export var is_flying: bool = false
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
 @onready var enemy_animation_component: EnemyAnimationComponent = $EnemyAnimationComponent
@@ -13,11 +14,21 @@ signal died
 @onready var elemental_state_component: ElementalStateComponent = $ElementalStateComponent
 @onready var ailment_component: AilmentComponent = $AilmentComponent
 @onready var vfx_manager: VFXManager = $VFXManager
+@onready var spike: CollisionShape2D = $spike
+@onready var body: CollisionShape2D = $body
+@onready var flying_body: CollisionShape2D = $flying_body
 
 
 func _ready() -> void:
 	health_component.enemy_died.connect(_on_died)
 	hitbox_component.monitoring = true
+	if is_flying:
+		spike.disabled = true
+		body.disabled = true
+		hitbox_component.monitoring = false
+	else:
+		flying_body.disabled = true
+	
 
 func _physics_process(delta: float) -> void:
 	#hitbox_component.tick(delta)

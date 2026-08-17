@@ -17,6 +17,7 @@ class_name Player extends CharacterBody2D
 @onready var special_attack_wheel: Node = $SpecialAttackWheel
 @onready var special_attack_component: SpecialAttackComponent = $SpecialAttackComponent
 #@onready var elemental_state_component: ElementalStateComponent = $ElementalStateComponent
+@onready var animated_components: AnimationPlayer = $AnimatedComponents
 
 func _ready() -> void:
 	health_component.died.connect(_on_died)

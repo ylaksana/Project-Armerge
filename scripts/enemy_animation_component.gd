@@ -25,18 +25,21 @@ func tick(delta: float):
 		animated_sprite.play("hurt")
 		body.animated_components.play("hit_flash")
 		return
-		
-	if body.is_on_floor():
-		if non_loop_animation_playing():
-			return
-		if body.enemy_movement_component.curr_state == body.enemy_movement_component.State.ATTACK:
-			animated_sprite.play("attack")
-			body.animated_components.play("attack")
-			body.hitbox_component.scale.x = -1.0 if animated_sprite.flip_h else 1.0
-		elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.STUNNED:
-			animated_sprite.play("stunned")
-		elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.CHASE or body.enemy_movement_component.prev_state == EnemyMovementComponent.State.CHASE:
-			animated_sprite.play("aggressive")
-		else:
-			animated_sprite.play("idle")
+	
+	if not body.is_flying:
+		if body.is_on_floor():
+			if non_loop_animation_playing():
+				return
+			if body.enemy_movement_component.curr_state == body.enemy_movement_component.State.ATTACK:
+				animated_sprite.play("attack")
+				body.animated_components.play("attack")
+				body.hitbox_component.scale.x = -1.0 if animated_sprite.flip_h else 1.0
+			elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.STUNNED:
+				animated_sprite.play("stunned")
+			elif body.enemy_movement_component.curr_state == EnemyMovementComponent.State.CHASE or body.enemy_movement_component.prev_state == EnemyMovementComponent.State.CHASE:
+				animated_sprite.play("aggressive")
+			else:
+				animated_sprite.play("idle")
+	else:
+		animated_sprite.play("flying_idle")
 				

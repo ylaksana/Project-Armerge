@@ -64,6 +64,7 @@ func combo() -> void:
 func _on_attack_triggered(animation_name:String) -> void:
 	print("attack animation: ", animation_name)
 	animated_sprite.play(animation_name)
+	body.animated_components.play(animation_name)
 
 func _on_combo_timer_timeout() -> void:
 	if body.is_on_floor():
@@ -82,3 +83,5 @@ func flip_animated_sprite() -> void:
 func flip_hitbox() -> void:
 	if not body.combo_component.is_attacking:
 		body.pivot_component.flip_hitbox(animated_sprite.flip_h)
+		
+		

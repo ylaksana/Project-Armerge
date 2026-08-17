@@ -54,7 +54,8 @@ func tick(delta: float):
 	#print(State.keys()[curr_state])
 	
 	# always affects the enemy
-	gravity(delta)
+	if not body.is_flying:
+		gravity(delta)
 	
 	if curr_state in [State.ATTACK, State.HURT]:
 		#print("hurt()")
