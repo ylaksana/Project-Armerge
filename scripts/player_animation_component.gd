@@ -69,6 +69,7 @@ func _on_attack_triggered(animation_name:String) -> void:
 func _on_combo_timer_timeout() -> void:
 	if body.is_on_floor():
 		animated_sprite.play("idle")
+
 	
 func flip_animated_sprite() -> void:
 	if not body.combo_component.is_attacking:
@@ -81,7 +82,6 @@ func flip_animated_sprite() -> void:
 			animated_sprite.flip_h = true
 
 func flip_hitbox() -> void:
-	if not body.combo_component.is_attacking:
-		body.pivot_component.flip_hitbox(animated_sprite.flip_h)
+	body.pivot_component.flip_hitbox(animated_sprite.flip_h)
 		
 		

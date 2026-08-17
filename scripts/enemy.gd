@@ -17,6 +17,8 @@ signal died
 @onready var spike: CollisionShape2D = $spike
 @onready var body: CollisionShape2D = $body
 @onready var flying_body: CollisionShape2D = $flying_body
+@onready var ground_hurtbox: CollisionShape2D = $HurtboxComponent/ground_hurtbox
+@onready var flying_hurtbox: CollisionShape2D = $HurtboxComponent/flying_hurtbox
 
 
 func _ready() -> void:
@@ -26,9 +28,11 @@ func _ready() -> void:
 		spike.disabled = true
 		body.disabled = true
 		hitbox_component.monitoring = false
+		ground_hurtbox.disabled = true
 	else:
+		body.disabled = true
+		flying_hurtbox.disabled = true
 		flying_body.disabled = true
-	
 
 func _physics_process(delta: float) -> void:
 	#hitbox_component.tick(delta)
