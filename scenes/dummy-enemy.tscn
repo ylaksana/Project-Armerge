@@ -427,7 +427,7 @@ metadata/_custom_type_script = "uid://dglvru5gfrr4b"
 
 [node name="ground_hurtbox" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1656536966]
 position = Vector2(0.5, 4)
-scale = Vector2(1.0045236, 1)
+scale = Vector2(1.121, 1.115)
 shape = SubResource("RectangleShape2D_ewmnv")
 
 [node name="flying_hurtbox" type="CollisionShape2D" parent="HurtboxComponent" unique_id=1783899936]

@@ -883,7 +883,7 @@ position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
 animation = &"aerialattack_2"
 autoplay = "basicattack_1"
-frame_progress = 0.9090815
+frame_progress = 0.4381324
 
 [node name="AnimatedComponents" type="AnimationPlayer" parent="." unique_id=349627145]
 libraries/ = SubResource("AnimationLibrary_giy8y")

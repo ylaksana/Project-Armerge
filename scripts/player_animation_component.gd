@@ -64,6 +64,8 @@ func combo() -> void:
 func _on_attack_triggered(animation_name:String) -> void:
 	print("attack animation: ", animation_name)
 	animated_sprite.play(animation_name)
+	if animation_name not in body.animated_components.get_animation_list():
+		return
 	body.animated_components.play(animation_name)
 
 func _on_combo_timer_timeout() -> void:

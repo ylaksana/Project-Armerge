@@ -30,7 +30,6 @@ func _ready() -> void:
 		hitbox_component.monitoring = false
 		ground_hurtbox.disabled = true
 	else:
-		body.disabled = true
 		flying_hurtbox.disabled = true
 		flying_body.disabled = true
 
