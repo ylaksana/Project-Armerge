@@ -5,6 +5,7 @@ class_name MovementComponent extends Node
 @export var speed: float = 150.0
 @export var jump = 6.0
 @export var gravity_multiplier = 0.0
+@export var tween_manager: TweenManager
 
 var dir : float = 0.0
 var wants_jump : bool = false
@@ -43,15 +44,15 @@ func gravity(delta:float) -> void:
 		body.velocity += body.get_gravity() * delta
 	body.move_and_slide()
 
-func animation_based_movement() -> void:
+func attacking_movement() -> void:
 	print("using lunge speed from curr_atk: ", body.hitbox_component.curr_atk)
 	print("lunge speed: ", body.hitbox_component.curr_atk.lunge_speed)
-	if not body.is_on_floor():
-		return
+	if body.is_on_floor():
+		tween_manager.attack_lunge(body, speed)
+	else:
+		tween_manager.aerial_attack_lunge(body, speed)
+	
 	if body.hitbox_component.curr_atk.lunge_speed == 0.0:
 		return
-	var direction = 1 if animated_sprite.flip_h else -1
-	var tween = create_tween()
-	tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)
-	tween.tween_property(body, "velocity:x", speed * body.hitbox_component.curr_atk.lunge_speed * direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	

@@ -84,7 +84,7 @@ func attack() -> void:
 	else:
 		body.attack_component.set_curr_atk("fireball")
 		attack_triggered.emit("fireball")
-	body.movement_component.animation_based_movement()
+	body.movement_component.attacking_movement()
 
 func _on_animation_finished() -> void:
 	# combo window
@@ -107,9 +107,12 @@ func _on_animation_finished() -> void:
 		
 			# if in the air, reset combo_step
 			else:
-				combo_step = 0
-				body.hitbox_component.curr_atk = null
-				is_attacking = false
+				if (body.animated_sprite.animation != aerial_attack_animations[-1]) or body.hitbox_component.curr_atk.is_special_attack:
+						print("combo timer start!")
+						combo_timer.start()
+					# end if end of the combo
+				else:
+					_on_combo_timer_timeout()
 		else:
 			is_attacking = false
 
@@ -119,4 +122,9 @@ func _on_combo_timer_timeout() -> void:
 		wants_special_attack = false
 	body.hitbox_component.monitoring = false
 	body.hitbox_component.curr_atk = null
+	has_hit = false
 	combo_step = 0
+	aerial_step = 0
+#
+#func _on_hit() -> void:
+	#has_hit = true

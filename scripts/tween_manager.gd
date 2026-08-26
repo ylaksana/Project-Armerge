@@ -3,6 +3,7 @@ class_name TweenManager extends Node
 signal knockback_finished
 signal enemy_attack_finished
 
+
 # hyperparams
 @export var light_knockback_min: float = 0.5
 @export var light_knockback_max: float = 1.6
@@ -12,8 +13,6 @@ signal enemy_attack_finished
 @export var heavy_knockback_max: float = 3.5
 @export var knockback_speed_x: float = 150.0
 @export var knockback_speed_y: float = 25.0
-
-
 
 var knockback_tween: Tween = null
 var attack_tween: Tween = null
@@ -53,6 +52,7 @@ func knockback_motion(body: CharacterBody2D, hitbox: HitboxComponent):
 	knockback_tween.tween_interval(knockback_stun_duration)
 	knockback_tween.finished.connect(_on_knockback_motion_finished, CONNECT_ONE_SHOT)
 	print("tween state: ", knockback_tween.is_running())
+	
 func enemy_attack_motion(body: CharacterBody2D):
 	attack_direction = 1 if body.animated_sprite.flip_h else -1
 	if attack_tween:
@@ -81,6 +81,23 @@ func heavy_knockback(body:CharacterBody2D) -> void:
 	knockback_tween.tween_property(body, "velocity:x", knockback_speed_x * random_multiplier * knockback_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	knockback_tween.parallel().tween_property(body, "velocity:y", -knockback_speed_y, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	knockback_tween.tween_property(body, "velocity:x", 0.0, 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func attack_lunge(body: CharacterBody2D, speed: float) -> void:
+	attack_direction = 1 if body.animated_sprite.flip_h else -1
+	if attack_tween:
+		attack_tween.kill()
+	attack_tween = create_tween()
+	attack_tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)
+	attack_tween.tween_property(body, "velocity:x", speed * body.hitbox_component.curr_atk.lunge_speed * attack_direction, 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	attack_tween.tween_property(body, "velocity:x", 0.0, 0.01).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func aerial_attack_lunge(body: CharacterBody2D, speed: float) -> void:
+	attack_direction = 1 if body.animated_sprite.flip_h else -1
+	if attack_tween:
+		attack_tween.kill()
+	attack_tween = create_tween()
+	attack_tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)
+	attack_tween.tween_property(body, "velocity:y", -100, 0.3).set_trans(Tween.TRANS_ELASTIC)
 
 func _on_knockback_motion_finished() -> void:
 	#print("emitting knockback_finished signal!")

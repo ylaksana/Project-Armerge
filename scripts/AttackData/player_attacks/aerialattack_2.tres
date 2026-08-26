@@ -6,4 +6,5 @@
 script = ExtResource("1_ywtsd")
 animation_name = "aerialattack_2"
 active_frames = Array[int]([2, 3, 4])
+tween_delay = 0.05
 metadata/_custom_type_script = "uid://d0d17vf4l00h6"

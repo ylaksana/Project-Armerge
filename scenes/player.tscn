@@ -41,6 +41,7 @@
 [ext_resource type="Resource" uid="uid://d184mqj6b1co6" path="res://scripts/AttackData/player_attacks/aerialattack_4.tres" id="32_hhpqf"]
 [ext_resource type="Resource" uid="uid://c8k5yt4nawl3n" path="res://scripts/AttackData/player_attacks/wind_blast.tres" id="32_md1ol"]
 [ext_resource type="Script" uid="uid://d188tehfqfdn2" path="res://scripts/ailment_component.gd" id="33_487ah"]
+[ext_resource type="Script" uid="uid://bs5mx1r43qj5f" path="res://scripts/tween_manager.gd" id="42_giy8y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ur7pv"]
 size = Vector2(14, 28)
@@ -420,7 +421,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ua5cf")
 }],
-"loop": true,
+"loop": false,
 "name": &"aerialattack_1",
 "speed": 10.0
 }, {
@@ -443,7 +444,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_770dr")
 }],
-"loop": true,
+"loop": false,
 "name": &"aerialattack_2",
 "speed": 10.0
 }, {
@@ -475,7 +476,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_p21yu")
 }],
-"loop": true,
+"loop": false,
 "name": &"aerialattack_3",
 "speed": 10.0
 }, {
@@ -507,7 +508,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_cbf1i")
 }],
-"loop": true,
+"loop": false,
 "name": &"aerialattack_4",
 "speed": 10.0
 }, {
@@ -881,23 +882,11 @@ z_index = 5
 material = SubResource("ShaderMaterial_oprun")
 position = Vector2(3, -9)
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"aerialattack_2"
+animation = &"aerialattack_1"
 autoplay = "basicattack_1"
-frame_progress = 0.4381324
 
 [node name="AnimatedComponents" type="AnimationPlayer" parent="." unique_id=349627145]
 libraries/ = SubResource("AnimationLibrary_giy8y")
-
-[node name="InputComponent" type="Node" parent="." unique_id=1273875027]
-script = ExtResource("3_dqkch")
-metadata/_custom_type_script = "uid://bd2gw28n1owvf"
-
-[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite")]
-script = ExtResource("4_qlg0r")
-body = NodePath("..")
-animated_sprite = NodePath("../AnimatedSprite2D")
-jump = -300.0
-metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
 [node name="HitboxComponent" type="Area2D" parent="." unique_id=1938364455 node_paths=PackedStringArray("hitbox_shape")]
 collision_layer = 2
@@ -931,6 +920,20 @@ body = NodePath("..")
 max_health = 50.0
 hurtbox = NodePath("../HurtboxComponent")
 ailment_component = NodePath("../AilmentComponent")
+
+[node name="InputComponent" type="Node" parent="." unique_id=1273875027]
+script = ExtResource("3_dqkch")
+metadata/_custom_type_script = "uid://bd2gw28n1owvf"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1716608426 node_paths=PackedStringArray("body", "animated_sprite", "tween_manager")]
+script = ExtResource("4_qlg0r")
+body = NodePath("..")
+animated_sprite = NodePath("../AnimatedSprite2D")
+speed = null
+jump = -300.0
+gravity_multiplier = null
+tween_manager = NodePath("../TweenManager")
+metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
 [node name="PlayerAnimationComponent" type="Node" parent="." unique_id=192981014 node_paths=PackedStringArray("body", "animated_sprite", "movement_component")]
 script = ExtResource("11_d2wvv")
@@ -985,6 +988,10 @@ duration_timer = NodePath("../Timers/AilmentTimer")
 tick_timer = NodePath("../Timers/TickTimer")
 health_component = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://d188tehfqfdn2"
+
+[node name="TweenManager" type="Node" parent="." unique_id=1305442685]
+script = ExtResource("42_giy8y")
+metadata/_custom_type_script = "uid://bs5mx1r43qj5f"
 
 [node name="Timers" type="Node" parent="." unique_id=69962899]
 
