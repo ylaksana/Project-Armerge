@@ -5,8 +5,12 @@ class_name HitstopManager extends Node
 @export var health_component: HealthComponent
 
 func _ready() -> void:
+	call_deferred("_connect_signals")
+	
+func _connect_signals() -> void:
 	hurtbox.hit_received.connect(_on_hit)
 	health_component.health_changed.connect(_on_health_changed)
+	
 
 func damage_flash() -> void:
 	animated_sprite.material.set_shader_parameter("hit_flash_on",true)

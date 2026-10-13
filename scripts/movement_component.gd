@@ -12,6 +12,13 @@ var wants_jump : bool = false
 var wants_attack: bool = false
 var is_dead: bool = false
 
+func _ready() -> void:
+	call_deferred("_connect_signals")
+
+func _connect_signals() -> void:
+	body.hitbox_component.hit.connect(_on_hit_attack)
+	body.hurtbox_component.hit_received.connect(_on_hit_reaction)
+	
 func tick(delta:float) -> void:
 	if body == null:
 		return	
@@ -49,10 +56,20 @@ func attacking_movement() -> void:
 	print("lunge speed: ", body.hitbox_component.curr_atk.lunge_speed)
 	if body.is_on_floor():
 		tween_manager.attack_lunge(body, speed)
-	else:
-		tween_manager.aerial_attack_lunge(body, speed)
 	
 	if body.hitbox_component.curr_atk.lunge_speed == 0.0:
 		return
-	
-	
+
+func _on_hit_attack() -> void:
+	if body.is_on_floor():
+		pass
+	else:
+		tween_manager.aerial_attack_lunge(body, speed)
+
+func _on_hit_reaction() -> void:
+	# body knockback
+	if body.is_on_floor():
+		pass
+	# body knockback in air
+	else:
+		pass

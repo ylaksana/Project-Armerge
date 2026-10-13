@@ -97,7 +97,7 @@ func aerial_attack_lunge(body: CharacterBody2D, speed: float) -> void:
 		attack_tween.kill()
 	attack_tween = create_tween()
 	attack_tween.tween_interval(body.hitbox_component.curr_atk.tween_delay)
-	attack_tween.tween_property(body, "velocity:y", -100, 0.3).set_trans(Tween.TRANS_ELASTIC)
+	attack_tween.tween_property(body, "velocity:y", -100, 0.1).set_trans(Tween.TRANS_ELASTIC)
 
 func _on_knockback_motion_finished() -> void:
 	#print("emitting knockback_finished signal!")

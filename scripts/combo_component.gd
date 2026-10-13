@@ -32,7 +32,7 @@ func non_loop_animation_playing() -> bool:
 	return body.animated_sprite.is_playing() and not body.animated_sprite.sprite_frames.get_animation_loop(body.animated_sprite.animation)
 
 func attack_animation_playing() -> bool:
-	return body.animated_sprite.animation != attack_animations[-1] or body.animated_sprite.animation != aerial_attack_animations[-1]
+	return body.animated_sprite.animation != attack_animations[-1]
 
 func combo() -> void:
 	# combo buffer
@@ -125,6 +125,6 @@ func _on_combo_timer_timeout() -> void:
 	has_hit = false
 	combo_step = 0
 	aerial_step = 0
-#
-#func _on_hit() -> void:
-	#has_hit = true
+
+func _on_hit() -> void:
+	has_hit = true

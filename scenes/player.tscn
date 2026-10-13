@@ -423,7 +423,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"aerialattack_1",
-"speed": 10.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -929,9 +929,7 @@ metadata/_custom_type_script = "uid://bd2gw28n1owvf"
 script = ExtResource("4_qlg0r")
 body = NodePath("..")
 animated_sprite = NodePath("../AnimatedSprite2D")
-speed = null
 jump = -300.0
-gravity_multiplier = null
 tween_manager = NodePath("../TweenManager")
 metadata/_custom_type_script = "uid://dp8i04h7j7y1v"
 
